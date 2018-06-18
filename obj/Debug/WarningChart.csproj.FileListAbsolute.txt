@@ -1,0 +1,17 @@
+c:\users\didon\onedrive\documents\visual studio 2015\Projects\WarningChart\WarningChart\bin\Debug\Archilizer_WarningChart.dll
+c:\users\didon\onedrive\documents\visual studio 2015\Projects\WarningChart\WarningChart\bin\Debug\Archilizer_WarningChart.pdb
+c:\users\didon\onedrive\documents\visual studio 2015\Projects\WarningChart\WarningChart\obj\Debug\WarningChart.csprojResolveAssemblyReference.cache
+c:\users\didon\onedrive\documents\visual studio 2015\Projects\WarningChart\WarningChart\obj\Debug\Archilizer_WarningChart.g.resources
+c:\users\didon\onedrive\documents\visual studio 2015\Projects\WarningChart\WarningChart\obj\Debug\Archilizer_WarningChart.dll
+c:\users\didon\onedrive\documents\visual studio 2015\Projects\WarningChart\WarningChart\obj\Debug\Archilizer_WarningChart.pdb
+c:\users\didon\onedrive\documents\visual studio 2015\Projects\WarningChart\WarningChart\obj\Debug\Archilizer_WarningChart.WarningChartForm.resources
+c:\users\didon\onedrive\documents\visual studio 2015\Projects\WarningChart\WarningChart\obj\Debug\WarningChart.csproj.GenerateResource.Cache
+c:\users\didon\onedrive\documents\visual studio 2015\Projects\WarningChart\WarningChart\bin\Debug\LiveCharts.dll
+c:\users\didon\onedrive\documents\visual studio 2015\Projects\WarningChart\WarningChart\bin\Debug\LiveCharts.WinForms.dll
+c:\users\didon\onedrive\documents\visual studio 2015\Projects\WarningChart\WarningChart\bin\Debug\LiveCharts.Wpf.dll
+c:\users\didon\onedrive\documents\visual studio 2015\Projects\WarningChart\WarningChart\bin\Debug\LiveCharts.pdb
+c:\users\didon\onedrive\documents\visual studio 2015\Projects\WarningChart\WarningChart\bin\Debug\LiveCharts.xml
+c:\users\didon\onedrive\documents\visual studio 2015\Projects\WarningChart\WarningChart\bin\Debug\LiveCharts.WinForms.pdb
+c:\users\didon\onedrive\documents\visual studio 2015\Projects\WarningChart\WarningChart\bin\Debug\LiveCharts.WinForms.xml
+c:\users\didon\onedrive\documents\visual studio 2015\Projects\WarningChart\WarningChart\bin\Debug\LiveCharts.Wpf.pdb
+c:\users\didon\onedrive\documents\visual studio 2015\Projects\WarningChart\WarningChart\bin\Debug\LiveCharts.Wpf.xml

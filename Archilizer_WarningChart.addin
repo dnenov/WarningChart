@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<RevitAddIns>
+  <AddIn Type="Application">
+    <Name>Archilizer_WarningChart</Name>
+    <Description>Warning Chart - creates a pie chart which dynamically updates and displays project Warnings.</Description>
+    <Assembly>Archilizer_WarningChart.dll</Assembly>
+    <FullClassName>Archilizer_WarningChart.App</FullClassName>
+    <ClientId>a4e78d1d-7a56-479d-9664-15d56d7e5a73</ClientId>
+    <VendorId>archilizer.com</VendorId>
+    <VendorDescription>Deyan Nenov, Archilizer</VendorDescription>
+  </AddIn>
+</RevitAddIns>
