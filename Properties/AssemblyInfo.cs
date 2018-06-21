@@ -6,10 +6,10 @@ using System.Runtime.InteropServices;
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
 [assembly: AssemblyTitle("Archilizer_WarningChart")]
-[assembly: AssemblyDescription("Archilizer_Project Description")]
+[assembly: AssemblyDescription("Creates a Pie Chart to visualize all Warnings within the Project.")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("Archilizer Ltd.")]
-[assembly: AssemblyProduct("Archilizer_product for Revit C# .NET Add-In")]
+[assembly: AssemblyProduct("Archilizer_WarningChart for Revit C# .NET Add-In")]
 [assembly: AssemblyCopyright("Copyright 2018 (C) Archilizer Ltd.")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
