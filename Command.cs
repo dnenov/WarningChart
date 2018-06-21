@@ -15,36 +15,23 @@ namespace Archilizer_WarningChart
     [Transaction(TransactionMode.Manual)]
     public class CommandWarningChart : IExternalCommand
     {
+        public static string global_message;
+
         public Result Execute(
           ExternalCommandData commandData,
           ref string message,
           ElementSet elements)
         {
-            UIApplication uiapp = commandData.Application;
-            UIDocument uidoc = uiapp.ActiveUIDocument;
-            Application app = uiapp.Application;
-            Document doc = uidoc.Document;
-
-            List<FailureMessage> warnings = new List<FailureMessage>(doc.GetWarnings());
-
-            Dictionary<string, int> warningMap = new Dictionary<string, int>();
-
-            warningMap = warnings.GroupBy(x => x.GetDescriptionText())
-              .Where(g => g.Count() > 1)
-              .ToDictionary(x => x.Key, y => y.Count());
-            
-            using (WarningChartForm form = new WarningChartForm(warningMap))
+            try
             {
-                var result = form.ShowDialog();
-
-                if(result == System.Windows.Forms.DialogResult.OK)
-                {
-                    return Result.Succeeded;
-                }
-                else
-                {
-                    return Result.Failed;
-                }
+                App.thisApp.ShowForm(commandData.Application);
+                return Result.Succeeded;
+            }
+            catch (Exception ex)
+            {
+                message += global_message;
+                message = ex.Message;
+                return Result.Failed;
             }
         }
     }
