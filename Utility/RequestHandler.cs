@@ -73,7 +73,7 @@ namespace Archilizer_WarningChart
             }
             finally
             {
-                App.thisApp.WakeFormUp();
+                //App.thisApp.WakeFormUp();
             }
 
             return;

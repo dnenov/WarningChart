@@ -17,6 +17,11 @@ c:\users\didon\onedrive\documents\visual studio 2015\Projects\WarningChart\Warni
 c:\users\didon\onedrive\documents\visual studio 2015\Projects\WarningChart\WarningChart\bin\Debug\LiveCharts.Wpf.xml
 C:\Users\dneno\source\repos\WarningChart\bin\Debug\Archilizer_WarningChart.dll
 C:\Users\dneno\source\repos\WarningChart\bin\Debug\Archilizer_WarningChart.pdb
+C:\Users\dneno\source\repos\WarningChart\obj\Debug\WarningChart.csprojAssemblyReference.cache
+C:\Users\dneno\source\repos\WarningChart\obj\Debug\WarningChartWPF\WarningChartView.g.cs
+C:\Users\dneno\source\repos\WarningChart\obj\Debug\Archilizer_WarningChart_MarkupCompile.cache
+C:\Users\dneno\source\repos\WarningChart\obj\Debug\Archilizer_WarningChart_MarkupCompile.lref
+C:\Users\dneno\source\repos\WarningChart\obj\Debug\WarningChartWPF\WarningChartView.baml
 C:\Users\dneno\source\repos\WarningChart\obj\Debug\Archilizer_WarningChart.g.resources
 C:\Users\dneno\source\repos\WarningChart\obj\Debug\Archilizer_WarningChart.WarningChart.WarningChartForm.resources
 C:\Users\dneno\source\repos\WarningChart\obj\Debug\WarningChart.csproj.GenerateResource.cache
@@ -24,4 +29,3 @@ C:\Users\dneno\source\repos\WarningChart\obj\Debug\WarningChart.csproj.CoreCompi
 C:\Users\dneno\source\repos\WarningChart\obj\Debug\WarningChart.csproj.CopyComplete
 C:\Users\dneno\source\repos\WarningChart\obj\Debug\Archilizer_WarningChart.dll
 C:\Users\dneno\source\repos\WarningChart\obj\Debug\Archilizer_WarningChart.pdb
-C:\Users\dneno\source\repos\WarningChart\obj\Debug\WarningChart.csprojAssemblyReference.cache

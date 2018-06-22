@@ -85,7 +85,7 @@ namespace Archilizer_WarningChart
                 -= new EventHandler<Autodesk.Revit.DB.Events.DocumentChangedEventArgs>(
                     c_app_DocumentChanged);
 
-            if (_presenter != null && _presenter.form.Visible)
+            if (_presenter != null)
             {
                 _presenter.Close();
             }
@@ -99,7 +99,7 @@ namespace Archilizer_WarningChart
         /// <param name="e"></param>
         private void c_app_DocumentChanged(object sender, Autodesk.Revit.DB.Events.DocumentChangedEventArgs e)
         {
-            if (_presenter != null && _presenter.form.Visible)
+            if (_presenter != null)
             {
                 if(e.GetDocument().GetWarnings().Count != _currentCount)
                 {
@@ -125,7 +125,7 @@ namespace Archilizer_WarningChart
                 _hWndRevit = new WindowHandle(h);
             }
 
-            if (_presenter == null || _presenter.form.IsDisposed)
+            if (_presenter == null || _presenter.IsClosed)
             {
                 //new handler
                 RequestHandler handler = new RequestHandler();
@@ -138,13 +138,13 @@ namespace Archilizer_WarningChart
             }
         }
 
-        public void WakeFormUp()
-        {
-            if (_presenter.form != null)
-            {
-                _presenter.form.WakeUp();
-            }
-        }
+        //public void WakeFormUp()
+        //{
+        //    if (_presenter.form != null)
+        //    {
+        //        _presenter.form.WakeUp();
+        //    }
+        //}
     }
     /// <summary>
     /// Retrieve Revit Windows thread in order to pass it to the form as it's owner

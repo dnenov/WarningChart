@@ -76,6 +76,9 @@
     <Compile Include="Utility\Request.cs" />
     <Compile Include="Utility\RequestHandler.cs" />
     <Compile Include="Utility\Utils.cs" />
+    <Compile Include="WarningChartWPF\WarningChartView.xaml.cs">
+      <DependentUpon>WarningChartView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WarningChart\Presenter\WarningChartPresenter.cs" />
     <Compile Include="WarningChart\View\IWarningChart.cs" />
     <Compile Include="WarningChart\View\WarningChartForm.cs">
@@ -100,6 +103,12 @@
     </EmbeddedResource>
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Page Include="WarningChartWPF\WarningChartView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy "$(ProjectDir)*.addin" "$(AppData)\Autodesk\REVIT\Addins\2018"
