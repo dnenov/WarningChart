@@ -67,7 +67,7 @@ namespace Archilizer_WarningChart.WarningChartWPF
                 {
                     Title = w.Name,
                     Values = new ChartValues<double> { w.Number },
-                    PushOut = 15,
+                    //PushOut = 15,
                     DataLabels = true,
                     LabelPoint = labelPoint,
                     Stroke = System.Windows.Media.Brushes.Transparent

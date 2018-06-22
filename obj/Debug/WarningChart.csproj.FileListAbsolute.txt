@@ -1,20 +1,3 @@
-c:\users\didon\onedrive\documents\visual studio 2015\Projects\WarningChart\WarningChart\bin\Debug\Archilizer_WarningChart.dll
-c:\users\didon\onedrive\documents\visual studio 2015\Projects\WarningChart\WarningChart\bin\Debug\Archilizer_WarningChart.pdb
-c:\users\didon\onedrive\documents\visual studio 2015\Projects\WarningChart\WarningChart\obj\Debug\WarningChart.csprojResolveAssemblyReference.cache
-c:\users\didon\onedrive\documents\visual studio 2015\Projects\WarningChart\WarningChart\obj\Debug\Archilizer_WarningChart.g.resources
-c:\users\didon\onedrive\documents\visual studio 2015\Projects\WarningChart\WarningChart\obj\Debug\Archilizer_WarningChart.dll
-c:\users\didon\onedrive\documents\visual studio 2015\Projects\WarningChart\WarningChart\obj\Debug\Archilizer_WarningChart.pdb
-c:\users\didon\onedrive\documents\visual studio 2015\Projects\WarningChart\WarningChart\obj\Debug\Archilizer_WarningChart.WarningChartForm.resources
-c:\users\didon\onedrive\documents\visual studio 2015\Projects\WarningChart\WarningChart\obj\Debug\WarningChart.csproj.GenerateResource.Cache
-c:\users\didon\onedrive\documents\visual studio 2015\Projects\WarningChart\WarningChart\bin\Debug\LiveCharts.dll
-c:\users\didon\onedrive\documents\visual studio 2015\Projects\WarningChart\WarningChart\bin\Debug\LiveCharts.WinForms.dll
-c:\users\didon\onedrive\documents\visual studio 2015\Projects\WarningChart\WarningChart\bin\Debug\LiveCharts.Wpf.dll
-c:\users\didon\onedrive\documents\visual studio 2015\Projects\WarningChart\WarningChart\bin\Debug\LiveCharts.pdb
-c:\users\didon\onedrive\documents\visual studio 2015\Projects\WarningChart\WarningChart\bin\Debug\LiveCharts.xml
-c:\users\didon\onedrive\documents\visual studio 2015\Projects\WarningChart\WarningChart\bin\Debug\LiveCharts.WinForms.pdb
-c:\users\didon\onedrive\documents\visual studio 2015\Projects\WarningChart\WarningChart\bin\Debug\LiveCharts.WinForms.xml
-c:\users\didon\onedrive\documents\visual studio 2015\Projects\WarningChart\WarningChart\bin\Debug\LiveCharts.Wpf.pdb
-c:\users\didon\onedrive\documents\visual studio 2015\Projects\WarningChart\WarningChart\bin\Debug\LiveCharts.Wpf.xml
 C:\Users\dneno\source\repos\WarningChart\bin\Debug\Archilizer_WarningChart.dll
 C:\Users\dneno\source\repos\WarningChart\bin\Debug\Archilizer_WarningChart.pdb
 C:\Users\dneno\source\repos\WarningChart\obj\Debug\WarningChart.csprojAssemblyReference.cache
@@ -29,3 +12,24 @@ C:\Users\dneno\source\repos\WarningChart\obj\Debug\WarningChart.csproj.CoreCompi
 C:\Users\dneno\source\repos\WarningChart\obj\Debug\WarningChart.csproj.CopyComplete
 C:\Users\dneno\source\repos\WarningChart\obj\Debug\Archilizer_WarningChart.dll
 C:\Users\dneno\source\repos\WarningChart\obj\Debug\Archilizer_WarningChart.pdb
+C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\bin\Debug\Archilizer_WarningChart.dll
+C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\bin\Debug\Archilizer_WarningChart.pdb
+C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\bin\Debug\LiveCharts.dll
+C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\bin\Debug\LiveCharts.WinForms.dll
+C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\bin\Debug\LiveCharts.Wpf.dll
+C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\bin\Debug\LiveCharts.pdb
+C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\bin\Debug\LiveCharts.xml
+C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\bin\Debug\LiveCharts.WinForms.pdb
+C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\bin\Debug\LiveCharts.WinForms.xml
+C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\bin\Debug\LiveCharts.Wpf.pdb
+C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\bin\Debug\LiveCharts.Wpf.xml
+C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\obj\Debug\WarningChart.csprojResolveAssemblyReference.cache
+C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\obj\Debug\WarningChartWPF\WarningChartView.g.cs
+C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\obj\Debug\Archilizer_WarningChart_MarkupCompile.cache
+C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\obj\Debug\Archilizer_WarningChart_MarkupCompile.lref
+C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\obj\Debug\WarningChartWPF\WarningChartView.baml
+C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\obj\Debug\Archilizer_WarningChart.g.resources
+C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\obj\Debug\Archilizer_WarningChart.WarningChart.WarningChartForm.resources
+C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\obj\Debug\WarningChart.csproj.GenerateResource.Cache
+C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\obj\Debug\Archilizer_WarningChart.dll
+C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\obj\Debug\Archilizer_WarningChart.pdb
