@@ -73,12 +73,19 @@
     <Compile Include="App.cs" />
     <Compile Include="Command.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Settings.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTimeSharedInput>True</DesignTimeSharedInput>
+      <DependentUpon>Settings.settings</DependentUpon>
+    </Compile>
     <Compile Include="Utility\Request.cs" />
     <Compile Include="Utility\RequestHandler.cs" />
     <Compile Include="Utility\Utils.cs" />
+    <Compile Include="WarningChartWPF\WarningChartPresenter.cs" />
     <Compile Include="WarningChartWPF\WarningChartView.xaml.cs">
       <DependentUpon>WarningChartView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="WarningChartWPF\WarningChartModel.cs" />
     <Compile Include="WarningChart\Presenter\WarningChartPresenter.cs" />
     <Compile Include="WarningChart\View\IWarningChart.cs" />
     <Compile Include="WarningChart\View\WarningChartForm.cs">
@@ -95,7 +102,12 @@
     <Resource Include="Resources\archilizer_default.png" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="app.config" />
     <None Include="packages.config" />
+    <None Include="Properties\Settings.settings">
+      <Generator>SettingsSingleFileGenerator</Generator>
+      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="WarningChart\View\WarningChartForm.resx">

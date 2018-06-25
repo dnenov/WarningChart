@@ -7,7 +7,7 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using System.Reflection;
 using System.Windows.Media.Imaging;
-using Archilizer_WarningChart.WarningChart;
+using Archilizer_WarningChart.WarningChartWPF;
 using System.Diagnostics;
 using System.Windows.Forms;
 #endregion

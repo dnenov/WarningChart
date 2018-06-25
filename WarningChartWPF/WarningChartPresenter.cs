@@ -2,26 +2,25 @@
 using Autodesk.Revit.UI;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using Archilizer_WarningChart.WarningChartWPF;
-using System.Diagnostics;
+using System.Windows.Input;
 
-namespace Archilizer_WarningChart.WarningChart
+namespace Archilizer_WarningChart.WarningChartWPF
 {
     public class WarningChartPresenter
     {
         private Document doc;
         private List<FailureMessage> warnings;
-        private List<WarningChartModel> warningModels;
-        //public WarningChartForm form;
+        private List<WarningChartModel> warningModels;        
         private UIApplication uiapp;
         private ExternalEvent exEvent;
         private RequestHandler handler;
         public WarningChartView form;
         internal bool IsClosed;
-
+        
         public WarningChartPresenter(UIApplication uiapp, ExternalEvent exEvent, RequestHandler handler)
         {
             this.uiapp = uiapp;
@@ -50,7 +49,7 @@ namespace Archilizer_WarningChart.WarningChart
         internal void Close()
         {
             form.Close();
-            
+
             IsClosed = true;
         }
 
@@ -61,6 +60,7 @@ namespace Archilizer_WarningChart.WarningChart
             x.Owner = hWndRevit.Handle;
             //x.Owner = Process.GetCurrentProcess().MainWindowHandle;
             form.warningModels = this.warningModels;
+            form.Closed += FormClosed;
             form.Show();
             /*
             form = new WarningChartForm();
@@ -68,6 +68,47 @@ namespace Archilizer_WarningChart.WarningChart
             form.warningModels = this.warningModels;
             form.Show(hWndRevit);
             */
+        }
+        // Notify that the form is closed
+        private void FormClosed(object sender, EventArgs e)
+        {
+            IsClosed = true;
+        }
+    }
+
+    public class DelegateCommand : ICommand
+    {
+        private readonly Action _action;
+
+        public DelegateCommand(Action action)
+        {
+            _action = action;
+        }
+
+        public void Execute(object parameter)
+        {
+            _action();
+        }
+
+        public bool CanExecute(object parameter)
+        {
+            return true;
+        }
+
+#pragma warning disable 67
+        public event EventHandler CanExecuteChanged { add { } remove { } }
+#pragma warning restore 67
+    }
+
+    public abstract class ObservableObject : INotifyPropertyChanged
+    {
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void RaisePropertyChangedEvent(string propertyName)
+        {
+            var handler = PropertyChanged;
+            if (handler != null)
+                handler(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }
