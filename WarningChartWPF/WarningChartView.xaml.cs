@@ -24,6 +24,8 @@ namespace Archilizer_WarningChart.WarningChartWPF
     public partial class WarningChartView : Window
     {
         private List<WarningChartModel> _warningModels;
+        private const int pushAmount = 8;
+        public event Action<String> SeriesSelectedEvent;
 
         public WarningChartView()
         {
@@ -34,38 +36,6 @@ namespace Archilizer_WarningChart.WarningChartWPF
             DataContext = this;
         }
 
-        private void MyWindow_Loaded(object sender, RoutedEventArgs e)
-        {
-            this.WindowStartupLocation = WindowStartupLocation.Manual;
-            double screenHeight = SystemParameters.FullPrimaryScreenHeight;
-            double screenWidth = SystemParameters.FullPrimaryScreenWidth;
-            this.Top = 160;
-            this.Left = screenWidth - this.Width - 80;
-            try
-            {
-                Rect bounds = Properties.Settings.Default.WindowPosition;
-                if(bounds.Top != 0)
-                {
-                    this.Top = bounds.Top;
-
-                }
-                if(bounds.Left != 0)
-                { 
-                    this.Left = bounds.Left;
-                }
-                // Restore the size only for a manually sized window.
-                if (bounds.Width != 0 && bounds.Height != 0)
-                {
-                    this.SizeToContent = SizeToContent.Manual;
-                    this.Width = bounds.Width;
-                    this.Height = bounds.Height;
-                }
-            }
-            catch
-            {
-                MessageBox.Show("No settings stored.");
-            }
-        }
 
         public List<WarningChartModel> warningModels
         {
@@ -95,14 +65,14 @@ namespace Archilizer_WarningChart.WarningChartWPF
                 string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation);
 
             LiveCharts.SeriesCollection series = new LiveCharts.SeriesCollection();
-
+            var max = _warningModels.OrderByDescending(x => x.Number).First().Name;
             foreach (var w in _warningModels)
             {
                 PieSeries ps = new PieSeries
                 {
                     Title = w.Name,
                     Values = new ChartValues<double> { w.Number },
-                    //PushOut = 15,
+                    PushOut = w.Name == max ? pushAmount : 0,
                     DataLabels = true,
                     LabelPoint = labelPoint,
                     Stroke = System.Windows.Media.Brushes.Transparent
@@ -112,8 +82,8 @@ namespace Archilizer_WarningChart.WarningChartWPF
             pieChart.Series = series;
             pieChart.Update();
         }
-
-        private void Chart_OnDataClick(object sender, ChartPoint chartpoint)
+        // When user click on one of the pies
+        public void Chart_OnDataClick(object sender, ChartPoint chartpoint)
         {
             var chart = (LiveCharts.Wpf.PieChart)chartpoint.ChartView;
 
@@ -122,7 +92,8 @@ namespace Archilizer_WarningChart.WarningChartWPF
                 series.PushOut = 0;
 
             var selectedSeries = (PieSeries)chartpoint.SeriesView;
-            selectedSeries.PushOut = 8;
+            selectedSeries.PushOut = pushAmount;
+            SeriesSelectedEvent(selectedSeries.Title);
         }
         // Drag window by clicking on any control
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -130,17 +101,55 @@ namespace Archilizer_WarningChart.WarningChartWPF
             if (e.ChangedButton == MouseButton.Left)
                 this.DragMove();
         }
-
+        // Close
         private void Button_Click(object sender, RoutedEventArgs e)
         {
             SavePosition();
             Close();
         }
 
+        #region Location
+        // On loaded, move the UI to the up-right corner
+        // or load the previous position and size
+        private void MyWindow_Loaded(object sender, RoutedEventArgs e)
+        {
+            this.WindowStartupLocation = WindowStartupLocation.Manual;
+            double screenHeight = SystemParameters.FullPrimaryScreenHeight;
+            double screenWidth = SystemParameters.FullPrimaryScreenWidth;
+            this.Top = 160;
+            this.Left = screenWidth - this.Width - 80;
+            try
+            {
+                Rect bounds = Properties.Settings.Default.WindowPosition;
+                if (bounds.Top != 0)
+                {
+                    this.Top = bounds.Top;
+
+                }
+                if (bounds.Left != 0)
+                {
+                    this.Left = bounds.Left;
+                }
+                // Restore the size only for a manually sized window.
+                if (bounds.Width != 0 && bounds.Height != 0)
+                {
+                    this.SizeToContent = SizeToContent.Manual;
+                    this.Width = bounds.Width;
+                    this.Height = bounds.Height;
+                }
+            }
+            catch
+            {
+                MessageBox.Show("No settings stored.");
+            }
+        }
+        // Save the location of the UI (per user)
         private void SavePosition()
         {
             Properties.Settings.Default.WindowPosition = this.RestoreBounds;
             Properties.Settings.Default.Save();
         }
+        #endregion
+
     }
 }

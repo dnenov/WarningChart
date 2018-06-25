@@ -37,21 +37,9 @@ namespace Archilizer_WarningChart
         /// </summary>
         None = 0,
         /// <summary>
-        /// "Change parameter value" request
+        /// "Select Warnings" request
         /// </summary>
-        SlideParam = 1,
-        /// <summary>
-        /// "Regenerate Document" request
-        /// </summary>
-        DeleteId = 2,
-        /// <summary>
-        /// "Regenerate Document" request
-        /// </summary>
-        RestoreAll = 3,
-        /// <summary>
-        /// "Change Parameter Name" request
-        /// </summary>
-        ChangeParamName = 4,
+        SelectWarnings = 1,
     }
 
    /// <summary>
@@ -67,6 +55,7 @@ namespace Archilizer_WarningChart
         // Storing the value as a plain Int makes using the interlocking mechanism simpler
         private int m_request = (int)RequestId.None;
         // try tp tramsport information
+        private List<ICollection<ElementId>> ids;
         private List<Tuple<string, double>> value;
         private List<Tuple<string, string>> renameValue;
         private List<string> deleteValue;
@@ -83,7 +72,6 @@ namespace Archilizer_WarningChart
         {
             return (RequestId)Interlocked.Exchange(ref m_request, (int)RequestId.None);
         }
-
         /// <summary>
         ///   Make - The Dialog calls this when the user presses a command button there. 
         /// </summary>
@@ -96,41 +84,14 @@ namespace Archilizer_WarningChart
             Interlocked.Exchange(ref m_request, (int)request);
         }
         // try to trasport the message
-        internal void Value(List<Tuple<string, double>> value)
+        internal void SelectWarnings(List<ICollection<ElementId>> ids)
         {
-            this.value = value;
-        }
-        internal void RenameValue(List<Tuple<string, string>> renameValue)
-        {
-            this.renameValue = renameValue;
-        }
-        internal void DeleteValue(List<string> deleteValue)
-        {
-            this.deleteValue = deleteValue;
-        }
-        internal void AllValues(List<Tuple<string, string, double>> allValues)
-        {
-            this.allValues = allValues;
-        }
+            this.ids = ids; 
+        }        
         // try to transport the message
-        internal List<string> GetDeleteValue()
+        internal List<ICollection<ElementId>> GetIDs()
         {
-            return this.deleteValue;
-        }
-        // try to transport the message
-        internal List<Tuple<string, double>> GetValue()
-        {
-          return this.value;
-        }
-        // try to transport the message
-        internal List<Tuple<string, string>> GetRenameValue()
-        {
-            return this.renameValue;
-        }
-        // try to transport the message
-        internal List<Tuple<string, string, double>> GetAllValues()
-        {
-            return this.allValues;
+            return this.ids;
         }
     }
 }

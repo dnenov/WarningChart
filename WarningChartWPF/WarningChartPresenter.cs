@@ -37,8 +37,8 @@ namespace Archilizer_WarningChart.WarningChartWPF
 
             //WOW!! Get the list of WarningModels
             this.warningModels = warnings.GroupBy(x => x.GetDescriptionText())
-              .Where(g => g.Count() > 1)
-              .Select(x => new WarningChartModel { Name = x.Key, Number = x.Count(), IDs = x.Select(y => y.GetFailingElements()) }).ToList();
+              //.Where(g => g.Count() > 1)
+              .Select(x => new WarningChartModel { Name = x.Key, Number = x.Count(), IDs = x.Select(y => y.GetFailingElements()).ToList() }).ToList();
         }
 
         internal void DocumentChanged()
@@ -61,6 +61,7 @@ namespace Archilizer_WarningChart.WarningChartWPF
             //x.Owner = Process.GetCurrentProcess().MainWindowHandle;
             form.warningModels = this.warningModels;
             form.Closed += FormClosed;
+            form.SeriesSelectedEvent += SeriesSelected;
             form.Show();
             /*
             form = new WarningChartForm();
@@ -72,7 +73,27 @@ namespace Archilizer_WarningChart.WarningChartWPF
         // Notify that the form is closed
         private void FormClosed(object sender, EventArgs e)
         {
+            // Revit handler stuff
+            exEvent.Dispose();
+            exEvent = null;
+            handler = null;
+            // This form is closed
             IsClosed = true;
+            // Remove registered events
+            form.Closed -= FormClosed;
+            form.SeriesSelectedEvent -= SeriesSelected;
+        }
+        private void SeriesSelected(string name)
+        {
+            MakeRequest(RequestId.SelectWarnings, warningModels.First(x => x.Name.Equals(name)).IDs);
+        }      
+
+        private void MakeRequest(RequestId request, List<ICollection<ElementId>> ids)
+        {
+            //MessageBox.Show("You are in the Control.Request event.");
+            handler.Request.SelectWarnings(ids);
+            handler.Request.Make(request);
+            exEvent.Raise();
         }
     }
 
