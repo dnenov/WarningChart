@@ -1,41 +1,127 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using Archilizer_WarningChart.WarningChart;
 using LiveCharts;
+using LiveCharts.Helpers;
 using LiveCharts.Wpf;
 
-namespace Archilizer_WarningChart.WarningChartWPF
+namespace WC.WarningChartWPF
 {
     /// <summary>
     /// Interaction logic for WarningChartView.xaml
     /// </summary>
-    public partial class WarningChartView : Window
+    public partial class WarningChartView : Window, INotifyPropertyChanged
     {
         private List<WarningChartModel> _warningModels;
+        private List<WarningChartModel> _previousWarningModels;
+        private WarningChartModel _changedModel;
         private const int pushAmount = 8;
         public event Action<String> SeriesSelectedEvent;
 
+        public Func<ChartPoint, string> Formatter { get; set; }
+
+        // The series that will be updated (Warnings)
+        private SeriesCollection _series;
+
+        // The public Series to which we will bind the View 
+        public SeriesCollection Series
+        {
+            get { return _series; }
+            set
+            {
+                _series = value;
+                OnPropertyChanged("Series");
+            }
+        }
+
         public WarningChartView()
         {
+
+            var initial = new WarningChartModel() { Name = "Initial", Number = 1, IDs = null };
+            var initialList = new List<WarningChartModel>() { initial };
+            Series = GroupsByNumberOfWarnings(initialList);
+
             InitializeComponent();
 
+            // Places the UI where it needs to go
             this.Loaded += new RoutedEventHandler(MyWindow_Loaded);
             
             DataContext = this;
         }
+        
+        private void LoadSeries()
+        {
+            if(!DocumentChanged)
+            {
+                Series = GroupsByNumberOfWarnings(warningModels);
+            }
+            else
+            {
+                if (_changedModel == null) return;
+                var change = _changedModel.Name;
+                var changedSeries = Series.Cast<PieSeries>().First(x => x.Tag.Equals(change));  //use Series Tag to identify ...?
 
+                foreach (PieSeries series in Series)
+                    series.PushOut = 0;
+
+                var color = ((PieSeries)changedSeries).Fill;
+
+                Series.Remove(changedSeries);
+                
+                Series.Add(ChagnedSeries(_changedModel, color));
+            }
+        }
+
+        private static PieSeries ChagnedSeries(WarningChartModel content, Brush color)
+        {
+            Func<ChartPoint, string> labelPoint = chartPoint =>
+                string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation);
+
+            var series = new PieSeries
+            {
+                Values = new ChartValues<WarningChartPoint>
+                    {
+                        new WarningChartPoint {Number = content.Number, Title = content.Title}
+                    },
+                LabelPoint = labelPoint,
+                PushOut = pushAmount,
+                Title = content.Title,
+                Tag = content.Name,
+                ToolTip = content.Name,
+                Fill = color,
+                Name = content.Name
+            };
+
+            return series;
+        }
+
+        private static SeriesCollection GroupsByNumberOfWarnings(List<WarningChartModel> content)
+        {
+            var max = content.OrderByDescending(x => x.Number).First().Name;
+
+            Func<ChartPoint, string> labelPoint = chartPoint =>
+                string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation);
+
+            var series = content
+                .Select(x => new PieSeries
+                {
+                    Values = new ChartValues<WarningChartPoint>
+                    {
+                        new WarningChartPoint {Number = x.Number, Title = x.Title}
+                    },
+                    LabelPoint = labelPoint,
+                    PushOut = x.Name == max ? pushAmount : 0,
+                    Title = x.Title,
+                    Tag = x.Name,
+                    ToolTip = x.Name,
+                }).AsSeriesCollection();
+
+            return series;
+        }
 
         public List<WarningChartModel> warningModels
         {
@@ -45,13 +131,16 @@ namespace Archilizer_WarningChart.WarningChartWPF
             }
             set
             {
+                _previousWarningModels = _warningModels;
                 _warningModels = value;
+                _changedModel = Utils.FindChange(_previousWarningModels, _warningModels);
 
-                SetUpChart();
+                LoadSeries();
             }
         }
 
         public Func<ChartPoint, string> PointLabel { get; set; }
+        public bool DocumentChanged { get; internal set; }
 
         private void SetUpChart()
         {
@@ -61,7 +150,7 @@ namespace Archilizer_WarningChart.WarningChartWPF
                 Close();
             }
 
-            pieChart.Series.Clear();
+            //pieChart.Series.Clear();
 
             Func<ChartPoint, string> labelPoint = chartPoint =>
                 string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation);
@@ -72,7 +161,7 @@ namespace Archilizer_WarningChart.WarningChartWPF
             {
                 PieSeries ps = new PieSeries
                 {
-                    Title = w.Name,
+                    Title = w.Title,
                     Values = new ChartValues<double> { w.Number },
                     PushOut = w.Name == max ? pushAmount : 0,
                     DataLabels = true,
@@ -81,8 +170,8 @@ namespace Archilizer_WarningChart.WarningChartWPF
                 };
                 series.Add(ps);
             }
-            pieChart.Series = series;
-            pieChart.Update();
+            //pieChart.Series = series;
+            //pieChart.Update();
         }
         // When user click on one of the pies
         public void Chart_OnDataClick(object sender, ChartPoint chartpoint)
@@ -95,7 +184,7 @@ namespace Archilizer_WarningChart.WarningChartWPF
 
             var selectedSeries = (PieSeries)chartpoint.SeriesView;
             selectedSeries.PushOut = pushAmount;
-            SeriesSelectedEvent(selectedSeries.Title);
+            SeriesSelectedEvent((string)((PieSeries)selectedSeries).Tag);
         }
         // Drag window by clicking on any control
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -151,6 +240,17 @@ namespace Archilizer_WarningChart.WarningChartWPF
             Properties.Settings.Default.WindowPosition = this.RestoreBounds;
             Properties.Settings.Default.Save();
         }
+        #endregion
+        
+        #region INotifyPropertyChanged implementation
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected virtual void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+
         #endregion
 
     }

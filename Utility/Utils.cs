@@ -5,8 +5,9 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using WC.WarningChartWPF;
 
-namespace Archilizer_WarningChart
+namespace WC
 {
     public static class Utils
     {
@@ -78,6 +79,18 @@ namespace Archilizer_WarningChart
             if (dut.Equals(DisplayUnitType.DUT_FEET_FRACTIONAL_INCHES)) return false;
             if (dut.Equals(DisplayUnitType.DUT_FRACTIONAL_INCHES)) return false;
             return true;
+        }
+
+        internal static WarningChartModel FindChange(List<WarningChartModel> previousWarningModels, List<WarningChartModel> warningModels)
+        {
+            if(previousWarningModels == null)
+            {
+                return null;
+            }
+            else
+            {
+                return warningModels.Except(previousWarningModels, new WCModelComparer()).First();
+            }
         }
 
         /// <summary>

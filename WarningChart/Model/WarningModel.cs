@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Archilizer_WarningChart.WarningChart
+namespace WC.WarningChart
 {
     public class WarningModel
     {

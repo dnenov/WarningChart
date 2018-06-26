@@ -7,11 +7,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Archilizer_WarningChart.WarningChartWPF
+namespace WC.WarningChartWPF
 {
     public class WarningChartModel : INotifyPropertyChanged
     {
         private string name;
+        private string title;
         private int number;
         private List<ICollection<ElementId>> ids;
 
@@ -27,6 +28,7 @@ namespace Archilizer_WarningChart.WarningChartWPF
                 if(name != value)
                 {
                     name = value;
+                    Title = Utils.Truncate(value, 24);
                     RaisePropertyChanged("Name");
                 }
             }
@@ -61,6 +63,19 @@ namespace Archilizer_WarningChart.WarningChartWPF
                     ids = value;
                     RaisePropertyChanged("IDs");
                 }
+            }
+        }
+
+        public string Title
+        {
+            get
+            {
+                return title;
+            }
+            set
+            {
+                title = value;
+                RaisePropertyChanged("Title");
             }
         }
 

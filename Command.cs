@@ -10,7 +10,7 @@ using Autodesk.Revit.UI.Selection;
 using System.Linq;
 #endregion
 
-namespace Archilizer_WarningChart
+namespace WC
 {
     [Transaction(TransactionMode.Manual)]
     public class CommandWarningChart : IExternalCommand

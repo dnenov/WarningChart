@@ -1,4 +1,4 @@
-﻿namespace Archilizer_WarningChart.WarningChart
+﻿namespace WC.WarningChart
 {
     partial class WarningChartForm
     {

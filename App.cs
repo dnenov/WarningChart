@@ -7,12 +7,12 @@ using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using System.Reflection;
 using System.Windows.Media.Imaging;
-using Archilizer_WarningChart.WarningChartWPF;
+using WC.WarningChartWPF;
 using System.Diagnostics;
 using System.Windows.Forms;
 #endregion
 
-namespace Archilizer_WarningChart
+namespace WC
 {
     class App : IExternalApplication
     {
@@ -43,7 +43,7 @@ namespace Archilizer_WarningChart
             string thisAssemblyPath = Assembly.GetExecutingAssembly().Location;
 
 
-            CreatePushButton(ribbonPanel, String.Format("Warning" + Environment.NewLine + "Chart"), thisAssemblyPath, "Archilizer_WarningChart.CommandWarningChart",
+            CreatePushButton(ribbonPanel, String.Format("Warning" + Environment.NewLine + "Chart"), thisAssemblyPath, "WC.CommandWarningChart",
                 "Displays a Pie Chart representing Project Warnings.", "archilizer_default.png");            
         }
         private static void CreatePushButton(RibbonPanel ribbonPanel, string name, string path, string command, string tooltip, string icon)
@@ -132,9 +132,22 @@ namespace Archilizer_WarningChart
                 //new event
                 ExternalEvent exEvent = ExternalEvent.Create(handler);
 
+                // Set the initial number of warnings so we don't detect document change on the first event
+                _currentCount = uiapp.ActiveUIDocument.Document.GetWarnings().Count;
+
                 _presenter = new WarningChartPresenter(uiapp, exEvent, handler);
-                //pass parent (Revit) thread here
-                _presenter.Show(_hWndRevit);
+
+                try
+                {
+                    //pass parent (Revit) thread here
+                    _presenter.Show(_hWndRevit);
+                }
+                catch(Exception ex)
+                {
+                    TaskDialog.Show("Error", ex.Message);
+                    _presenter.Dispose();
+                    _presenter = null;
+                }
             }
         }
 

@@ -11,7 +11,7 @@ using LiveCharts; //Core of the library
 using LiveCharts.Wpf; //The WPF controls
 using LiveCharts.WinForms; //the WinForm wrappers
 
-namespace Archilizer_WarningChart.WarningChart
+namespace WC.WarningChart
 {
     public partial class WarningChartForm : Form, IWarningChart
     {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 
-namespace Archilizer_WarningChart
+namespace WC
 {
     /// <summary>
     /// A class with methods to execute requests made by the dialog user.
@@ -93,16 +93,20 @@ namespace Archilizer_WarningChart
                     }
                 }
 
-                using (Transaction trans = new Transaction(uidoc.Document))
+                try
                 {
-                    if (trans.Start(text) == TransactionStatus.Started)
+                    using (Transaction trans = new Transaction(uidoc.Document))
                     {
-                        uidoc.Selection.SetElementIds(idsToSelect);
-                        doc.Regenerate();
-                        trans.Commit();
-                        uidoc.RefreshActiveView();
+                        if (trans.Start(text) == TransactionStatus.Started)
+                        {
+                            uidoc.Selection.SetElementIds(idsToSelect);
+                            doc.Regenerate();
+                            trans.Commit();
+                            uidoc.RefreshActiveView();
+                        }
                     }
                 }
+                catch (Exception) { }
             }
         }        
     }

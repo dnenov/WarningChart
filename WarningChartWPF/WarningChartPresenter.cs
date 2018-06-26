@@ -1,5 +1,6 @@
 ﻿using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
+using LiveCharts;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -8,9 +9,9 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace Archilizer_WarningChart.WarningChartWPF
+namespace WC.WarningChartWPF
 {
-    public class WarningChartPresenter
+    public class WarningChartPresenter : IDisposable
     {
         private Document doc;
         private List<FailureMessage> warnings;
@@ -20,7 +21,8 @@ namespace Archilizer_WarningChart.WarningChartWPF
         private RequestHandler handler;
         public WarningChartView form;
         internal bool IsClosed;
-        
+
+
         public WarningChartPresenter(UIApplication uiapp, ExternalEvent exEvent, RequestHandler handler)
         {
             this.uiapp = uiapp;
@@ -46,6 +48,7 @@ namespace Archilizer_WarningChart.WarningChartWPF
             // Fetch the new warnings
             LoadData();
             // Update the Form
+            form.DocumentChanged = true;
             form.warningModels = this.warningModels;
         }
 
@@ -61,6 +64,7 @@ namespace Archilizer_WarningChart.WarningChartWPF
             form = new WarningChartView();
             System.Windows.Interop.WindowInteropHelper x = new System.Windows.Interop.WindowInteropHelper(form);
             x.Owner = hWndRevit.Handle;
+            form.DocumentChanged = false;
             form.warningModels = this.warningModels;
             form.Closed += FormClosed;
             form.SeriesSelectedEvent += SeriesSelected;
@@ -69,16 +73,9 @@ namespace Archilizer_WarningChart.WarningChartWPF
         // Notify that the form is closed
         private void FormClosed(object sender, EventArgs e)
         {
-            // Revit handler stuff
-            exEvent.Dispose();
-            exEvent = null;
-            handler = null;
-            // This form is closed
-            IsClosed = true;
-            // Remove registered events
-            form.Closed -= FormClosed;
-            form.SeriesSelectedEvent -= SeriesSelected;
+            this.Dispose();
         }
+
         private void SeriesSelected(string name)
         {
             MakeRequest(RequestId.SelectWarnings, warningModels.First(x => x.Name.Equals(name)).IDs);
@@ -89,6 +86,19 @@ namespace Archilizer_WarningChart.WarningChartWPF
             handler.Request.SelectWarnings(ids);
             handler.Request.Make(request);
             exEvent.Raise();
+        }
+
+        public void Dispose()
+        {
+            // Revit handler stuff
+            exEvent.Dispose();
+            exEvent = null;
+            handler = null;
+            // This form is closed
+            IsClosed = true;
+            // Remove registered events
+            form.Closed -= FormClosed;
+            form.SeriesSelectedEvent -= SeriesSelected;
         }
     }
 

@@ -24,7 +24,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading;
 
-namespace Archilizer_WarningChart
+namespace WC
 {
    /// <summary>
    ///   A list of requests the dialog has available
@@ -56,10 +56,6 @@ namespace Archilizer_WarningChart
         private int m_request = (int)RequestId.None;
         // try tp tramsport information
         private List<ICollection<ElementId>> ids;
-        private List<Tuple<string, double>> value;
-        private List<Tuple<string, string>> renameValue;
-        private List<string> deleteValue;
-        private List<Tuple<string, string, double>> allValues;
         /// <summary>
         ///   Take - The Idling handler calls this to obtain the latest request. 
         /// </summary>
