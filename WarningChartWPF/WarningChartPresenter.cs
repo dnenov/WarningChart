@@ -43,7 +43,10 @@ namespace Archilizer_WarningChart.WarningChartWPF
 
         internal void DocumentChanged()
         {
-            throw new NotImplementedException();
+            // Fetch the new warnings
+            LoadData();
+            // Update the Form
+            form.warningModels = this.warningModels;
         }
 
         internal void Close()
@@ -58,17 +61,10 @@ namespace Archilizer_WarningChart.WarningChartWPF
             form = new WarningChartView();
             System.Windows.Interop.WindowInteropHelper x = new System.Windows.Interop.WindowInteropHelper(form);
             x.Owner = hWndRevit.Handle;
-            //x.Owner = Process.GetCurrentProcess().MainWindowHandle;
             form.warningModels = this.warningModels;
             form.Closed += FormClosed;
             form.SeriesSelectedEvent += SeriesSelected;
             form.Show();
-            /*
-            form = new WarningChartForm();
-
-            form.warningModels = this.warningModels;
-            form.Show(hWndRevit);
-            */
         }
         // Notify that the form is closed
         private void FormClosed(object sender, EventArgs e)
@@ -87,7 +83,6 @@ namespace Archilizer_WarningChart.WarningChartWPF
         {
             MakeRequest(RequestId.SelectWarnings, warningModels.First(x => x.Name.Equals(name)).IDs);
         }      
-
         private void MakeRequest(RequestId request, List<ICollection<ElementId>> ids)
         {
             //MessageBox.Show("You are in the Control.Request event.");

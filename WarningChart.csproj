@@ -86,7 +86,6 @@
       <DependentUpon>WarningChartView.xaml</DependentUpon>
     </Compile>
     <Compile Include="WarningChartWPF\WarningChartModel.cs" />
-    <Compile Include="WarningChart\Presenter\WarningChartWINFormsPresenter.cs" />
     <Compile Include="WarningChart\View\IWarningChart.cs" />
     <Compile Include="WarningChart\View\WarningChartForm.cs">
       <SubType>Form</SubType>

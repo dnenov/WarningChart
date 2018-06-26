@@ -32,7 +32,7 @@ namespace Archilizer_WarningChart.WarningChartWPF
             InitializeComponent();
 
             this.Loaded += new RoutedEventHandler(MyWindow_Loaded);
-
+            
             DataContext = this;
         }
 
@@ -60,6 +60,8 @@ namespace Archilizer_WarningChart.WarningChartWPF
                 MessageBox.Show("No warnings here.");
                 Close();
             }
+
+            pieChart.Series.Clear();
 
             Func<ChartPoint, string> labelPoint = chartPoint =>
                 string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation);
