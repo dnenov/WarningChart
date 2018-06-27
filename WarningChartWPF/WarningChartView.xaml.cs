@@ -85,7 +85,7 @@ namespace WC.WarningChartWPF
             {
                 Values = new ChartValues<WarningChartPoint>
                     {
-                        new WarningChartPoint {Number = content.Number, Title = content.Title}
+                        new WarningChartPoint {Number = content.Number, Title = content.Title, Name = content.Name }
                     },
                 LabelPoint = labelPoint,
                 PushOut = pushAmount,
@@ -111,7 +111,7 @@ namespace WC.WarningChartWPF
                 {
                     Values = new ChartValues<WarningChartPoint>
                     {
-                        new WarningChartPoint {Number = x.Number, Title = x.Title}
+                        new WarningChartPoint {Number = x.Number, Title = x.Title, Name = x.Name}
                     },
                     LabelPoint = labelPoint,
                     PushOut = x.Name == max ? pushAmount : 0,

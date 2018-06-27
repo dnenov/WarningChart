@@ -83,8 +83,14 @@
     <Compile Include="Utility\RequestHandler.cs" />
     <Compile Include="Utility\Utils.cs" />
     <Compile Include="Utility\WCModelComparer.cs" />
+    <Compile Include="WarningChartWPF\WarningChartCustomLegend.xaml.cs">
+      <DependentUpon>WarningChartCustomLegend.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WarningChartWPF\WarningChartPoint.cs" />
     <Compile Include="WarningChartWPF\WarningChartPresenter.cs" />
+    <Compile Include="WarningChartWPF\WarningChartToolTip.xaml.cs">
+      <DependentUpon>WarningChartToolTip.xaml</DependentUpon>
+    </Compile>
     <Compile Include="WarningChartWPF\WarningChartView.xaml.cs">
       <DependentUpon>WarningChartView.xaml</DependentUpon>
     </Compile>
@@ -124,6 +130,14 @@
     <Folder Include="WPF\Model\" />
   </ItemGroup>
   <ItemGroup>
+    <Page Include="WarningChartWPF\WarningChartCustomLegend.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="WarningChartWPF\WarningChartToolTip.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="WarningChartWPF\WarningChartView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>

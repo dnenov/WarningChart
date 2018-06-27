@@ -38,3 +38,7 @@ C:\Users\dneno\source\repos\WarningChart\obj\Debug\WarningChart.csproj.CopyCompl
 C:\Users\dneno\source\repos\WarningChart\obj\Debug\Archilizer_WarningChart.dll
 C:\Users\dneno\source\repos\WarningChart\obj\Debug\Archilizer_WarningChart.pdb
 C:\Users\dneno\source\repos\WarningChart\obj\Debug\WarningChart.csprojAssemblyReference.cache
+C:\Users\dneno\source\repos\WarningChart\obj\Debug\WarningChartWPF\WarningChartCustomLegend.g.cs
+C:\Users\dneno\source\repos\WarningChart\obj\Debug\WarningChartWPF\WarningChartToolTip.g.cs
+C:\Users\dneno\source\repos\WarningChart\obj\Debug\WarningChartWPF\WarningChartCustomLegend.baml
+C:\Users\dneno\source\repos\WarningChart\obj\Debug\WarningChartWPF\WarningChartToolTip.baml

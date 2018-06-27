@@ -52,5 +52,10 @@ namespace WC.WarningChartWPF
         /// The title.
         /// </value>
         public string Title { get; set; }
+
+        /// <summary>
+        /// Gets or sets the full name of the warning
+        /// </summary>
+        public string Name { get; set; }
     }
 }

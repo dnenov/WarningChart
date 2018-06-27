@@ -42,8 +42,8 @@
         </Grid.RowDefinitions>
         <lvc:PieChart Series="{Binding Series}" Grid.ColumnSpan="2" Grid.Row="1"  x:Name="pieChart" LegendLocation="Right" DataClick="Chart_OnDataClick" Hoverable="False" Margin="10" AnimationsSpeed="0:0:0.1">
             <lvc:PieChart.DataTooltip>
-                <lvc:DefaultTooltip BulletSize="12" Background="Gray" SelectionMode="OnlySender"/>
-            </lvc:PieChart.DataTooltip>            
+                <local:WarningChartToolTip SelectionMode="OnlySender"/>
+            </lvc:PieChart.DataTooltip>
         </lvc:PieChart>
         <Button Grid.Column="1" Grid.Row="2"  Width="78" Height="23" Click="Button_Click">Close</Button>
     </Grid>
