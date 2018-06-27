@@ -57,7 +57,24 @@ namespace WC.WarningChartWPF
         private int number;
         private List<ICollection<Autodesk.Revit.DB.ElementId>> ids;
         private Brush color;
+        private string id;
 
+        // The ID of the WarningModel
+        public string ID
+        {
+            get
+            {
+                return id;
+            }
+            set
+            {
+                if (id != value)
+                {
+                    id = value;
+                    RaisePropertyChanged("ID");
+                }
+            }
+        }
         //Name of the Warning
         public string Name
         {
@@ -71,7 +88,7 @@ namespace WC.WarningChartWPF
                 {
                     name = value;
                     Title = Utils.Truncate(value, 24);
-                    Color = BrushSwatch.Get();
+                    //Color = BrushSwatch.Get();
                     RaisePropertyChanged("Name");
                 }
             }

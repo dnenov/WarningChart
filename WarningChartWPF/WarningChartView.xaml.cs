@@ -18,7 +18,6 @@ namespace WC.WarningChartWPF
     {
         private List<WarningChartModel> _warningModels;
         private List<WarningChartModel> _previousWarningModels;
-        private WarningChartModel _changedModel;
         private const int pushAmount = 8;
         public event Action<String> SeriesSelectedEvent;
 
@@ -29,6 +28,7 @@ namespace WC.WarningChartWPF
 
         // The series that will be updated (Warnings)
         private SeriesCollection _series;
+        private Tuple<List<WarningChartModel>, List<WarningChartModel>, List<WarningChartModel>> _changes;
 
         // The public Series to which we will bind the View 
         public SeriesCollection Series
@@ -64,26 +64,38 @@ namespace WC.WarningChartWPF
             }
             else
             {
-                if (_changedModel == null) return;
-                else if(_changedModel.IDs.Count == 0)
+                // Reset the popouts
+                foreach (PieSeries series in Series) series.PushOut = 0;
+                // Item1 - New
+                // Item2 - Deleted
+                // Item3 - Changed
+                if (_changes == null) return;
+                if(_changes.Item1.Count > 0)
                 {
-                    var change = _changedModel.Name;
-                    var changedSeries = Series.Cast<PieSeries>().First(x => x.Tag.Equals(change));  //use Series Tag to identify ...?
-
-                    Series.Remove(changedSeries);
-                } else
+                    Series.AddRange(GroupsByNumberOfWarnings(_changes.Item1));
+                }
+                if (_changes.Item2.Count > 0)
                 {
-                    var change = _changedModel.Name;
-                    var changedSeries = Series.Cast<PieSeries>().First(x => x.Tag.Equals(change));  //use Series Tag to identify ...?
+                    foreach (var deleted in _changes.Item2)
+                    {
+                        var name = deleted.Name;
+                        var deletedSeries = Series.Cast<PieSeries>().First(x => x.Tag.Equals(name));  //use Series Tag to identify ...?
 
-                    foreach (PieSeries series in Series)
-                        series.PushOut = 0;
+                        Series.Remove(deletedSeries);
+                    }
+                }
+                if(_changes.Item3.Count > 0)
+                {
+                    foreach (var changed in _changes.Item3)
+                    {
+                        var name = changed.Name;
+                        var changedSeries = Series.Cast<PieSeries>().First(x => x.Tag.Equals(name));  //use Series Tag to identify ...?
 
-                    var color = ((PieSeries)changedSeries).Fill;
-
-                    Series.Remove(changedSeries);
-
-                    Series.Add(ChagnedSeries(_changedModel, color));
+                        var color = ((PieSeries)changedSeries).Fill;
+                        
+                        Series.Remove(changedSeries);
+                        Series.Add(ChagnedSeries(changed, color));
+                    }
                 }
             }
         }
@@ -120,8 +132,8 @@ namespace WC.WarningChartWPF
                     LabelPoint = labelPoint,
                     PushOut = x.Name == max ? pushAmount : 0,
                     Tag = x.Name,
-                    //Fill = x.Color,
-                    ToolTip = x.Name,
+
+                    //ToolTip = x.Name,
                 }).AsSeriesCollection();
 
             return series;
@@ -137,7 +149,7 @@ namespace WC.WarningChartWPF
             {
                 _previousWarningModels = _warningModels;
                 _warningModels = value;
-                _changedModel = Utils.FindChange(_previousWarningModels, _warningModels);
+                _changes = Utils.FindChange(_previousWarningModels, _warningModels);
 
                 LoadSeries();
             }

@@ -81,7 +81,7 @@ namespace WC
             return true;
         }
 
-        internal static WarningChartModel FindChange(List<WarningChartModel> previousWarningModels, List<WarningChartModel> warningModels)
+        internal static Tuple<List<WarningChartModel>, List<WarningChartModel>, List<WarningChartModel>> FindChange(List<WarningChartModel> previousWarningModels, List<WarningChartModel> warningModels)
         {
             if(previousWarningModels == null)
             {
@@ -89,6 +89,18 @@ namespace WC
             }
             else
             {
+                // new warnings
+                var newWarning = warningModels.Where(x => !previousWarningModels.Any(y => y.Name == x.Name)).ToList();
+
+                // no longer exist warnings
+                var deletedWarnings = previousWarningModels.Where(x => !warningModels.Any(y => y.Name == x.Name)).ToList();
+
+                // changed warnings (few warnings have been added or removed)
+                var changedWarnings = warningModels.Where(x => !previousWarningModels.Any(y => y.ID == x.ID)).Except(newWarning).ToList();
+
+                return (Tuple.Create(newWarning, deletedWarnings, changedWarnings));
+
+                /*
                 WarningChartModel change = null;
                 List<WarningChartModel> popList = new List<WarningChartModel>(previousWarningModels);
                 foreach (var x1 in previousWarningModels)
@@ -114,7 +126,7 @@ namespace WC
                     popList[0].IDs.Clear();
                     return popList[0];
                 }
-                /*
+                
                 var withoutFirst = previousWarningModels.Except(warningModels, new WCModelComparer());
                 if(!withoutFirst.Any())
                 {

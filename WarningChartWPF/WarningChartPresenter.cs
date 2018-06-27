@@ -40,7 +40,7 @@ namespace WC.WarningChartWPF
             //WOW!! Get the list of WarningModels
             this.warningModels = warnings.GroupBy(x => x.GetDescriptionText())
               //.Where(g => g.Count() > 1)
-              .Select(x => new WarningChartModel { Name = x.Key, Number = x.Count(), IDs = x.Select(y => y.GetFailingElements()).ToList() }).ToList();
+              .Select(x => new WarningChartModel { Name = x.Key, Number = x.Count(), ID = x.Key + x.Count().ToString(), IDs = x.Select(y => y.GetFailingElements()).ToList() }).ToList();
         }
 
         internal void DocumentChanged()
