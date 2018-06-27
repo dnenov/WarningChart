@@ -18,6 +18,13 @@
         <SolidColorBrush Opacity="0" Color="White"/>
     </Window.Background>
     <Window.Resources>
+        <lvc:ColorsCollection x:Key="ColorsCollection">
+            <Color>#FFFFFFFF</Color>
+            <Color>#FFFAFAFA</Color>
+            <Color>#FFF5F5F5</Color>
+            <Color>#FFF0F0F0</Color>
+            <Color>#FFEBEBEB</Color>
+        </lvc:ColorsCollection>
         <Style TargetType="lvc:PieSeries">
             <Setter Property="StrokeThickness" Value="0"></Setter>
             <Setter Property="DataLabels" Value="True"></Setter>

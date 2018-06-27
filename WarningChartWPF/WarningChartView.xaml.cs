@@ -23,6 +23,9 @@ namespace WC.WarningChartWPF
         public event Action<String> SeriesSelectedEvent;
 
         public Func<ChartPoint, string> Formatter { get; set; }
+        
+        public static Func<ChartPoint, string> labelPoint = chartPoint =>
+            string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation);
 
         // The series that will be updated (Warnings)
         private SeriesCollection _series;
@@ -62,25 +65,31 @@ namespace WC.WarningChartWPF
             else
             {
                 if (_changedModel == null) return;
-                var change = _changedModel.Name;
-                var changedSeries = Series.Cast<PieSeries>().First(x => x.Tag.Equals(change));  //use Series Tag to identify ...?
+                else if(_changedModel.IDs.Count == 0)
+                {
+                    var change = _changedModel.Name;
+                    var changedSeries = Series.Cast<PieSeries>().First(x => x.Tag.Equals(change));  //use Series Tag to identify ...?
 
-                foreach (PieSeries series in Series)
-                    series.PushOut = 0;
+                    Series.Remove(changedSeries);
+                } else
+                {
+                    var change = _changedModel.Name;
+                    var changedSeries = Series.Cast<PieSeries>().First(x => x.Tag.Equals(change));  //use Series Tag to identify ...?
 
-                var color = ((PieSeries)changedSeries).Fill;
+                    foreach (PieSeries series in Series)
+                        series.PushOut = 0;
 
-                Series.Remove(changedSeries);
-                
-                Series.Add(ChagnedSeries(_changedModel, color));
+                    var color = ((PieSeries)changedSeries).Fill;
+
+                    Series.Remove(changedSeries);
+
+                    Series.Add(ChagnedSeries(_changedModel, color));
+                }
             }
         }
 
         private static PieSeries ChagnedSeries(WarningChartModel content, Brush color)
         {
-            Func<ChartPoint, string> labelPoint = chartPoint =>
-                string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation);
-
             var series = new PieSeries
             {
                 Values = new ChartValues<WarningChartPoint>
@@ -89,11 +98,9 @@ namespace WC.WarningChartWPF
                     },
                 LabelPoint = labelPoint,
                 PushOut = pushAmount,
-                Title = content.Title,
                 Tag = content.Name,
-                ToolTip = content.Name,
+                //ToolTip = content.Name,
                 Fill = color,
-                Name = content.Name
             };
 
             return series;
@@ -102,9 +109,6 @@ namespace WC.WarningChartWPF
         private static SeriesCollection GroupsByNumberOfWarnings(List<WarningChartModel> content)
         {
             var max = content.OrderByDescending(x => x.Number).First().Name;
-
-            Func<ChartPoint, string> labelPoint = chartPoint =>
-                string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation);
 
             var series = content
                 .Select(x => new PieSeries
@@ -115,8 +119,8 @@ namespace WC.WarningChartWPF
                     },
                     LabelPoint = labelPoint,
                     PushOut = x.Name == max ? pushAmount : 0,
-                    Title = x.Title,
                     Tag = x.Name,
+                    //Fill = x.Color,
                     ToolTip = x.Name,
                 }).AsSeriesCollection();
 
