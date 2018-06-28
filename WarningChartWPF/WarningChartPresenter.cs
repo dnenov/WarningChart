@@ -8,25 +8,55 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
+using Autodesk.Revit.ApplicationServices;
 
 namespace WC.WarningChartWPF
 {
     public class WarningChartPresenter : IDisposable
     {
+        private UIApplication uiapp;
         private Document doc;
         private List<FailureMessage> warnings;
         private List<WarningChartModel> warningModels;        
-        private UIApplication uiapp;
         private ExternalEvent exEvent;
         private RequestHandler handler;
         public WarningChartView form;
         internal bool IsClosed;
 
+        public UIApplication _Application
+        {
+            get
+            {
+                return uiapp;
+            }
+            set
+            {
+                if(uiapp != value)
+                {
+                    uiapp = value;
+                    _Document = uiapp.ActiveUIDocument.Document;
+                }
+            }
+        }
+
+        public Document _Document
+        {
+            get
+            {
+                return doc;
+            }
+            set
+            {
+                if (doc != value)
+                {
+                    doc = value;
+                }
+            }
+        }
 
         public WarningChartPresenter(UIApplication uiapp, ExternalEvent exEvent, RequestHandler handler)
         {
-            this.uiapp = uiapp;
-            this.doc = uiapp.ActiveUIDocument.Document;
+            this._Application = uiapp;
             this.exEvent = exEvent;
             this.handler = handler;
             this.LoadData();
@@ -49,6 +79,15 @@ namespace WC.WarningChartWPF
             LoadData();
             // Update the Form
             form.DocumentChanged = true;
+            form.warningModels = this.warningModels;
+        }
+
+        internal void DocumentSwitched()
+        {
+            // Fetch the new warnings
+            LoadData();
+            // Update the Form
+            form.DocumentSwitched = true;
             form.warningModels = this.warningModels;
         }
 
@@ -100,6 +139,7 @@ namespace WC.WarningChartWPF
             form.Closed -= FormClosed;
             form.SeriesSelectedEvent -= SeriesSelected;
         }
+
     }
 
     public class DelegateCommand : ICommand

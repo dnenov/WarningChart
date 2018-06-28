@@ -7,6 +7,7 @@
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d" 
         d:DesignHeight="400" d:DesignWidth="650"
+        MinWidth="450" MinHeight="300"
         SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterOwner"
         WindowStyle="None"
@@ -21,14 +22,14 @@
         <lvc:ColorsCollection x:Key="ColorsCollection">
             <Color>#FFCB21</Color>
             <Color>#8D99AE</Color>
-            <Color>#EDF2F4</Color>
+            <!--<Color>#EDF2F4</Color>
             <Color>#EF233C</Color>
             <Color>#9E031E</Color>
             <Color>#FFDECA</Color>
             <Color>#9891BA</Color>
             <Color>#EFE2FF</Color>
             <Color>#F93E18</Color>
-            <Color>#B21A00</Color>
+            <Color>#B21A00</Color>-->
         </lvc:ColorsCollection>
         <Style TargetType="lvc:PieChart">
             <Setter Property="SeriesColors" Value="{StaticResource ColorsCollection}"/>
@@ -40,26 +41,124 @@
             <Setter Property="Foreground" Value="#303030"></Setter>
             <Setter Property="FontSize" Value="12"></Setter>
             <Setter Property="Stroke" Value="Transparent"></Setter>
-        </Style>
-        <Style TargetType="DataGridCell">
-            <Setter Property="TextBlock.TextAlignment" Value="Center" />
+            <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
         </Style>
     </Window.Resources>
-    <Grid>
+    <Grid x:Name="mainGrid">
+        <Grid.Resources>
+            <local:ReverseConverter x:Key="ReverseConverter"></local:ReverseConverter>
+        </Grid.Resources>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="4*"/>
-            <ColumnDefinition Width="*" />
+            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
-            <RowDefinition Height="20px"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
-            <RowDefinition Height="40px"/>
         </Grid.RowDefinitions>
-        <lvc:PieChart Series="{Binding Series}" Grid.ColumnSpan="2" Grid.Row="1" x:Name="pieChart" TextBlock.TextAlignment="Center" LegendLocation="Right" DataClick="Chart_OnDataClick" Hoverable="False" Margin="10" AnimationsSpeed="0:0:0.1">
+        <lvc:PieChart Series="{Binding Series}" Grid.Row="1" x:Name="pieChart" TextBlock.TextAlignment="Center" LegendLocation="None" DataClick="Chart_OnDataClick" Hoverable="False" Margin="10" ChartLegend="{x:Null}" AnimationsSpeed="0:0:0.1">
             <lvc:PieChart.DataTooltip>
                 <local:WarningChartToolTip SelectionMode="OnlySender"/>
             </lvc:PieChart.DataTooltip>
         </lvc:PieChart>
-        <Button Grid.Column="1" Grid.Row="2"  Width="78" Height="23" Click="Button_Click">Close</Button>
+
+        <TextBlock Grid.Row="1" Grid.Column="1" FontSize="40" Foreground="#404040" Margin="20, 10">Energy Consumption</TextBlock>
+        <Canvas Grid.Row="1" Grid.Column="1" Name="Canvas" Margin="-4, 0, 0, 20">
+            <ListBox Name="ListBox" ItemsSource="{Binding Series, Converter={StaticResource ReverseConverter}}" Panel.ZIndex="1" Canvas.Left="60" Canvas.Top="20" BorderThickness="0" Background="Transparent">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <TextBlock Text="{Binding (lvc:PieSeries.Title)}" FontSize="22"/>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+                <ListBox.ItemContainerStyle>
+                    <Style TargetType="{x:Type ListBoxItem}">
+                        <Setter Property="Background" Value="Transparent" />
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="{x:Type ListBoxItem}">
+                                    <ContentPresenter />
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                    </Style>
+                </ListBox.ItemContainerStyle>
+            </ListBox>
+        </Canvas>
+        <!--<local:WarningChartCustomLegend DataContext="{Binding Series}"  Margin="10" x:Name="pieLegend" Grid.Row="1" Grid.Column="1"/>-->
+
+        <!--<ItemsControl ItemsSource="{Binding Series}" Grid.IsSharedSizeScope="True">
+        <ItemsControl.ItemTemplate>
+            <DataTemplate DataType="{x:Type lvc:SeriesViewModel}">
+                <Grid Margin="2">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="Auto"/>
+                        <ColumnDefinition Width="Auto" SharedSizeGroup="Title"/>
+                    </Grid.ColumnDefinitions>
+                    <Rectangle Grid.Column="0" Stroke="{Binding Stroke}" Fill="{Binding Fill}" 
+                               Width="15" Height="15"/>
+                    <TextBlock Grid.Column="1" Margin="4 0" Text="{Binding Title}" Foreground="White" VerticalAlignment="Center" />
+                </Grid>
+            </DataTemplate>
+        </ItemsControl.ItemTemplate>
+    </ItemsControl>-->
+
+
+        <DockPanel Grid.Column="2" Margin="0 0 10 0">
+            <Button Margin="2" DockPanel.Dock="Right" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderThickness="0" ToolTip="Close" Click="CloseButton_Click">
+                <Viewbox Width="14" Height="14">
+                    <Canvas Width="24" Height="24">
+                        <Path Data="M19,6.41L17.59,5L12,10.59L6.41,5L5,6.41L10.59,12L5,17.59L6.41,19L12,13.41L17.59,19L19,17.59L13.41,12L19,6.41Z" Fill="Black" />
+                    </Canvas>
+                </Viewbox>
+            </Button>
+            <ToggleButton Margin="2" IsThreeState="True" DockPanel.Dock="Right" Background="Transparent" Foreground="Transparent" BorderThickness="0" Click="CollapseButton_Click" IsChecked="{Binding IsCheckedState}">
+                <ToggleButton.Style>
+                    <Style TargetType="{x:Type ToggleButton}">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="ToggleButton">
+                                    <Border BorderThickness="0" BorderBrush="Transparent" Background="Transparent">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsChecked" Value="True">
+                                <Setter Property="ToolTip" Value="Collapse Legend" />
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="False">
+                                <Setter Property="ToolTip" Value="Collapse Chart" />
+                            </Trigger>
+                            <Trigger Property="IsChecked" Value="{x:Null}">
+                                <Setter Property="ToolTip" Value="Expand Chart" />
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </ToggleButton.Style>
+                <Viewbox Width="16" Height="16">
+                    <Canvas Width="24" Height="24">
+                        <Path Fill="Black">
+                            <Path.Style>
+                                <Style TargetType="{x:Type Path}">
+                                    <Style.Triggers>
+                                        <DataTrigger Binding="{Binding IsChecked,RelativeSource={RelativeSource AncestorType=ToggleButton}}" Value="True">
+                                            <Setter Property="Data" Value="M10,17L15,12L10,7V17Z" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsChecked,RelativeSource={RelativeSource AncestorType=ToggleButton}}"  Value="{x:Null}">
+                                            <Setter Property="Data" Value="M7,10L12,15L17,10H7Z" />
+                                        </DataTrigger>
+                                        <DataTrigger Binding="{Binding IsChecked,RelativeSource={RelativeSource AncestorType=ToggleButton}}"  Value="False">
+                                            <Setter Property="Data" Value="M14,7L9,12L14,17V7Z" />
+                                        </DataTrigger>
+                                    </Style.Triggers>
+                                </Style>
+                            </Path.Style>
+                        </Path>
+                    </Canvas>
+                </Viewbox>
+            </ToggleButton>
+            <Border></Border>
+        </DockPanel>
     </Grid>
 </Window>

@@ -8,9 +8,26 @@ using System.Windows.Media;
 using LiveCharts;
 using LiveCharts.Helpers;
 using LiveCharts.Wpf;
+using System.Windows.Controls.Primitives;
+using System.Collections.ObjectModel;
+using System.Windows.Data;
+using System.Globalization;
 
 namespace WC.WarningChartWPF
 {
+
+    public class ReverseConverter : IValueConverter
+    {
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            return ((SeriesCollection)value).Reverse();
+        }
+
+        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
     /// <summary>
     /// Interaction logic for WarningChartView.xaml
     /// </summary>
@@ -20,16 +37,31 @@ namespace WC.WarningChartWPF
         private List<WarningChartModel> _previousWarningModels;
         private const int pushAmount = 8;
         public event Action<String> SeriesSelectedEvent;
-
-        public Func<ChartPoint, string> Formatter { get; set; }
-
+        public bool? IsCheckedState { get; set; }
+                
         public static Func<ChartPoint, string> labelPoint = chartPoint =>
-            string.Format("{0} {1} ({2:P})", chartPoint.Y, Environment.NewLine, chartPoint.Participation);
+        chartPoint.Participation > 0.05 ?
+        string.Format("{0} {1} ({2:P})", chartPoint.Y, Environment.NewLine, chartPoint.Participation)
+        : "";
 
         // The series that will be updated (Warnings)
         private SeriesCollection _series;
         private Tuple<List<WarningChartModel>, List<WarningChartModel>, List<WarningChartModel>> _changes;
-       
+
+        private ObservableCollection<string> _test;
+
+        public ObservableCollection<string> Test
+        {
+            get { return _test; }
+            set
+            {
+                if (value != _test)
+                {
+                    _test = value;
+                    OnPropertyChanged("Name2");
+                }
+            }
+        }
 
         // The public Series to which we will bind the View 
         public SeriesCollection Series
@@ -44,12 +76,15 @@ namespace WC.WarningChartWPF
 
         public WarningChartView()
         {
-
             var initial = new WarningChartModel() { Name = "Initial", Number = 1, IDs = null };
             var initialList = new List<WarningChartModel>() { initial };
             Series = GroupsByNumberOfWarnings(initialList);
 
+            Test = new ObservableCollection<string>(new string[] { "element1", "element2", "element3" });
+
             InitializeComponent();
+
+            IsCheckedState = true;
 
             // Places the UI where it needs to go
             this.Loaded += new RoutedEventHandler(MyWindow_Loaded);
@@ -59,12 +94,23 @@ namespace WC.WarningChartWPF
         
         private void LoadSeries()
         {
-            if(!DocumentChanged)
+            if(!DocumentChanged && !DocumentSwitched)
             {
+                // Only at the start
                 Series = GroupsByNumberOfWarnings(warningModels);
             }
-            else
+            else if(DocumentSwitched)
             {
+                // When a different document is active
+                DocumentSwitched = false;
+                // Reset the popouts
+                foreach (PieSeries series in Series) series.PushOut = 0;
+                Series = GroupsByNumberOfWarnings(warningModels);
+            }
+            else if(DocumentChanged)
+            {
+                // When some of the warnings have changed
+                DocumentChanged = false;
                 // Reset the popouts
                 foreach (PieSeries series in Series) series.PushOut = 0;
                 // Item1 - New
@@ -112,11 +158,9 @@ namespace WC.WarningChartWPF
                 LabelPoint = labelPoint,
                 PushOut = pushAmount,
                 Tag = content.Name,
-                //ToolTip = content.Name,
                 Fill = color,
                 Title = content.Title
             };
-
             return series;
         }
 
@@ -135,7 +179,6 @@ namespace WC.WarningChartWPF
                     PushOut = x.Name == max ? pushAmount : 0,
                     Tag = x.Name,
                     Title = x.Title
-                    //ToolTip = x.Name,
                 }).AsSeriesCollection();
 
             return series;
@@ -158,7 +201,8 @@ namespace WC.WarningChartWPF
         }
         
         public bool DocumentChanged { get; internal set; }
-        
+        public bool DocumentSwitched { get; internal set; }
+
         // When user click on one of the pies
         public void Chart_OnDataClick(object sender, ChartPoint chartpoint)
         {
@@ -179,10 +223,32 @@ namespace WC.WarningChartWPF
                 this.DragMove();
         }
         // Close
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void CloseButton_Click(object sender, RoutedEventArgs e)
         {
             SavePosition();
             Close();
+        }
+        // Collapse
+        private void CollapseButton_Click(object sender, RoutedEventArgs e)
+        {
+            // cycle through the three states
+            if(IsCheckedState == true)
+            {
+                // 1: show everything
+                IsCheckedState = null;
+                pieChart.Visibility = Visibility.Visible;
+            }
+            else if(IsCheckedState == null)
+            {
+                // 2: hide legend
+                IsCheckedState = false;
+            }
+            else if(IsCheckedState == false)
+            {
+                // 3: hide chart
+                IsCheckedState = true;
+                pieChart.Visibility = Visibility.Collapsed;
+            }
         }
 
         #region Location
@@ -238,6 +304,6 @@ namespace WC.WarningChartWPF
         }
 
         #endregion
-
+        
     }
 }

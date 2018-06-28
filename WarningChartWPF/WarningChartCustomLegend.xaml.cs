@@ -13,7 +13,7 @@ namespace WC.WarningChartWPF
         {
             InitializeComponent();
 
-            DataContext = this;
+            //DataContext = this;
         }
 
         public List<SeriesViewModel> Series

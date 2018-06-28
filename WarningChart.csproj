@@ -95,18 +95,6 @@
       <DependentUpon>WarningChartView.xaml</DependentUpon>
     </Compile>
     <Compile Include="WarningChartWPF\WarningChartModel.cs" />
-    <Compile Include="WarningChart\View\IWarningChart.cs" />
-    <Compile Include="WarningChart\View\WarningChartForm.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="WarningChart\View\WarningChartForm.Designer.cs">
-      <DependentUpon>WarningChartForm.cs</DependentUpon>
-    </Compile>
-    <Compile Include="WarningChart\Model\WarningModel.cs" />
-    <Compile Include="WPF\ViewModel\WCViewModel.cs" />
-    <Compile Include="WPF\View\WCView.xaml.cs">
-      <DependentUpon>WCView.xaml</DependentUpon>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
     <Content Include="archilizer.ico" />
@@ -121,14 +109,7 @@
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
   </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="WarningChart\View\WarningChartForm.resx">
-      <DependentUpon>WarningChartForm.cs</DependentUpon>
-    </EmbeddedResource>
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="WPF\Model\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Page Include="WarningChartWPF\WarningChartCustomLegend.xaml">
       <SubType>Designer</SubType>
@@ -139,10 +120,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="WarningChartWPF\WarningChartView.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="WPF\View\WCView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

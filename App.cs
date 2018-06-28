@@ -10,6 +10,7 @@ using System.Windows.Media.Imaging;
 using WC.WarningChartWPF;
 using System.Diagnostics;
 using System.Windows.Forms;
+using Autodesk.Revit.UI.Events;
 #endregion
 
 namespace WC
@@ -24,6 +25,8 @@ namespace WC
         private WarningChartPresenter _presenter;
         // Keeps track of the number of Warnings in the current Document
         private int _currentCount;
+        // Current Document
+        private Document _document;
 
         static void AddRibbonPanel(UIControlledApplication application)
         {
@@ -76,14 +79,20 @@ namespace WC
                 += new EventHandler<Autodesk.Revit.DB.Events.DocumentChangedEventArgs>(
                     c_app_DocumentChanged);
 
+            a.ViewActivated += new EventHandler<Autodesk.Revit.UI.Events.ViewActivatedEventArgs>(OnViewActivated);
+
+
             return Result.Succeeded;
         }
         public Result OnShutdown(UIControlledApplication a)
         {
             ControlledApplication c_app = a.ControlledApplication;
+
             c_app.DocumentChanged
                 -= new EventHandler<Autodesk.Revit.DB.Events.DocumentChangedEventArgs>(
                     c_app_DocumentChanged);
+
+            a.ViewActivated -= new EventHandler<Autodesk.Revit.UI.Events.ViewActivatedEventArgs>(OnViewActivated);
 
             if (_presenter != null)
             {
@@ -91,6 +100,23 @@ namespace WC
             }
 
             return Result.Succeeded;
+        }
+        /// <summary>
+        /// On Document Switched
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void OnViewActivated(object sender, ViewActivatedEventArgs e)
+        {
+            Document doc = e.CurrentActiveView.Document;
+
+            if (_document != doc)
+            {
+                _document = doc;
+                _currentCount = doc.GetWarnings().Count;
+                _presenter._Application = new UIApplication(doc.Application);
+                _presenter.DocumentSwitched();
+            }
         }
         /// <summary>
         /// On document change, update Family Parameters
@@ -101,7 +127,7 @@ namespace WC
         {
             if (_presenter != null)
             {
-                if(e.GetDocument().GetWarnings().Count != _currentCount)
+                if (e.GetDocument().GetWarnings().Count != _currentCount)
                 {
                     _currentCount = e.GetDocument().GetWarnings().Count;
                     _presenter.DocumentChanged();
@@ -131,6 +157,8 @@ namespace WC
                 RequestHandler handler = new RequestHandler();
                 //new event
                 ExternalEvent exEvent = ExternalEvent.Create(handler);
+                // set current document
+                _document = uiapp.ActiveUIDocument.Document;
 
                 // Set the initial number of warnings so we don't detect document change on the first event
                 _currentCount = uiapp.ActiveUIDocument.Document.GetWarnings().Count;

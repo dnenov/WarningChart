@@ -21,16 +21,18 @@
                     <Border Margin="2" BorderBrush="White" BorderThickness="0" CornerRadius="10">
                         <Grid Margin="4">
                             <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="20"/>
-                                <ColumnDefinition Width="40" SharedSizeGroup="Number"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*" SharedSizeGroup="Number"/>
+                                <ColumnDefinition Width="*"/>
                                 <ColumnDefinition Width="240" SharedSizeGroup="Name"/>
                             </Grid.ColumnDefinitions>
-                            <TextBlock Grid.Column="0" Text="{Binding ChartPoint.Instance.(local:WarningChartPoint.Number)}" 
-                               Margin="4" VerticalAlignment="Center" Foreground="#303030"/>
-                            <Rectangle Grid.Column="1" Stroke="{Binding Series.Stroke}" Fill="{Binding Series.Fill}"
-                               Height="15" Width="15"></Rectangle>
-                            <TextBlock Grid.Column="2" Text="{Binding ChartPoint.Instance.(local:WarningChartPoint.Name)}" 
-                               Margin="4" VerticalAlignment="Center" Foreground="#303030" TextWrapping="Wrap"/>
+                            <Ellipse Grid.Column="0" Stroke="{Binding Series.Stroke}" Fill="{Binding Series.Fill}"
+                               Margin="8" Height="15" Width="15" VerticalAlignment="Center"></Ellipse>
+                            <TextBlock Grid.Column="1" Text="{Binding ChartPoint.Instance.(local:WarningChartPoint.Number)}"                                            
+                               Margin="8" VerticalAlignment="Center" Foreground="#303030"/>
+                            <Separator Grid.Column="2" Style="{StaticResource {x:Static ToolBar.SeparatorStyleKey}}" />
+                            <TextBlock Grid.Column="3" Text="{Binding ChartPoint.Instance.(local:WarningChartPoint.Name)}" 
+                               Margin="8" VerticalAlignment="Center" TextAlignment="Left" Foreground="#303030" TextWrapping="Wrap"/>
                         </Grid>
                     </Border>
                 </Grid>
