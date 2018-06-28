@@ -98,45 +98,7 @@ namespace WC
                 // changed warnings (few warnings have been added or removed)
                 var changedWarnings = warningModels.Where(x => !previousWarningModels.Any(y => y.ID == x.ID)).Except(newWarning).ToList();
 
-                return (Tuple.Create(newWarning, deletedWarnings, changedWarnings));
-
-                /*
-                WarningChartModel change = null;
-                List<WarningChartModel> popList = new List<WarningChartModel>(previousWarningModels);
-                foreach (var x1 in previousWarningModels)
-                {
-                    foreach(var x2 in warningModels)
-                    {
-                        if(x1.Name.Equals(x2.Name))
-                        {
-                            //they are the same warning
-                            if(x1.Number != x2.Number)
-                            {
-                                //number of warning changed, so x2 is the change
-                                change = x2;
-                                return x2;
-                            }
-                            popList.Remove(x1);
-                            break;
-                        }
-                    }
-                }
-                if(popList.Count > 0)
-                {
-                    popList[0].IDs.Clear();
-                    return popList[0];
-                }
-                
-                var withoutFirst = previousWarningModels.Except(warningModels, new WCModelComparer());
-                if(!withoutFirst.Any())
-                {
-                    withoutFirst = previousWarningModels.Except(warningModels);
-                }
-                var withFirst = withoutFirst.First();
-
-                return withFirst;
-                */
-                return null;
+                return (Tuple.Create(newWarning, deletedWarnings, changedWarnings));                
             }
         }
 

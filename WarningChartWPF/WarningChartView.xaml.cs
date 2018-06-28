@@ -22,13 +22,14 @@ namespace WC.WarningChartWPF
         public event Action<String> SeriesSelectedEvent;
 
         public Func<ChartPoint, string> Formatter { get; set; }
-        
+
         public static Func<ChartPoint, string> labelPoint = chartPoint =>
-            string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation);
+            string.Format("{0} {1} ({2:P})", chartPoint.Y, Environment.NewLine, chartPoint.Participation);
 
         // The series that will be updated (Warnings)
         private SeriesCollection _series;
         private Tuple<List<WarningChartModel>, List<WarningChartModel>, List<WarningChartModel>> _changes;
+       
 
         // The public Series to which we will bind the View 
         public SeriesCollection Series
@@ -113,6 +114,7 @@ namespace WC.WarningChartWPF
                 Tag = content.Name,
                 //ToolTip = content.Name,
                 Fill = color,
+                Title = content.Title
             };
 
             return series;
@@ -132,7 +134,7 @@ namespace WC.WarningChartWPF
                     LabelPoint = labelPoint,
                     PushOut = x.Name == max ? pushAmount : 0,
                     Tag = x.Name,
-
+                    Title = x.Title
                     //ToolTip = x.Name,
                 }).AsSeriesCollection();
 
@@ -154,41 +156,9 @@ namespace WC.WarningChartWPF
                 LoadSeries();
             }
         }
-
-        public Func<ChartPoint, string> PointLabel { get; set; }
+        
         public bool DocumentChanged { get; internal set; }
-
-        private void SetUpChart()
-        {
-            if (_warningModels.Count == 0)
-            {
-                MessageBox.Show("No warnings here.");
-                Close();
-            }
-
-            //pieChart.Series.Clear();
-
-            Func<ChartPoint, string> labelPoint = chartPoint =>
-                string.Format("{0} ({1:P})", chartPoint.Y, chartPoint.Participation);
-
-            LiveCharts.SeriesCollection series = new LiveCharts.SeriesCollection();
-            var max = _warningModels.OrderByDescending(x => x.Number).First().Name;
-            foreach (var w in _warningModels)
-            {
-                PieSeries ps = new PieSeries
-                {
-                    Title = w.Title,
-                    Values = new ChartValues<double> { w.Number },
-                    PushOut = w.Name == max ? pushAmount : 0,
-                    DataLabels = true,
-                    LabelPoint = labelPoint,
-                    Stroke = System.Windows.Media.Brushes.Transparent
-                };
-                series.Add(ps);
-            }
-            //pieChart.Series = series;
-            //pieChart.Update();
-        }
+        
         // When user click on one of the pies
         public void Chart_OnDataClick(object sender, ChartPoint chartpoint)
         {

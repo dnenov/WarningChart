@@ -12,25 +12,33 @@
         WindowStyle="None"
         AllowsTransparency="True"
         ResizeMode="CanResizeWithGrip"
-        MouseDown="Window_MouseDown"
+        MouseDown="Window_MouseDown" 
         d:DataContext="{d:DesignInstance local:WarningChartView}">
     <Window.Background>
         <SolidColorBrush Opacity="0" Color="White"/>
     </Window.Background>
     <Window.Resources>
         <lvc:ColorsCollection x:Key="ColorsCollection">
-            <Color>#FFFFFFFF</Color>
-            <Color>#FFFAFAFA</Color>
-            <Color>#FFF5F5F5</Color>
-            <Color>#FFF0F0F0</Color>
-            <Color>#FFEBEBEB</Color>
+            <Color>#FFCB21</Color>
+            <Color>#8D99AE</Color>
+            <Color>#EDF2F4</Color>
+            <Color>#EF233C</Color>
+            <Color>#9E031E</Color>
+            <Color>#FFDECA</Color>
+            <Color>#9891BA</Color>
+            <Color>#EFE2FF</Color>
+            <Color>#F93E18</Color>
+            <Color>#B21A00</Color>
         </lvc:ColorsCollection>
+        <Style TargetType="lvc:PieChart">
+            <Setter Property="SeriesColors" Value="{StaticResource ColorsCollection}"/>
+        </Style>
         <Style TargetType="lvc:PieSeries">
             <Setter Property="StrokeThickness" Value="0"></Setter>
             <Setter Property="DataLabels" Value="True"></Setter>
             <Setter Property="LabelPosition" Value="InsideSlice"></Setter>
             <Setter Property="Foreground" Value="#303030"></Setter>
-            <Setter Property="FontSize" Value="10"></Setter>
+            <Setter Property="FontSize" Value="12"></Setter>
             <Setter Property="Stroke" Value="Transparent"></Setter>
         </Style>
         <Style TargetType="DataGridCell">
@@ -47,7 +55,7 @@
             <RowDefinition Height="*"/>
             <RowDefinition Height="40px"/>
         </Grid.RowDefinitions>
-        <lvc:PieChart Series="{Binding Series}" Grid.ColumnSpan="2" Grid.Row="1"  x:Name="pieChart" LegendLocation="Right" DataClick="Chart_OnDataClick" Hoverable="False" Margin="10" AnimationsSpeed="0:0:0.1">
+        <lvc:PieChart Series="{Binding Series}" Grid.ColumnSpan="2" Grid.Row="1" x:Name="pieChart" TextBlock.TextAlignment="Center" LegendLocation="Right" DataClick="Chart_OnDataClick" Hoverable="False" Margin="10" AnimationsSpeed="0:0:0.1">
             <lvc:PieChart.DataTooltip>
                 <local:WarningChartToolTip SelectionMode="OnlySender"/>
             </lvc:PieChart.DataTooltip>
