@@ -22,14 +22,14 @@
         <lvc:ColorsCollection x:Key="ColorsCollection">
             <Color>#FFCB21</Color>
             <Color>#8D99AE</Color>
-            <!--<Color>#EDF2F4</Color>
+            <Color>#EDF2F4</Color>
             <Color>#EF233C</Color>
             <Color>#9E031E</Color>
             <Color>#FFDECA</Color>
             <Color>#9891BA</Color>
             <Color>#EFE2FF</Color>
             <Color>#F93E18</Color>
-            <Color>#B21A00</Color>-->
+            <Color>#B21A00</Color>
         </lvc:ColorsCollection>
         <Style TargetType="lvc:PieChart">
             <Setter Property="SeriesColors" Value="{StaticResource ColorsCollection}"/>
@@ -61,48 +61,28 @@
                 <local:WarningChartToolTip SelectionMode="OnlySender"/>
             </lvc:PieChart.DataTooltip>
         </lvc:PieChart>
-
-        <TextBlock Grid.Row="1" Grid.Column="1" FontSize="40" Foreground="#404040" Margin="20, 10">Energy Consumption</TextBlock>
-        <Canvas Grid.Row="1" Grid.Column="1" Name="Canvas" Margin="-4, 0, 0, 20">
-            <ListBox Name="ListBox" ItemsSource="{Binding Series, Converter={StaticResource ReverseConverter}}" Panel.ZIndex="1" Canvas.Left="60" Canvas.Top="20" BorderThickness="0" Background="Transparent">
+        <StackPanel Margin="10" Name="Legend" Grid.Column="1" Grid.Row="1">
+            <TextBlock FontSize="16" Foreground="#404040"  TextAlignment="Right">Legend</TextBlock>
+            <ListBox ItemsSource="{Binding Series, Converter={StaticResource ReverseConverter}}" Grid.IsSharedSizeScope="True" BorderThickness="0">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
-                        <TextBlock Text="{Binding (lvc:PieSeries.Title)}" FontSize="22"/>
+                        <Grid Margin="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto"/>
+                                <ColumnDefinition Width="Auto" SharedSizeGroup="Title"/>
+                            </Grid.ColumnDefinitions>
+                            <Ellipse Grid.Column="0" Fill="{Binding (lvc:PieSeries.Fill)}" Width="15" Height="15"/>
+                            <TextBlock Grid.Column="1" Margin="4 0" Text="{Binding (lvc:PieSeries.Title)}" FontSize="12" ToolTip="{Binding (lvc:PieSeries.Tag)}"/>
+                        </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
-                <ListBox.ItemContainerStyle>
-                    <Style TargetType="{x:Type ListBoxItem}">
-                        <Setter Property="Background" Value="Transparent" />
-                        <Setter Property="Template">
-                            <Setter.Value>
-                                <ControlTemplate TargetType="{x:Type ListBoxItem}">
-                                    <ContentPresenter />
-                                </ControlTemplate>
-                            </Setter.Value>
-                        </Setter>
-                    </Style>
-                </ListBox.ItemContainerStyle>
+                <ListBox.ItemsPanel>
+                    <ItemsPanelTemplate>
+                        <WrapPanel Orientation="Vertical"></WrapPanel>
+                    </ItemsPanelTemplate>
+                </ListBox.ItemsPanel>
             </ListBox>
-        </Canvas>
-        <!--<local:WarningChartCustomLegend DataContext="{Binding Series}"  Margin="10" x:Name="pieLegend" Grid.Row="1" Grid.Column="1"/>-->
-
-        <!--<ItemsControl ItemsSource="{Binding Series}" Grid.IsSharedSizeScope="True">
-        <ItemsControl.ItemTemplate>
-            <DataTemplate DataType="{x:Type lvc:SeriesViewModel}">
-                <Grid Margin="2">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="Auto"/>
-                        <ColumnDefinition Width="Auto" SharedSizeGroup="Title"/>
-                    </Grid.ColumnDefinitions>
-                    <Rectangle Grid.Column="0" Stroke="{Binding Stroke}" Fill="{Binding Fill}" 
-                               Width="15" Height="15"/>
-                    <TextBlock Grid.Column="1" Margin="4 0" Text="{Binding Title}" Foreground="White" VerticalAlignment="Center" />
-                </Grid>
-            </DataTemplate>
-        </ItemsControl.ItemTemplate>
-    </ItemsControl>-->
-
-
+        </StackPanel>               
         <DockPanel Grid.Column="2" Margin="0 0 10 0">
             <Button Margin="2" DockPanel.Dock="Right" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderThickness="0" ToolTip="Close" Click="CloseButton_Click">
                 <Viewbox Width="14" Height="14">

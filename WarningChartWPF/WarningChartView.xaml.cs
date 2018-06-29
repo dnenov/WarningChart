@@ -237,11 +237,13 @@ namespace WC.WarningChartWPF
                 // 1: show everything
                 IsCheckedState = null;
                 pieChart.Visibility = Visibility.Visible;
+                Legend.Visibility = Visibility.Visible;
             }
             else if(IsCheckedState == null)
             {
                 // 2: hide legend
                 IsCheckedState = false;
+                Legend.Visibility = Visibility.Collapsed;
             }
             else if(IsCheckedState == false)
             {
