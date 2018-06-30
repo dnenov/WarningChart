@@ -19,6 +19,7 @@
         <SolidColorBrush Opacity="0" Color="White"/>
     </Window.Background>
     <Window.Resources>
+        <local:IntToColorConverter x:Key="IntToColorConvertor"/>
         <lvc:ColorsCollection x:Key="ColorsCollection">
             <Color>#FFCB21</Color>
             <Color>#8D99AE</Color>
@@ -85,7 +86,9 @@
         </DockPanel>
 
         <DockPanel HorizontalAlignment="Right" MinWidth="50">
-            <TextBlock HorizontalAlignment="Right" Margin="4" Padding="10 4 10 4" DockPanel.Dock="Right" Text="{Binding WarningNumber}" Background="#FFCB21" Foreground="#303030" FontWeight="Light"/>
+            <Border Margin="5" Padding="5" BorderThickness="0" Background="{Binding Path=WarningNumber,Converter={StaticResource IntToColorConvertor}}" CornerRadius="4" DockPanel.Dock="Right" ToolTip="Total number of Warnings">
+                <TextBlock HorizontalAlignment="Right"  Text="{Binding WarningNumber}"  Foreground="#303030" FontWeight="Light"/>
+            </Border>
         </DockPanel>
         
         <DockPanel Grid.Column="1" Margin="0 0 10 0">

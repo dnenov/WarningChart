@@ -29,13 +29,70 @@ namespace WC.WarningChartWPF
         }
     }
     /// <summary>
+    /// Int to Color Converter
+    /// </summary>
+    public class IntToColorConverter : IValueConverter
+    {
+        private static GradientStopCollection grsc = new GradientStopCollection()
+        {
+            new GradientStop((Color)ColorConverter.ConvertFromString("#FFCB21"), 0),
+            new GradientStop((Color)ColorConverter.ConvertFromString("#EDF2F4"), 0.5),
+            new GradientStop((Color)ColorConverter.ConvertFromString("#9891BA"), 1),
+        };
+
+        private static Color GetColorByOffset(GradientStopCollection collection, double offset)
+        {
+            GradientStop[] stops = collection.OrderBy(x => x.Offset).ToArray();
+            if (offset <= 0) return stops[0].Color;
+            if (offset >= 1) return stops[stops.Length - 1].Color;
+            GradientStop left = stops[0], right = null;
+            foreach (GradientStop stop in stops)
+            {
+                if (stop.Offset >= offset)
+                {
+                    right = stop;
+                    break;
+                }
+                left = stop;
+            }
+            offset = Math.Round((offset - left.Offset) / (right.Offset - left.Offset), 2);
+
+            byte a = (byte)((right.Color.A - left.Color.A) * offset + left.Color.A);
+            byte r = (byte)((right.Color.R - left.Color.R) * offset + left.Color.R);
+            byte g = (byte)((right.Color.G - left.Color.G) * offset + left.Color.G);
+            byte b = (byte)((right.Color.B - left.Color.B) * offset + left.Color.B);
+
+            return Color.FromArgb(a, r, g, b);
+        }
+        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
+        {
+            int val = System.Convert.ToInt32(value);
+
+            var color = GetColorByOffset(grsc, Remap(val, 0, 2000, 0, 1));
+
+            return new SolidColorBrush(color);
+
+            var drwcolor = System.Drawing.Color.FromArgb(color.A, color.R, color.G, color.B);
+
+            return (SolidColorBrush)(new BrushConverter().ConvertFrom(color));
+        }
+        public static float Remap(float value, float from1, float to1, float from2, float to2)
+        {
+            return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
+        }
+        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
+        {
+            throw new NotImplementedException();
+        }
+    }
+    /// <summary>
     /// Interaction logic for WarningChartView.xaml
     /// </summary>
     public partial class WarningChartView : Window, INotifyPropertyChanged
     {
         private List<WarningChartModel> _warningModels;
         private List<WarningChartModel> _previousWarningModels;
-        private const int pushAmount = 8;
+        private const int pushAmount = 12;
         private int _warningNumber;
         public event Action<String> SeriesSelectedEvent;        
         public bool DocumentChanged { get; internal set; }
@@ -91,6 +148,7 @@ namespace WC.WarningChartWPF
                 OnPropertyChanged("Series");
             }
         }
+
 
         public WarningChartView()
         {
