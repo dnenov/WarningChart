@@ -36,7 +36,25 @@ namespace WC.WarningChartWPF
         private List<WarningChartModel> _warningModels;
         private List<WarningChartModel> _previousWarningModels;
         private const int pushAmount = 8;
-        public event Action<String> SeriesSelectedEvent;
+        private int _warningNumber;
+        public event Action<String> SeriesSelectedEvent;        
+        public bool DocumentChanged { get; internal set; }
+        public bool DocumentSwitched { get; internal set; }
+        public int WarningNumber
+        {
+            get
+            {
+                return _warningNumber;
+            }
+            set
+            {
+                if(_warningNumber != value)
+                {
+                    _warningNumber = value;
+                    OnPropertyChanged("WarningNumber");
+                }
+            }
+        }
         public bool? IsCheckedState { get; set; }
                 
         public static Func<ChartPoint, string> labelPoint = chartPoint =>
@@ -199,10 +217,6 @@ namespace WC.WarningChartWPF
                 LoadSeries();
             }
         }
-        
-        public bool DocumentChanged { get; internal set; }
-        public bool DocumentSwitched { get; internal set; }
-
         // When user click on one of the pies
         public void Chart_OnDataClick(object sender, ChartPoint chartpoint)
         {

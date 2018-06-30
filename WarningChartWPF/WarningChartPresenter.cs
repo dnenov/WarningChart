@@ -80,6 +80,7 @@ namespace WC.WarningChartWPF
             // Update the Form
             form.DocumentChanged = true;
             form.warningModels = this.warningModels;
+            form.WarningNumber = this.warnings.Count;
         }
 
         internal void DocumentSwitched()
@@ -89,6 +90,7 @@ namespace WC.WarningChartWPF
             // Update the Form
             form.DocumentSwitched = true;
             form.warningModels = this.warningModels;
+            form.WarningNumber = this.warnings.Count;
         }
 
         internal void Close()
@@ -105,6 +107,7 @@ namespace WC.WarningChartWPF
             x.Owner = hWndRevit.Handle;
             form.DocumentChanged = false;
             form.warningModels = this.warningModels;
+            form.WarningNumber = this.warnings.Count;
             form.Closed += FormClosed;
             form.SeriesSelectedEvent += SeriesSelected;
             form.Show();

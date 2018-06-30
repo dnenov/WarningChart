@@ -39,6 +39,7 @@
             <Setter Property="DataLabels" Value="True"></Setter>
             <Setter Property="LabelPosition" Value="InsideSlice"></Setter>
             <Setter Property="Foreground" Value="#303030"></Setter>
+            <Setter Property="FontWeight" Value="Light"></Setter>
             <Setter Property="FontSize" Value="12"></Setter>
             <Setter Property="Stroke" Value="Transparent"></Setter>
             <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
@@ -49,7 +50,7 @@
             <local:ReverseConverter x:Key="ReverseConverter"></local:ReverseConverter>
         </Grid.Resources>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="*"/>
+            <ColumnDefinition Width="*" MinWidth="200"/>
             <ColumnDefinition Width="Auto" />
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
@@ -61,9 +62,8 @@
                 <local:WarningChartToolTip SelectionMode="OnlySender"/>
             </lvc:PieChart.DataTooltip>
         </lvc:PieChart>
-        <StackPanel Margin="10" Name="Legend" Grid.Column="1" Grid.Row="1">
-            <TextBlock FontSize="16" Foreground="#404040"  TextAlignment="Right">Legend</TextBlock>
-            <ListBox ItemsSource="{Binding Series, Converter={StaticResource ReverseConverter}}" Grid.IsSharedSizeScope="True" BorderThickness="0">
+        <DockPanel VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" Margin="10" Name="Legend" Background="Transparent">
+            <ListBox DockPanel.Dock="Bottom" ItemsSource="{Binding Series, Converter={StaticResource ReverseConverter}}" Grid.IsSharedSizeScope="True" BorderThickness="0">
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <Grid Margin="2">
@@ -72,18 +72,23 @@
                                 <ColumnDefinition Width="Auto" SharedSizeGroup="Title"/>
                             </Grid.ColumnDefinitions>
                             <Ellipse Grid.Column="0" Fill="{Binding (lvc:PieSeries.Fill)}" Width="15" Height="15"/>
-                            <TextBlock Grid.Column="1" Margin="4 0" Text="{Binding (lvc:PieSeries.Title)}" FontSize="12" ToolTip="{Binding (lvc:PieSeries.Tag)}"/>
+                            <TextBlock Grid.Column="1" Margin="8 0" Text="{Binding (lvc:PieSeries.Title)}" FontSize="12" ToolTip="{Binding (lvc:PieSeries.Tag)}" Background="Transparent"/>
                         </Grid>
                     </DataTemplate>
                 </ListBox.ItemTemplate>
                 <ListBox.ItemsPanel>
                     <ItemsPanelTemplate>
-                        <WrapPanel Orientation="Vertical"></WrapPanel>
+                        <WrapPanel ItemHeight="28" ItemWidth="180" Orientation="Vertical" MaxWidth="{Binding MaxWidth, ElementName=This}" Background="Transparent"/>
                     </ItemsPanelTemplate>
                 </ListBox.ItemsPanel>
             </ListBox>
-        </StackPanel>               
-        <DockPanel Grid.Column="2" Margin="0 0 10 0">
+        </DockPanel>
+
+        <DockPanel HorizontalAlignment="Right" MinWidth="50">
+            <TextBlock HorizontalAlignment="Right" Margin="4" Padding="10 4 10 4" DockPanel.Dock="Right" Text="{Binding WarningNumber}" Background="#FFCB21" Foreground="#303030" FontWeight="Light"/>
+        </DockPanel>
+        
+        <DockPanel Grid.Column="1" Margin="0 0 10 0">
             <Button Margin="2" DockPanel.Dock="Right" Style="{StaticResource {x:Static ToolBar.ButtonStyleKey}}" BorderThickness="0" ToolTip="Close" Click="CloseButton_Click">
                 <Viewbox Width="14" Height="14">
                     <Canvas Width="24" Height="24">
