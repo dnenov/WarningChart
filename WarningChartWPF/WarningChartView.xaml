@@ -47,9 +47,6 @@
         </Style>
     </Window.Resources>
     <Grid x:Name="mainGrid">
-        <Grid.Resources>
-            <local:ReverseConverter x:Key="ReverseConverter"></local:ReverseConverter>
-        </Grid.Resources>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" MinWidth="200"/>
             <ColumnDefinition Width="Auto" />
@@ -58,31 +55,15 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
+        <!--The Pie Chart-->
         <lvc:PieChart Series="{Binding Series}" Grid.Row="1" x:Name="pieChart" TextBlock.TextAlignment="Center" LegendLocation="None" DataClick="Chart_OnDataClick" Hoverable="False" Margin="10" ChartLegend="{x:Null}" AnimationsSpeed="0:0:0.1">
             <lvc:PieChart.DataTooltip>
                 <local:WarningChartToolTip SelectionMode="OnlySender"/>
             </lvc:PieChart.DataTooltip>
         </lvc:PieChart>
+        <!--Custom Legend--> 
         <DockPanel VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" Margin="10" Name="Legend" Background="Transparent">
-            <ListBox DockPanel.Dock="Bottom" ItemsSource="{Binding Series, Converter={StaticResource ReverseConverter}}" Grid.IsSharedSizeScope="True" BorderThickness="0">
-                <ListBox.ItemTemplate>
-                    <DataTemplate>
-                        <Grid Margin="2">
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="Auto"/>
-                                <ColumnDefinition Width="Auto" SharedSizeGroup="Title"/>
-                            </Grid.ColumnDefinitions>
-                            <Ellipse Grid.Column="0" Fill="{Binding (lvc:PieSeries.Fill)}" Width="15" Height="15"/>
-                            <TextBlock Grid.Column="1" Margin="8 0" Text="{Binding (lvc:PieSeries.Title)}" FontSize="12" ToolTip="{Binding (lvc:PieSeries.Tag)}" Background="Transparent"/>
-                        </Grid>
-                    </DataTemplate>
-                </ListBox.ItemTemplate>
-                <ListBox.ItemsPanel>
-                    <ItemsPanelTemplate>
-                        <WrapPanel ItemHeight="28" ItemWidth="180" Orientation="Vertical" MaxWidth="{Binding MaxWidth, ElementName=This}" Background="Transparent"/>
-                    </ItemsPanelTemplate>
-                </ListBox.ItemsPanel>
-            </ListBox>
+            <local:WarningChartCustomLegend/>       
         </DockPanel>
 
         <DockPanel HorizontalAlignment="Right" MinWidth="50">

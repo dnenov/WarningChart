@@ -16,18 +16,6 @@ using System.Globalization;
 namespace WC.WarningChartWPF
 {
 
-    public class ReverseConverter : IValueConverter
-    {
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            return ((SeriesCollection)value).Reverse();
-        }
-
-        public object ConvertBack(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
     /// <summary>
     /// Int to Color Converter
     /// </summary>
@@ -35,9 +23,11 @@ namespace WC.WarningChartWPF
     {
         private static GradientStopCollection grsc = new GradientStopCollection()
         {
-            new GradientStop((Color)ColorConverter.ConvertFromString("#FFCB21"), 0),
-            new GradientStop((Color)ColorConverter.ConvertFromString("#EDF2F4"), 0.5),
-            new GradientStop((Color)ColorConverter.ConvertFromString("#9891BA"), 1),
+            new GradientStop((Color)ColorConverter.ConvertFromString("#00EDF2F4"), 0), // mellow yellow
+            new GradientStop((Color)ColorConverter.ConvertFromString("#EDF2F4"), 0.1), // mellow yellow
+            new GradientStop((Color)ColorConverter.ConvertFromString("#FFCB21"), 0.5), // anti-flash white
+            new GradientStop((Color)ColorConverter.ConvertFromString("#B21A00"), 0.9), //mordant red 19
+            new GradientStop((Color)ColorConverter.ConvertFromString("#9E031E"), 1), //heidelberg red
         };
 
         private static Color GetColorByOffset(GradientStopCollection collection, double offset)
@@ -68,7 +58,7 @@ namespace WC.WarningChartWPF
         {
             int val = System.Convert.ToInt32(value);
 
-            var color = GetColorByOffset(grsc, Remap(val, 0, 2000, 0, 1));
+            var color = GetColorByOffset(grsc, Remap(val, 0, 10, 0, 1));
 
             return new SolidColorBrush(color);
 

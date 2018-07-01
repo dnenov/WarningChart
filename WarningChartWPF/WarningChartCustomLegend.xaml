@@ -6,33 +6,29 @@
              xmlns:local="clr-namespace:WC.WarningChartWPF"
              xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
              mc:Ignorable="d" 
-             Background="#555555" BorderThickness="2" Padding="20 10" BorderBrush="AntiqueWhite">
-    <!--d:DataContext="{d:DesignInstance local:WarningChartCustomLegend}">-->
-    
-    <!--<ItemsControl ItemsSource="{Binding Series}" Grid.IsSharedSizeScope="True">
-        <ItemsControl.ItemTemplate>
-            <DataTemplate DataType="{x:Type lvc:SeriesViewModel}">
+             Background="Transparent" BorderThickness="0" Padding="5"
+             d:DataContext="{d:DesignInstance local:WarningChartCustomLegend}">
+    <UserControl.Resources>
+        <local:ReverseConverter x:Key="ReverseConverter"></local:ReverseConverter>
+    </UserControl.Resources>
+    <ListBox DockPanel.Dock="Bottom" ItemsSource="{Binding Series, Converter={StaticResource ReverseConverter}}" Grid.IsSharedSizeScope="True" BorderThickness="0">
+        <ListBox.ItemTemplate>
+            <DataTemplate>
                 <Grid Margin="2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>
                         <ColumnDefinition Width="Auto" SharedSizeGroup="Title"/>
                     </Grid.ColumnDefinitions>
-                    <Rectangle Grid.Column="0" Stroke="{Binding Stroke}" Fill="{Binding Fill}" 
-                               Width="15" Height="15"/>
-                    <TextBlock Grid.Column="1" Margin="4 0" Text="{Binding Title}" Foreground="White" VerticalAlignment="Center" />
+                    <Ellipse Grid.Column="0" Fill="{Binding (lvc:PieSeries.Fill)}" Width="15" Height="15"/>
+                    <TextBlock Grid.Column="1" Margin="8 0" Text="{Binding (lvc:PieSeries.Title)}" FontSize="12" ToolTip="{Binding (lvc:PieSeries.Tag)}" Background="Transparent"/>
                 </Grid>
             </DataTemplate>
-        </ItemsControl.ItemTemplate>
-    </ItemsControl>-->
+        </ListBox.ItemTemplate>
+        <ListBox.ItemsPanel>
+            <ItemsPanelTemplate>
+                <WrapPanel ItemHeight="28" ItemWidth="180" Orientation="Vertical" MaxWidth="{Binding MaxWidth, ElementName=This}" Background="Transparent"/>
+            </ItemsPanelTemplate>
+        </ListBox.ItemsPanel>
+    </ListBox>
 
-    <Grid Margin="2">
-        <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="Auto"/>
-            <ColumnDefinition Width="Auto" SharedSizeGroup="Title"/>
-        </Grid.ColumnDefinitions>
-        <Rectangle Grid.Column="0" Stroke="{Binding Stroke}" Fill="{Binding Fill}" 
-                               Width="15" Height="15"/>
-        <TextBlock Grid.Column="1" Margin="4 0" Text="{Binding Title}" Foreground="White" VerticalAlignment="Center" />
-    </Grid>
-    
 </UserControl>
