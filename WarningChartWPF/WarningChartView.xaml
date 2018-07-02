@@ -19,34 +19,40 @@
         <SolidColorBrush Opacity="0" Color="White"/>
     </Window.Background>
     <Window.Resources>
-        <local:IntToColorConverter x:Key="IntToColorConvertor"/>
-        <lvc:ColorsCollection x:Key="ColorsCollection">
-            <Color>#FFCB21</Color>
-            <Color>#8D99AE</Color>
-            <Color>#EDF2F4</Color>
-            <Color>#EF233C</Color>
-            <Color>#9E031E</Color>
-            <Color>#FFDECA</Color>
-            <Color>#9891BA</Color>
-            <Color>#EFE2FF</Color>
-            <Color>#F93E18</Color>
-            <Color>#B21A00</Color>
-        </lvc:ColorsCollection>
-        <Style TargetType="lvc:PieChart">
-            <Setter Property="SeriesColors" Value="{StaticResource ColorsCollection}"/>
-        </Style>
-        <Style TargetType="lvc:PieSeries">
-            <Setter Property="StrokeThickness" Value="0"></Setter>
-            <Setter Property="DataLabels" Value="True"></Setter>
-            <Setter Property="LabelPosition" Value="InsideSlice"></Setter>
-            <Setter Property="Foreground" Value="#303030"></Setter>
-            <Setter Property="FontWeight" Value="Light"></Setter>
-            <Setter Property="FontSize" Value="12"></Setter>
-            <Setter Property="Stroke" Value="Transparent"></Setter>
-            <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
-        </Style>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Archilizer_Warchart;component/WarningChartWPF/MyResourceDictionary.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+            
+            <local:IntToColorConverter x:Key="IntToColorConvertor"/>
+            <lvc:ColorsCollection x:Key="ColorsCollection">
+                <Color>#FFCB21</Color>
+                <Color>#8D99AE</Color>
+                <Color>#EDF2F4</Color>
+                <Color>#EF233C</Color>
+                <Color>#9E031E</Color>
+                <Color>#FFDECA</Color>
+                <Color>#9891BA</Color>
+                <Color>#EFE2FF</Color>
+                <Color>#F93E18</Color>
+                <Color>#B21A00</Color>
+            </lvc:ColorsCollection>
+            <Style TargetType="lvc:PieChart">
+                <Setter Property="SeriesColors" Value="{StaticResource ColorsCollection}"/>
+            </Style>
+            <Style TargetType="lvc:PieSeries">
+                <Setter Property="StrokeThickness" Value="0"></Setter>
+                <Setter Property="DataLabels" Value="True"></Setter>
+                <Setter Property="LabelPosition" Value="InsideSlice"></Setter>
+                <Setter Property="Foreground" Value="#303030"></Setter>
+                <Setter Property="FontWeight" Value="Light"></Setter>
+                <Setter Property="FontSize" Value="12"></Setter>
+                <Setter Property="Stroke" Value="Transparent"></Setter>
+                <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
+            </Style>
+        </ResourceDictionary>
 
-        <Style x:Key="ScrollBarTrackThumb"
+        <!--<Style x:Key="ScrollBarTrackThumb"
         TargetType="{x:Type Thumb}">
             <Setter Property="Template">
                 <Setter.Value>
@@ -176,11 +182,9 @@
                     </ControlTemplate>
                 </Setter.Value>
             </Setter>
-        </Style>
-
-
-
-        <!--<ResourceDictionary Source="pack://application:,,,/Archilizer_Warchart;component/WarningChartWPF/MyResourceDictionary.xaml" x:Key="MyDictionary"/>-->
+        </Style>-->
+        
+        
     </Window.Resources>
     <Grid x:Name="mainGrid">
         <Grid.ColumnDefinitions>

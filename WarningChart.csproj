@@ -106,9 +106,10 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
-    <Resource Include="WarningChartWPF\MyResourceDictionary.xaml">
+    <Page Include="WarningChartWPF\MyResourceDictionary.xaml">
       <SubType>Designer</SubType>
-    </Resource>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="WarningChartWPF\WarningChartCustomLegend.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
