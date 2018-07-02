@@ -38,6 +38,17 @@ C:\Users\dneno\source\repos\WarningChart\obj\Debug\Archilizer_Warchart.dll
 C:\Users\dneno\source\repos\WarningChart\obj\Debug\Archilizer_Warchart.pdb
 C:\Users\dneno\source\repos\WarningChart\obj\Debug\WarningChart.csprojAssemblyReference.cache
 C:\Users\dneno\source\repos\WarningChart\obj\Debug\WarningChartWPF\MyResourceDictionary.baml
+C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\obj\Debug\WarningChartWPF\WarningChartCustomLegend.g.cs
+C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\obj\Debug\WarningChartWPF\WarningChartToolTip.g.cs
+C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\obj\Debug\WarningChartWPF\WarningChartView.g.cs
+C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\obj\Debug\Archilizer_Warchart_MarkupCompile.cache
+C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\obj\Debug\Archilizer_Warchart_MarkupCompile.lref
+C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\obj\Debug\WarningChartWPF\MyResourceDictionary.baml
+C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\obj\Debug\WarningChartWPF\WarningChartCustomLegend.baml
+C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\obj\Debug\WarningChartWPF\WarningChartToolTip.baml
+C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\obj\Debug\Archilizer_Warchart.dll
+C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\obj\Debug\Archilizer_Warchart.pdb
 C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\bin\Debug\Archilizer_Warchart.bundle\Archilizer_Warchart.dll.config
 C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\bin\Debug\Archilizer_Warchart.bundle\Archilizer_Warchart.dll
 C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\bin\Debug\Archilizer_Warchart.bundle\Archilizer_Warchart.pdb
@@ -47,16 +58,6 @@ C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\Warni
 C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\bin\Debug\Archilizer_Warchart.bundle\LiveCharts.xml
 C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\bin\Debug\Archilizer_Warchart.bundle\LiveCharts.Wpf.pdb
 C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\bin\Debug\Archilizer_Warchart.bundle\LiveCharts.Wpf.xml
-C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\obj\Debug\WarningChartWPF\WarningChartCustomLegend.g.cs
-C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\obj\Debug\WarningChartWPF\WarningChartToolTip.g.cs
-C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\obj\Debug\WarningChartWPF\WarningChartView.g.cs
-C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\obj\Debug\GeneratedInternalTypeHelper.g.cs
-C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\obj\Debug\Archilizer_Warchart_MarkupCompile.cache
-C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\obj\Debug\Archilizer_Warchart_MarkupCompile.lref
-C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\obj\Debug\WarningChartWPF\WarningChartCustomLegend.baml
-C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\obj\Debug\WarningChartWPF\WarningChartToolTip.baml
 C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\obj\Debug\WarningChartWPF\WarningChartView.baml
 C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\obj\Debug\Archilizer_Warchart.g.resources
-C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\obj\Debug\Archilizer_Warchart.dll
-C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\obj\Debug\Archilizer_Warchart.pdb
-C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\obj\Debug\WarningChartWPF\MyResourceDictionary.baml
+C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\obj\Debug\WarningChart.csprojResolveAssemblyReference.cache

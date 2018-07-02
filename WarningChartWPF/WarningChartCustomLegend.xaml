@@ -11,9 +11,14 @@
     <UserControl.Resources>
         <local:ReverseConverter x:Key="ReverseConverter"></local:ReverseConverter>
     </UserControl.Resources>
-    <ListBox DockPanel.Dock="Bottom" ItemsSource="{Binding Series, Converter={StaticResource ReverseConverter}}" Grid.IsSharedSizeScope="True" BorderThickness="0">
+    <ListBox DockPanel.Dock="Bottom" ItemsSource="{Binding Series, Converter={StaticResource ReverseConverter}}" Grid.IsSharedSizeScope="True" BorderThickness="0" Background="Transparent" Mouse.PreviewMouseDown="ListBox_PreviewMouseDown">
         <ListBox.ItemTemplate>
             <DataTemplate>
+                <DataTemplate.Resources>
+                    <Style TargetType="ListBoxItem">
+                        <Setter Property="Background" Value="Transparent"/>
+                    </Style>
+                </DataTemplate.Resources>                    
                 <Grid Margin="2">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="Auto"/>

@@ -7,6 +7,7 @@ using System;
 using LiveCharts;
 using System.Globalization;
 using System.Linq;
+using System.Windows;
 
 namespace WC.WarningChartWPF
 {
@@ -25,10 +26,13 @@ namespace WC.WarningChartWPF
     public partial class WarningChartCustomLegend : UserControl, IChartLegend
     {
         private List<SeriesViewModel> _series;
+        public event EventHandler StatusUpdated;
 
         public WarningChartCustomLegend()
         {
             InitializeComponent();
+
+            //this.DataContext = this;
         }
 
         public List<SeriesViewModel> Series
@@ -40,6 +44,12 @@ namespace WC.WarningChartWPF
                 OnPropertyChanged("Series");
             }
         }
+        private void ListBox_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            ListBoxItem item = e.Source as ListBoxItem;
+            if (this.StatusUpdated != null)
+                this.StatusUpdated(this, new EventArgs());
+        }
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -48,5 +58,6 @@ namespace WC.WarningChartWPF
             if (PropertyChanged != null)
                 PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
+
     }
 }

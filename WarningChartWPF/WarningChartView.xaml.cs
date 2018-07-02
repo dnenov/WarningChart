@@ -12,10 +12,10 @@ using System.Windows.Controls.Primitives;
 using System.Collections.ObjectModel;
 using System.Windows.Data;
 using System.Globalization;
+using System.Windows.Controls;
 
 namespace WC.WarningChartWPF
 {
-
     /// <summary>
     /// Int to Color Converter
     /// </summary>
@@ -60,11 +60,7 @@ namespace WC.WarningChartWPF
 
             var color = GetColorByOffset(grsc, Remap(val, 0, 10, 0, 1));
 
-            return new SolidColorBrush(color);
-
-            var drwcolor = System.Drawing.Color.FromArgb(color.A, color.R, color.G, color.B);
-
-            return (SolidColorBrush)(new BrushConverter().ConvertFrom(color));
+            return new SolidColorBrush(color);            
         }
         public static float Remap(float value, float from1, float to1, float from2, float to2)
         {
@@ -154,10 +150,17 @@ namespace WC.WarningChartWPF
 
             // Places the UI where it needs to go
             this.Loaded += new RoutedEventHandler(MyWindow_Loaded);
-            
+            this.MyCustomLegend.StatusUpdated += new EventHandler(MyEventHandlerFunction_StatusUpdated);
+
             DataContext = this;
         }
-        
+
+        private void MyEventHandlerFunction_StatusUpdated(object sender, EventArgs e)
+        {
+            ListBoxItem item = (e as RoutedEventArgs).Source as ListBoxItem;
+            SeriesSelectedEvent((string)item.ToolTip); 
+        }
+
         private void LoadSeries()
         {
             if(!DocumentChanged && !DocumentSwitched)
@@ -314,6 +317,10 @@ namespace WC.WarningChartWPF
                 pieChart.Visibility = Visibility.Collapsed;
             }
         }
+        private void SettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
 
         #region Location
         // On loaded, move the UI to the up-right corner
@@ -368,6 +375,6 @@ namespace WC.WarningChartWPF
         }
 
         #endregion
-        
+
     }
 }
