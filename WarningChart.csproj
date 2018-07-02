@@ -8,16 +8,17 @@
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>WC</RootNamespace>
-    <AssemblyName>Archilizer_WarningChart</AssemblyName>
+    <AssemblyName>Archilizer_Warchart</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>bin\Debug\Archilizer_Warchart.bundle\</OutputPath>
     <DefineConstants>DEBUG;TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
@@ -39,17 +40,11 @@
     <ApplicationIcon>archilizer.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="LiveCharts, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
-      <HintPath>..\packages\LiveCharts.0.9.7\lib\net45\LiveCharts.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="LiveCharts">
+      <HintPath>packages\LiveCharts.0.9.7\lib\net45\LiveCharts.dll</HintPath>
     </Reference>
-    <Reference Include="LiveCharts.WinForms, Version=0.9.7.1, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
-      <HintPath>..\packages\LiveCharts.WinForms.0.9.7.1\lib\net45\LiveCharts.WinForms.dll</HintPath>
-      <Private>True</Private>
-    </Reference>
-    <Reference Include="LiveCharts.Wpf, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
-      <HintPath>..\packages\LiveCharts.Wpf.0.9.7\lib\net45\LiveCharts.Wpf.dll</HintPath>
-      <Private>True</Private>
+    <Reference Include="LiveCharts.Wpf">
+      <HintPath>packages\LiveCharts.Wpf.0.9.7\lib\net45\LiveCharts.Wpf.dll</HintPath>
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="PresentationFramework" />
@@ -98,8 +93,8 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="archilizer.ico" />
-    <Content Include="Archilizer_WarningChart.addin" />
-    <Resource Include="Resources\archilizer_default.png" />
+    <Content Include="Archilizer_Warchart.addin" />
+    <Resource Include="Resources\archilizer_warchart.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="app.config" />
@@ -111,6 +106,9 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Resource Include="WarningChartWPF\MyResourceDictionary.xaml">
+      <SubType>Designer</SubType>
+    </Resource>
     <Page Include="WarningChartWPF\WarningChartCustomLegend.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -126,8 +124,11 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy "$(ProjectDir)*.addin" "$(AppData)\Autodesk\REVIT\Addins\2018"
-copy "$(ProjectDir)bin\debug\*.dll" "$(AppData)\Autodesk\REVIT\Addins\2018"</PostBuildEvent>
+    <PostBuildEvent>copy "$(ProjectDir)*.addin" "%25Programdata%25\Autodesk\ApplicationPlugins\Archilizer_Warchart.bundle\Content\windows"
+copy "$(ProjectDir)bin\debug\Archilizer_Warchart.bundle\*" "%25Programdata%25\Autodesk\ApplicationPlugins\Archilizer_Warchart.bundle\Content\windows"</PostBuildEvent>
+  </PropertyGroup>
+  <PropertyGroup>
+    <PreBuildEvent>if not exist  "%25Programdata%25\Autodesk\ApplicationPlugins\Archilizer_Warchart.bundle\Content\windows" mkdir  "%25Programdata%25\Autodesk\ApplicationPlugins\Archilizer_Warchart.bundle\Content\windows"</PreBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it.
        Other similar extension points exist, see Microsoft.Common.targets.

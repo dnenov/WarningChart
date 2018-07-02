@@ -47,7 +47,7 @@ namespace WC
 
 
             CreatePushButton(ribbonPanel, String.Format("Warning" + Environment.NewLine + "Chart"), thisAssemblyPath, "WC.CommandWarningChart",
-                "Displays a Pie Chart representing Project Warnings.", "archilizer_default.png");            
+                "Displays a Pie Chart representing Project Warnings.", "archilizer_warchart.png");            
         }
         private static void CreatePushButton(RibbonPanel ribbonPanel, string name, string path, string command, string tooltip, string icon)
         {
@@ -59,7 +59,7 @@ namespace WC
 
             PushButton pb = ribbonPanel.AddItem(pbData) as PushButton;
             pb.ToolTip = tooltip;
-            BitmapImage pb2Image = new BitmapImage(new Uri(String.Format("pack://application:,,,/Archilizer_WarningChart;component/Resources/{0}", icon)));
+            BitmapImage pb2Image = new BitmapImage(new Uri(String.Format("pack://application:,,,/Archilizer_Warchart;component/Resources/{0}", icon)));
             pb.LargeImage = pb2Image;
         }
         public Result OnStartup(UIControlledApplication a)

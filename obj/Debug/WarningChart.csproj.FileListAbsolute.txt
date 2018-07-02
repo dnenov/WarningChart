@@ -1,25 +1,3 @@
-C:\Users\dneno\source\repos\WarningChart\bin\Debug\Archilizer_WarningChart.dll.config
-C:\Users\dneno\source\repos\WarningChart\bin\Debug\Archilizer_WarningChart.dll
-C:\Users\dneno\source\repos\WarningChart\bin\Debug\Archilizer_WarningChart.pdb
-C:\Users\dneno\source\repos\WarningChart\obj\Debug\WarningChartWPF\WarningChartCustomLegend.g.cs
-C:\Users\dneno\source\repos\WarningChart\obj\Debug\WarningChartWPF\WarningChartToolTip.g.cs
-C:\Users\dneno\source\repos\WarningChart\obj\Debug\WarningChartWPF\WarningChartView.g.cs
-C:\Users\dneno\source\repos\WarningChart\obj\Debug\WPF\View\WCView.g.cs
-C:\Users\dneno\source\repos\WarningChart\obj\Debug\GeneratedInternalTypeHelper.g.cs
-C:\Users\dneno\source\repos\WarningChart\obj\Debug\Archilizer_WarningChart_MarkupCompile.cache
-C:\Users\dneno\source\repos\WarningChart\obj\Debug\Archilizer_WarningChart_MarkupCompile.lref
-C:\Users\dneno\source\repos\WarningChart\obj\Debug\WarningChartWPF\WarningChartCustomLegend.baml
-C:\Users\dneno\source\repos\WarningChart\obj\Debug\WarningChartWPF\WarningChartToolTip.baml
-C:\Users\dneno\source\repos\WarningChart\obj\Debug\WarningChartWPF\WarningChartView.baml
-C:\Users\dneno\source\repos\WarningChart\obj\Debug\WPF\View\WCView.baml
-C:\Users\dneno\source\repos\WarningChart\obj\Debug\Archilizer_WarningChart.g.resources
-C:\Users\dneno\source\repos\WarningChart\obj\Debug\WC.WarningChart.WarningChartForm.resources
-C:\Users\dneno\source\repos\WarningChart\obj\Debug\WarningChart.csproj.GenerateResource.cache
-C:\Users\dneno\source\repos\WarningChart\obj\Debug\WarningChart.csproj.CoreCompileInputs.cache
-C:\Users\dneno\source\repos\WarningChart\obj\Debug\WarningChart.csproj.CopyComplete
-C:\Users\dneno\source\repos\WarningChart\obj\Debug\Archilizer_WarningChart.dll
-C:\Users\dneno\source\repos\WarningChart\obj\Debug\Archilizer_WarningChart.pdb
-C:\Users\dneno\source\repos\WarningChart\obj\Debug\WarningChart.csprojAssemblyReference.cache
 C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\bin\Debug\Archilizer_WarningChart.dll.config
 C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\bin\Debug\Archilizer_WarningChart.dll
 C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\bin\Debug\Archilizer_WarningChart.pdb
@@ -45,3 +23,31 @@ C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\Warni
 C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\obj\Debug\Archilizer_WarningChart.dll
 C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\obj\Debug\Archilizer_WarningChart.pdb
 C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\obj\Debug\WarningChart.csprojResolveAssemblyReference.cache
+C:\Users\dneno\source\repos\WarningChart\bin\Debug\Archilizer_Warchart.dll.config
+C:\Users\dneno\source\repos\WarningChart\bin\Debug\Archilizer_Warchart.dll
+C:\Users\dneno\source\repos\WarningChart\bin\Debug\Archilizer_Warchart.pdb
+C:\Users\dneno\source\repos\WarningChart\bin\Debug\Archilizer_Warchart.bundle\Archilizer_Warchart.dll.config
+C:\Users\dneno\source\repos\WarningChart\bin\Debug\Archilizer_Warchart.bundle\Archilizer_Warchart.dll
+C:\Users\dneno\source\repos\WarningChart\bin\Debug\Archilizer_Warchart.bundle\Archilizer_Warchart.pdb
+C:\Users\dneno\source\repos\WarningChart\bin\Debug\Archilizer_Warchart.bundle\LiveCharts.dll
+C:\Users\dneno\source\repos\WarningChart\bin\Debug\Archilizer_Warchart.bundle\LiveCharts.Wpf.dll
+C:\Users\dneno\source\repos\WarningChart\bin\Debug\Archilizer_Warchart.bundle\LiveCharts.pdb
+C:\Users\dneno\source\repos\WarningChart\bin\Debug\Archilizer_Warchart.bundle\LiveCharts.xml
+C:\Users\dneno\source\repos\WarningChart\bin\Debug\Archilizer_Warchart.bundle\LiveCharts.Wpf.pdb
+C:\Users\dneno\source\repos\WarningChart\bin\Debug\Archilizer_Warchart.bundle\LiveCharts.Wpf.xml
+C:\Users\dneno\source\repos\WarningChart\obj\Debug\WarningChartWPF\WarningChartCustomLegend.g.cs
+C:\Users\dneno\source\repos\WarningChart\obj\Debug\WarningChartWPF\WarningChartToolTip.g.cs
+C:\Users\dneno\source\repos\WarningChart\obj\Debug\WarningChartWPF\WarningChartView.g.cs
+C:\Users\dneno\source\repos\WarningChart\obj\Debug\GeneratedInternalTypeHelper.g.cs
+C:\Users\dneno\source\repos\WarningChart\obj\Debug\Archilizer_Warchart_MarkupCompile.cache
+C:\Users\dneno\source\repos\WarningChart\obj\Debug\Archilizer_Warchart_MarkupCompile.lref
+C:\Users\dneno\source\repos\WarningChart\obj\Debug\WarningChartWPF\WarningChartCustomLegend.baml
+C:\Users\dneno\source\repos\WarningChart\obj\Debug\WarningChartWPF\WarningChartToolTip.baml
+C:\Users\dneno\source\repos\WarningChart\obj\Debug\WarningChartWPF\WarningChartView.baml
+C:\Users\dneno\source\repos\WarningChart\obj\Debug\Archilizer_Warchart.g.resources
+C:\Users\dneno\source\repos\WarningChart\obj\Debug\WarningChart.csproj.CoreCompileInputs.cache
+C:\Users\dneno\source\repos\WarningChart\obj\Debug\WarningChart.csproj.CopyComplete
+C:\Users\dneno\source\repos\WarningChart\obj\Debug\Archilizer_Warchart.dll
+C:\Users\dneno\source\repos\WarningChart\obj\Debug\Archilizer_Warchart.pdb
+C:\Users\dneno\source\repos\WarningChart\obj\Debug\WarningChart.csprojAssemblyReference.cache
+C:\Users\dneno\source\repos\WarningChart\obj\Debug\WarningChartWPF\MyResourceDictionary.baml
