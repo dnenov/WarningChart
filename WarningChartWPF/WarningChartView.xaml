@@ -90,7 +90,7 @@
                 </Viewbox>
             </Button>
             <!--Collapse Button-->
-            <ToggleButton Margin="2" IsThreeState="True" DockPanel.Dock="Right" Click="CollapseButton_Click" IsChecked="{Binding IsCheckedState}">
+            <ToggleButton Name="btnToggle" Margin="2" IsThreeState="True" DockPanel.Dock="Right" Click="CollapseButton_Click" IsChecked="{Binding IsCheckedState}">
                 <ToggleButton.Style>
                     <Style TargetType="{x:Type ToggleButton}">
                         <Setter Property="Template">

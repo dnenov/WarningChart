@@ -98,7 +98,7 @@ namespace WC.WarningChartWPF
                 }
             }
         }
-        public bool? IsCheckedState { get; set; }
+        public bool? IsCheckedState { get; private set; }
                 
         public static Func<ChartPoint, string> labelPoint = chartPoint =>
         chartPoint.Participation > 0.05 ?
@@ -145,14 +145,37 @@ namespace WC.WarningChartWPF
             Test = new ObservableCollection<string>(new string[] { "element1", "element2", "element3" });
 
             InitializeComponent();
-
-            IsCheckedState = true;
-
+            
             // Places the UI where it needs to go
             this.Loaded += new RoutedEventHandler(MyWindow_Loaded);
             this.MyCustomLegend.StatusUpdated += new EventHandler(MyEventHandlerFunction_StatusUpdated);
 
+            IsCheckedState = intToBool(Properties.Settings.Default.IsCheckedState);
+            UpdateInterfaceLayout();
+
             DataContext = this;
+        }
+
+        public bool? intToBool(int i)
+        {
+            switch (i)
+            {
+                case 0: return null;
+                case 1: return true;
+                default:
+                    return false;
+            }
+        }
+
+        public int boolToInt(bool? b)
+        {
+            switch (b)
+            {
+                case true: return 1;
+                case false: return -1;
+                default:
+                    return 0;
+            }
         }
 
         private void MyEventHandlerFunction_StatusUpdated(object sender, EventArgs e)
@@ -302,27 +325,36 @@ namespace WC.WarningChartWPF
         // Collapse
         private void CollapseButton_Click(object sender, RoutedEventArgs e)
         {
+            Properties.Settings.Default.IsCheckedState = boolToInt(IsCheckedState);
+            UpdateInterfaceLayout();
+        }
+
+        private void UpdateInterfaceLayout()
+        {
             // cycle through the three states
-            if(IsCheckedState == true)
+            if (IsCheckedState == true)
             {
                 // 1: show everything
                 IsCheckedState = null;
                 pieChart.Visibility = Visibility.Visible;
                 Legend.Visibility = Visibility.Visible;
             }
-            else if(IsCheckedState == null)
+            else if (IsCheckedState == null)
             {
                 // 2: hide legend
                 IsCheckedState = false;
+                pieChart.Visibility = Visibility.Visible;
                 Legend.Visibility = Visibility.Collapsed;
             }
-            else if(IsCheckedState == false)
+            else if (IsCheckedState == false)
             {
                 // 3: hide chart
                 IsCheckedState = true;
                 pieChart.Visibility = Visibility.Collapsed;
+                Legend.Visibility = Visibility.Collapsed;
             }
         }
+
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
             WarningChartSettings settings = new WarningChartSettings();
