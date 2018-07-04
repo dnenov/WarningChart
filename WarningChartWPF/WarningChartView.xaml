@@ -71,7 +71,7 @@
         </lvc:PieChart>
         <!--Custom Legend--> 
         <DockPanel VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" Margin="10" Name="Legend" Background="Transparent">
-            <local:WarningChartCustomLegend x:Name="MyCustomLegend"/>       
+            <local:WarningChartCustomLegend x:Name="MyCustomLegend" LegendItemSelected="MyCustomLegend_LegendItemSelected"/>       
         </DockPanel>
         <!--Number of Warnings Label-->
         <DockPanel HorizontalAlignment="Right" MinWidth="50">

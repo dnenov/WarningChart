@@ -46,9 +46,6 @@ namespace WC.WarningChartWPF
         }
         private void ListBox_PreviewMouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
         {
-            ListBoxItem item = e.Source as ListBoxItem;
-            if (this.StatusUpdated != null)
-                this.StatusUpdated(this, new EventArgs());
         }
 
         public event PropertyChangedEventHandler PropertyChanged;
@@ -59,5 +56,52 @@ namespace WC.WarningChartWPF
                 PropertyChanged.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
+        //start
+
+        public static readonly RoutedEvent LegendItemSelectedEvent = EventManager.RegisterRoutedEvent("TabItemSelected", RoutingStrategy.Bubble, typeof(RoutedEventHandler), typeof(WarningChartCustomLegend));
+
+        public event RoutedEventHandler LegendItemSelected
+        {
+            add { AddHandler(LegendItemSelectedEvent, value); }
+            remove { RemoveHandler(LegendItemSelectedEvent, value); }
+        }
+
+        void RaiseLegendItemSelectedEvent(string selectedItem)
+        {
+            SelectedLegendRoutedEventArgs newEventArgs = new SelectedLegendRoutedEventArgs(LegendItemSelectedEvent, selectedItem);
+            RaiseEvent(newEventArgs);
+        }
+
+        //end
+
+
+        private void ListBoxItem_Selected(object sender, RoutedEventArgs e)
+        {
+            ListBoxItem item = e.Source as ListBoxItem;
+            var pieSeries = (PieSeries) item.Content;
+            var chartPoint = (WarningChartPoint) pieSeries.ActualValues[0];
+            var name = chartPoint.Name;
+
+            RaiseLegendItemSelectedEvent(name);
+        }
+    }
+    public class SelectedLegendRoutedEventArgs : RoutedEventArgs
+    {
+        private readonly string selectedItem;
+
+        public SelectedLegendRoutedEventArgs(RoutedEvent routedEvent,
+                                          string selectedItem)
+            : base(routedEvent)
+        {
+            this.selectedItem = selectedItem;
+        }
+
+        public string SelectedItem
+        {
+            get
+            {
+                return selectedItem;
+            }
+        }
     }
 }

@@ -376,5 +376,10 @@ namespace WC.WarningChartWPF
 
         #endregion
 
+        private void MyCustomLegend_LegendItemSelected(object sender, RoutedEventArgs e)
+        {
+            var test = (e as SelectedLegendRoutedEventArgs).SelectedItem;
+            SeriesSelectedEvent(test);
+        }
     }
 }

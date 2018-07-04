@@ -11,7 +11,7 @@
     <UserControl.Resources>
         <local:ReverseConverter x:Key="ReverseConverter"></local:ReverseConverter>
     </UserControl.Resources>
-    <ListBox DockPanel.Dock="Bottom" ItemsSource="{Binding Series, Converter={StaticResource ReverseConverter}}" Grid.IsSharedSizeScope="True" BorderThickness="0" Background="Transparent" Mouse.PreviewMouseDown="ListBox_PreviewMouseDown">
+    <ListBox DockPanel.Dock="Bottom" ItemsSource="{Binding Series, Converter={StaticResource ReverseConverter}}" Grid.IsSharedSizeScope="True" BorderThickness="0" Background="Transparent">
         <ListBox.ItemTemplate>
             <DataTemplate>
                 <DataTemplate.Resources>
@@ -34,6 +34,11 @@
                 <WrapPanel ItemHeight="28" ItemWidth="180" Orientation="Vertical" MaxWidth="{Binding MaxWidth, ElementName=This}" Background="Transparent"/>
             </ItemsPanelTemplate>
         </ListBox.ItemsPanel>
+        <ListBox.ItemContainerStyle>
+            <Style TargetType="ListBoxItem">
+                <EventSetter Event="Selected" Handler="ListBoxItem_Selected"/>
+            </Style>
+        </ListBox.ItemContainerStyle>
     </ListBox>
 
 </UserControl>
