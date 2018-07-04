@@ -58,7 +58,7 @@ namespace WC.WarningChartWPF
         {
             int val = System.Convert.ToInt32(value);
 
-            var color = GetColorByOffset(grsc, Remap(val, 0, 10, 0, 1));
+            var color = GetColorByOffset(grsc, Remap(val, 0, Properties.Settings.Default.WarningNumber, 0, 1));
 
             return new SolidColorBrush(color);            
         }
@@ -268,7 +268,7 @@ namespace WC.WarningChartWPF
                 LoadSeries();
             }
         }
-        // When user click on one of the pies
+        // When user clicks on one of the pies
         public void Chart_OnDataClick(object sender, ChartPoint chartpoint)
         {
             var chart = (LiveCharts.Wpf.PieChart)chartpoint.ChartView;
@@ -280,6 +280,12 @@ namespace WC.WarningChartWPF
             var selectedSeries = (PieSeries)chartpoint.SeriesView;
             selectedSeries.PushOut = pushAmount;
             SeriesSelectedEvent((string)((PieSeries)selectedSeries).Tag);
+        }
+        // When user clicks on the custom legend
+        private void MyCustomLegend_LegendItemSelected(object sender, RoutedEventArgs e)
+        {
+            var test = (e as SelectedLegendRoutedEventArgs).SelectedItem;
+            SeriesSelectedEvent(test);
         }
         // Drag window by clicking on any control
         private void Window_MouseDown(object sender, MouseButtonEventArgs e)
@@ -319,7 +325,14 @@ namespace WC.WarningChartWPF
         }
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
-
+            WarningChartSettings settings = new WarningChartSettings();
+            if(settings.ShowDialog() == true)
+            { 
+                //stupid update
+                var holder = WarningNumber;
+                WarningNumber = 0;
+                WarningNumber = holder;
+            }
         }
 
         #region Location
@@ -376,10 +389,5 @@ namespace WC.WarningChartWPF
 
         #endregion
 
-        private void MyCustomLegend_LegendItemSelected(object sender, RoutedEventArgs e)
-        {
-            var test = (e as SelectedLegendRoutedEventArgs).SelectedItem;
-            SeriesSelectedEvent(test);
-        }
     }
 }

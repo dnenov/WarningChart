@@ -61,3 +61,5 @@ C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\Warni
 C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\obj\Debug\WarningChartWPF\WarningChartView.baml
 C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\obj\Debug\Archilizer_Warchart.g.resources
 C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\WarningChart\obj\Debug\WarningChart.csprojResolveAssemblyReference.cache
+C:\Users\dneno\source\repos\WarningChart\obj\Debug\WarningChartWPF\WarningChartSettings.g.cs
+C:\Users\dneno\source\repos\WarningChart\obj\Debug\WarningChartWPF\WarningChartSettings.baml

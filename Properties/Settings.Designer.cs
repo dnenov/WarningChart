@@ -9,7 +9,8 @@
 //------------------------------------------------------------------------------
 
 namespace WC.Properties {
-        
+    
+    
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "15.7.0.0")]
     internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
@@ -31,6 +32,18 @@ namespace WC.Properties {
             }
             set {
                 this["WindowPosition"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("2000")]
+        public int WarningNumber {
+            get {
+                return ((int)(this["WarningNumber"]));
+            }
+            set {
+                this["WarningNumber"] = value;
             }
         }
     }
