@@ -27,6 +27,9 @@ namespace WC
         private int _currentCount;
         // Current Document
         private Document _document;
+        // Hardcoded helpfile path
+        static string helpFile = "file:///C:/ProgramData/Autodesk/ApplicationPlugins/Archilizer_Warchart.bundle/Content/Help/Warchart%20_%20Revit%20_%20Autodesk%20App%20Store.html";
+        private bool _disabled;
 
         static void AddRibbonPanel(UIControlledApplication application)
         {
@@ -45,11 +48,12 @@ namespace WC
             // Get dll assembly path
             string thisAssemblyPath = Assembly.GetExecutingAssembly().Location;
 
+            ContextualHelp ch = new ContextualHelp(ContextualHelpType.Url, @helpFile);
 
             CreatePushButton(ribbonPanel, String.Format("Warning" + Environment.NewLine + "Chart"), thisAssemblyPath, "WC.CommandWarningChart",
-                "Displays a Pie Chart representing Project Warnings.", "archilizer_warchart.png");            
+                "Displays a Pie Chart representing Project Warnings.", "archilizer_warchart.png", ch);            
         }
-        private static void CreatePushButton(RibbonPanel ribbonPanel, string name, string path, string command, string tooltip, string icon)
+        private static void CreatePushButton(RibbonPanel ribbonPanel, string name, string path, string command, string tooltip, string icon, ContextualHelp ch)
         {
             PushButtonData pbData = new PushButtonData(
                 name,
@@ -59,6 +63,7 @@ namespace WC
 
             PushButton pb = ribbonPanel.AddItem(pbData) as PushButton;
             pb.ToolTip = tooltip;
+            pb.SetContextualHelp(ch);
             BitmapImage pb2Image = new BitmapImage(new Uri(String.Format("pack://application:,,,/Archilizer_Warchart;component/Resources/{0}", icon)));
             pb.LargeImage = pb2Image;
         }
@@ -110,7 +115,26 @@ namespace WC
         {
             Document doc = e.CurrentActiveView.Document;
 
-            if (_document != doc)
+            // If the document is a Family Document, disable the UI
+            if(doc.IsFamilyDocument)
+            {
+                if(!_disabled)
+                {
+                    _presenter.Disable();
+                    _disabled = true;
+                }
+                return;
+            }
+            else
+            {
+                if(_disabled)
+                {
+                    _presenter.Enable();
+                    _disabled = false;
+                }
+            }
+
+            if (_document.Title != doc.Title)
             {
                 _document = doc;
                 _currentCount = doc.GetWarnings().Count;

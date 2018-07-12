@@ -69,6 +69,9 @@
                 <local:WarningChartToolTip SelectionMode="OnlySender"/>
             </lvc:PieChart.DataTooltip>
         </lvc:PieChart>
+        <Label Grid.Row="1" x:Name="lblNoWarnings" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22" Foreground="#33303030">
+            <TextBlock TextAlignment="Center">Congratulations!<LineBreak/>This document contains no Warnings.</TextBlock>
+        </Label>
         <!--Custom Legend--> 
         <DockPanel VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" Margin="10" Name="Legend" Background="Transparent">
             <local:WarningChartCustomLegend x:Name="MyCustomLegend" LegendItemSelected="MyCustomLegend_LegendItemSelected"/>       

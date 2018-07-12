@@ -151,6 +151,7 @@ namespace WC.WarningChartWPF
             this.MyCustomLegend.StatusUpdated += new EventHandler(MyEventHandlerFunction_StatusUpdated);
 
             IsCheckedState = intToBool(Properties.Settings.Default.IsCheckedState);
+
             UpdateInterfaceLayout();
 
             DataContext = this;
@@ -291,6 +292,34 @@ namespace WC.WarningChartWPF
                 LoadSeries();
             }
         }
+
+        public bool NoProjectWarnings { get; private set; }
+
+        // If there are no warnings in the current project
+        // Collapse the Chart (and Legend)
+        // And display a 'No Warning' sign ;)
+        internal void NoWarnings()
+        {
+            if(!NoProjectWarnings)
+            {
+                NoProjectWarnings = true;
+                pieChart.Visibility = Visibility.Collapsed;
+                Legend.Visibility = Visibility.Collapsed;
+                lblNoWarnings.Visibility = Visibility.Visible;
+                btnToggle.IsEnabled = false;
+            }
+        }
+        internal void YesWarnings()
+        {
+            if (NoProjectWarnings)
+            {
+                NoProjectWarnings = false;
+                lblNoWarnings.Visibility = Visibility.Collapsed;
+                btnToggle.IsEnabled = true;
+                ResumeInterfaceLayout();
+            }
+        }
+
         // When user clicks on one of the pies
         public void Chart_OnDataClick(object sender, ChartPoint chartpoint)
         {
@@ -354,12 +383,33 @@ namespace WC.WarningChartWPF
                 Legend.Visibility = Visibility.Collapsed;
             }
         }
-
+        private void ResumeInterfaceLayout()
+        {
+            // cycle through the three states
+            if (IsCheckedState == true)
+            {
+                // 1: show everything
+                pieChart.Visibility = Visibility.Visible;
+                Legend.Visibility = Visibility.Visible;
+            }
+            else if (IsCheckedState == null)
+            {
+                // 2: hide legend
+                pieChart.Visibility = Visibility.Visible;
+                Legend.Visibility = Visibility.Collapsed;
+            }
+            else if (IsCheckedState == false)
+            {
+                // 3: hide chart
+                pieChart.Visibility = Visibility.Collapsed;
+                Legend.Visibility = Visibility.Collapsed;
+            }
+        }
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
         {
             WarningChartSettings settings = new WarningChartSettings();
-            if(settings.ShowDialog() == true)
-            { 
+            if (settings.ShowDialog() == true)
+            {
                 //stupid update
                 var holder = WarningNumber;
                 WarningNumber = 0;
@@ -418,7 +468,6 @@ namespace WC.WarningChartWPF
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
-
         #endregion
 
     }

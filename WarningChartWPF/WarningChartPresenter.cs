@@ -79,7 +79,15 @@ namespace WC.WarningChartWPF
             LoadData();
             // Update the Form
             form.DocumentChanged = true;
-            form.warningModels = this.warningModels;
+            if(this.warningModels.Count == 0)
+            {
+                form.NoWarnings();
+            }
+            else
+            {
+                form.YesWarnings();
+                form.warningModels = this.warningModels;
+            }
             form.WarningNumber = this.warnings.Count;
         }
 
@@ -89,7 +97,15 @@ namespace WC.WarningChartWPF
             LoadData();
             // Update the Form
             form.DocumentSwitched = true;
-            form.warningModels = this.warningModels;
+            if (this.warningModels.Count == 0)
+            {
+                form.NoWarnings();
+            }
+            else
+            {
+                form.YesWarnings();
+                form.warningModels = this.warningModels;
+            }
             form.WarningNumber = this.warnings.Count;
         }
 
@@ -106,7 +122,15 @@ namespace WC.WarningChartWPF
             System.Windows.Interop.WindowInteropHelper x = new System.Windows.Interop.WindowInteropHelper(form);
             x.Owner = hWndRevit.Handle;
             form.DocumentChanged = false;
-            form.warningModels = this.warningModels;
+            if (this.warningModels.Count == 0)
+            {
+                form.NoWarnings();
+            }
+            else
+            {
+                form.YesWarnings();
+                form.warningModels = this.warningModels;
+            }
             form.WarningNumber = this.warnings.Count;
             form.Closed += FormClosed;
             form.SeriesSelectedEvent += SeriesSelected;
@@ -143,6 +167,17 @@ namespace WC.WarningChartWPF
             form.SeriesSelectedEvent -= SeriesSelected;
         }
 
+        internal void Disable()
+        {
+            form.IsEnabled = false;
+            form.Visibility = System.Windows.Visibility.Hidden;
+        }
+
+        internal void Enable()
+        {
+            form.IsEnabled = true;
+            form.Visibility = System.Windows.Visibility.Visible;
+        }
     }
 
     public class DelegateCommand : ICommand
