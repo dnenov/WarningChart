@@ -13,6 +13,9 @@ using System.Collections.ObjectModel;
 using System.Windows.Data;
 using System.Globalization;
 using System.Windows.Controls;
+using MaterialDesignThemes.Wpf;
+using MaterialDesignColors;
+using MahApps.Metro.Controls;
 
 namespace WC.WarningChartWPF
 {
@@ -138,12 +141,14 @@ namespace WC.WarningChartWPF
 
         public WarningChartView()
         {
+            MahApps.Metro.Controls.SplitButton btn = new SplitButton();
             var initial = new WarningChartModel() { Name = "Initial", Number = 1, IDs = null };
             var initialList = new List<WarningChartModel>() { initial };
             Series = GroupsByNumberOfWarnings(initialList);
 
             Test = new ObservableCollection<string>(new string[] { "element1", "element2", "element3" });
 
+            InitializeMaterialDesign();
             InitializeComponent();
             
             // Places the UI where it needs to go
@@ -156,7 +161,15 @@ namespace WC.WarningChartWPF
 
             DataContext = this;
         }
-
+        private void InitializeMaterialDesign()
+        {
+            // Create dummy objects to force the MaterialDesign assemblies to be loaded
+            // from this assembly, which causes the MaterialDesign assemblies to be searched
+            // relative to this assembly's path. Otherwise, the MaterialDesign assemblies
+            // are searched relative to Eclipse's path, so they're not found.
+            var card = new Card();
+            var hue = new Hue("Dummy", Colors.Black, Colors.White);
+        }
         public bool? intToBool(int i)
         {
             switch (i)

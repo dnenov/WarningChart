@@ -3,11 +3,24 @@
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-        xmlns:local="clr-namespace:WC.WarningChartWPF"
+        xmlns:local="clr-namespace:WC.WarningChartWPF" 
+        xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d"
-        Title="Settings 1.0" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen"
+        TextElement.FontWeight="Light"
+        TextElement.FontSize="12"
+        TextOptions.TextFormattingMode="Ideal"
+        FontFamily="{DynamicResource MaterialDesignFont}"
+        Title="Settings" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen"
         Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
         ContentRendered="Window_ContentRendered">
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Archilizer_Warchart;component/Resources/Theme.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
     <Grid Margin="15 15 15 25"> 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
