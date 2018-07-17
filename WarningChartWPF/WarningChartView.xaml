@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:WC.WarningChartWPF"
         xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"
         mc:Ignorable="d" 
-        d:DesignHeight="400" d:DesignWidth="650"
+        d:DesignHeight="400" d:DesignWidth="650" 
         MinWidth="450" MinHeight="300"
         SizeToContent="WidthAndHeight"
         WindowStartupLocation="CenterOwner"

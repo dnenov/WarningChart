@@ -11,7 +11,7 @@ namespace WC.WarningChartWPF
     public partial class WarningChartSettings : Window
     {
         // Only allow positive integers
-        private static readonly Regex _regex = new Regex("[^0-9]+");
+        private static readonly Regex _regex = new Regex(@"^[1-9]\d{0,2}$");
 
         public WarningChartSettings()
         {
@@ -42,12 +42,28 @@ namespace WC.WarningChartWPF
         // Check if the input text matches the Regex
         private void txtAnswer_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
         {
-            e.Handled = !IsTextAllowed(e.Text);
+            TextBox box = sender as TextBox;
+            if(box.SelectionLength > 0)
+            {
+                e.Handled = !IsTextAllowed(e.Text);
+            }else
+            {
+                e.Handled = !IsTextAllowed(((TextBox)sender).Text + e.Text);
+            }
         }
         // Checks the input against the Regex (only positive integers)
         private static bool IsTextAllowed(string text)
         {
-            return !_regex.IsMatch(text);
+            int result = 0;
+            if (Int32.TryParse(text, out result))
+            {
+                // Your conditions
+                if (result > 0 && result < 100000)
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
