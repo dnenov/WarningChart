@@ -1,7 +1,10 @@
-﻿using System;
+﻿using MaterialDesignColors;
+using MaterialDesignThemes.Wpf;
+using System;
 using System.Text.RegularExpressions;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Media;
 
 namespace WC.WarningChartWPF
 {
@@ -10,16 +13,13 @@ namespace WC.WarningChartWPF
     /// </summary>
     public partial class WarningChartSettings : Window
     {
-        // Only allow positive integers
-        private static readonly Regex _regex = new Regex(@"^[1-9]\d{0,2}$");
-
         public WarningChartSettings()
         {
             InitializeComponent();
 
             txtAnswer.Text = Properties.Settings.Default.WarningNumber.ToString();
         }
-
+        
         private void btnDialogOk_Click(object sender, RoutedEventArgs e)
         {
             string result = txtAnswer.Text;
