@@ -18,6 +18,11 @@ For more information visit Archilizer website:
 
 http://www.archilizer.com/release/warchart/
 
+A few examples:
+
+<img src="http://www.archilizer.com/wp-content/uploads/2018/07/warchart_scrn1-1030x557.jpg" width ="85%" />  
+<img src="http://www.archilizer.com/wp-content/uploads/2018/07/warchart_scrn2-1030x558.jpg" width="85%" />  
+
 License
 ============
 
