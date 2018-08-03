@@ -1,7 +1,7 @@
 # Warchart
 ============
 
-![Screenshot](http://www.archilizer.com/wp-content/uploads/2018/07/Warchart.png)
+![Screenshot](http://www.archilizer.com/wp-content/uploads/2018/07/Archilizer_Warchart_200.png)
 
 
 Warchart stands for Warnings (Pie) Chart. Warchart is a visual interactive tool that helps you navigate, isolate and ultimately eliminate Autodesk® Revit® Warnings. The real-time update of the chart will follow your progress and give you immediate feedback. 
