@@ -11,12 +11,40 @@ using WC.WarningChartWPF;
 using System.Diagnostics;
 using System.Windows.Forms;
 using Autodesk.Revit.UI.Events;
+using System.Collections;
 #endregion
 
 namespace WC
 {
+
     class App : IExternalApplication
     {
+        private static object TheInternalDoingPart(UIControlledApplication CApp, string TabName, string PanelName)
+        {
+            IList ERPs = null;
+
+            ERPs = CApp.GetRibbonPanels(TabName);
+
+            Autodesk.Revit.UI.RibbonPanel NewOrExtgRevitPanel = null;
+
+            foreach (Autodesk.Revit.UI.RibbonPanel Pan in ERPs)
+            {
+                if (Pan.Name == PanelName)
+                {
+                    NewOrExtgRevitPanel = Pan;
+                    goto FoundSoJumpPastNew;
+                }
+            }
+
+            Autodesk.Revit.UI.RibbonPanel NewRevitPanel = null;
+
+            NewRevitPanel = CApp.CreateRibbonPanel(TabName, PanelName);
+
+            NewOrExtgRevitPanel = NewRevitPanel;
+            FoundSoJumpPastNew:
+
+            return NewOrExtgRevitPanel;
+        }
         // Windows Revit handle
         static WindowHandle _hWndRevit = null;
         // Class instance
@@ -35,6 +63,7 @@ namespace WC
         {
             // Create a custom ribbon panel
             String tabName = "Archilizer";
+            String panelName = "Miscellaneous";
             try
             {
                 application.CreateRibbonTab(tabName);
@@ -43,7 +72,7 @@ namespace WC
             {
 
             }
-            RibbonPanel ribbonPanel = application.CreateRibbonPanel(tabName, "Miscellaneous");
+            RibbonPanel ribbonPanel = (RibbonPanel)TheInternalDoingPart(application, tabName, panelName);
 
             // Get dll assembly path
             string thisAssemblyPath = Assembly.GetExecutingAssembly().Location;
