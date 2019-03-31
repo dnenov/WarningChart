@@ -112,6 +112,7 @@
   <ItemGroup>
     <Content Include="archilizer.ico" />
     <Content Include="Archilizer_Warchart.addin" />
+    <Resource Include="PackageContents.xml" />
     <Resource Include="Resources\archilizer_warchart.png" />
   </ItemGroup>
   <ItemGroup>
@@ -152,7 +153,8 @@
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>copy "$(ProjectDir)*.addin" "%25Programdata%25\Autodesk\ApplicationPlugins\Archilizer_Warchart.bundle\Content\windows"
-copy "$(ProjectDir)bin\debug\Archilizer_Warchart.bundle\*" "%25Programdata%25\Autodesk\ApplicationPlugins\Archilizer_Warchart.bundle\Content\windows"</PostBuildEvent>
+copy "$(ProjectDir)PackageContents.xml" "%25Programdata%25\Autodesk\ApplicationPlugins\Archilizer_Warchart.bundle"
+copy "$(ProjectDir)bin\Debug\Archilizer_Warchart.bundle\*.*" "%25Programdata%25\Autodesk\ApplicationPlugins\Archilizer_Warchart.bundle\Content\windows"</PostBuildEvent>
   </PropertyGroup>
   <PropertyGroup>
     <PreBuildEvent>if not exist  "%25Programdata%25\Autodesk\ApplicationPlugins\Archilizer_Warchart.bundle\Content\windows" mkdir  "%25Programdata%25\Autodesk\ApplicationPlugins\Archilizer_Warchart.bundle\Content\windows"</PreBuildEvent>

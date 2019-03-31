@@ -105,7 +105,6 @@ C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\bin\D
 C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\bin\Debug\Archilizer_Warchart.bundle\MahApps.Metro.xml
 C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\bin\Debug\Archilizer_Warchart.bundle\MaterialDesignThemes.Wpf.pdb
 C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\bin\Debug\Archilizer_Warchart.bundle\MaterialDesignThemes.Wpf.xml
-C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\obj\Debug\WarningChart.csprojResolveAssemblyReference.cache
 C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\obj\Debug\WarningChartWPF\WarningChartCustomLegend.g.cs
 C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\obj\Debug\WarningChartWPF\WarningChartSettings.g.cs
 C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\obj\Debug\WarningChartWPF\WarningChartToolTip.g.cs
@@ -122,3 +121,4 @@ C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\obj\D
 C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\obj\Debug\Archilizer_Warchart.g.resources
 C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\obj\Debug\Archilizer_Warchart.dll
 C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\obj\Debug\Archilizer_Warchart.pdb
+C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\obj\Debug\WarningChart.csprojResolveAssemblyReference.cache

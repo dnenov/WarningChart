@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ApplicationPackage SchemaVersion="1.0" AutodeskProduct="Revit" ProductType="Application" Name="Warchart" AppVersion="1.0.0" Description="Ccreates a pie chart which dynamically updates and displays project warnings." Author="Archilizer" AppNameSpace="appstore.exchange.autodesk.com" ProductCode="{5FCA4D09-FB79-45E2-8D98-3774DDFDD1D8}" UpgradeCode="{6D787D66-7118-4459-BE21-7835B3FA2C60}" SupportedLocales="Enu" FriendlyVersion="1.0.0" OnlineDocumentation="http://archilizer.com " HelpFile="./Content/help/Warchart _ Revit _ Autodesk App Store.html" Icon="./Content/help/Resources/appicon.ico">
+  <CompanyDetails Name="Archilizer" Phone=" " Url="http://archilizer.com " Email="support@archilizer.com " />
+  <RuntimeRequirements OS="Win64" Platform="Revit" SeriesMin="R2018" SeriesMax="R2019" />
+  <Components Description="2018 parts">
+    <RuntimeRequirements OS="Win64" Platform="Revit" SeriesMin="R2018" SeriesMax="R2018" />
+    <ComponentEntry AppName="Archilizer_Warchart" Version="1.0.0" ModuleName="./Content/windows/Archilizer_Warchart.addin" AppDescription="Warning Chart - creates a pie chart which dynamically updates and displays project Warnings." />
+  </Components>
+  <Components Description="2019 parts">
+    <RuntimeRequirements OS="Win64" Platform="Revit" SeriesMin="R2019" SeriesMax="R2019" />
+    <ComponentEntry AppName="Archilizer_Warchart" Version="1.0.0" ModuleName="./Content/windows/Archilizer_Warchart.addin" AppDescription="Warning Chart - creates a pie chart which dynamically updates and displays project Warnings." />
+  </Components>
+</ApplicationPackage>

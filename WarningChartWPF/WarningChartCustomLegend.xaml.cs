@@ -89,9 +89,7 @@ namespace WC.WarningChartWPF
     {
         private readonly string selectedItem;
 
-        public SelectedLegendRoutedEventArgs(RoutedEvent routedEvent,
-                                          string selectedItem)
-            : base(routedEvent)
+        public SelectedLegendRoutedEventArgs(RoutedEvent routedEvent, string selectedItem) : base(routedEvent)
         {
             this.selectedItem = selectedItem;
         }

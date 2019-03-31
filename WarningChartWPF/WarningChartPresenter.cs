@@ -144,7 +144,14 @@ namespace WC.WarningChartWPF
 
         private void SeriesSelected(string name)
         {
-            MakeRequest(RequestId.SelectWarnings, warningModels.First(x => x.Name.Equals(name)).IDs);
+            try
+            {
+                MakeRequest(RequestId.SelectWarnings, warningModels.First(x => x.Name.Equals(name)).IDs);
+            }
+            catch(Exception ex)
+            {
+               //
+            }
         }      
         private void MakeRequest(RequestId request, List<ICollection<ElementId>> ids)
         {
