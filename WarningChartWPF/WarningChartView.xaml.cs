@@ -251,6 +251,8 @@ namespace WC.WarningChartWPF
                     }
                 }
             }
+
+            OnPropertyChanged("Series");
         }
 
         private static PieSeries ChagnedSeries(WarningChartModel content, Brush color)
@@ -333,6 +335,7 @@ namespace WC.WarningChartWPF
             }
         }
 
+        #region Button Events
         // When user clicks on one of the pies
         public void Chart_OnDataClick(object sender, ChartPoint chartpoint)
         {
@@ -370,7 +373,20 @@ namespace WC.WarningChartWPF
             Properties.Settings.Default.IsCheckedState = boolToInt(IsCheckedState);
             UpdateInterfaceLayout();
         }
+        private void SettingsButton_Click(object sender, RoutedEventArgs e)
+        {
+            WarningChartSettings settings = new WarningChartSettings();
+            if (settings.ShowDialog() == true)
+            {
+                //stupid update
+                var holder = WarningNumber;
+                WarningNumber = 0;
+                WarningNumber = holder;
+            }
+        }
+        #endregion
 
+        #region Update Layout
         private void UpdateInterfaceLayout()
         {
             // cycle through the three states
@@ -418,17 +434,7 @@ namespace WC.WarningChartWPF
                 Legend.Visibility = Visibility.Collapsed;
             }
         }
-        private void SettingsButton_Click(object sender, RoutedEventArgs e)
-        {
-            WarningChartSettings settings = new WarningChartSettings();
-            if (settings.ShowDialog() == true)
-            {
-                //stupid update
-                var holder = WarningNumber;
-                WarningNumber = 0;
-                WarningNumber = holder;
-            }
-        }
+        #endregion
 
         #region Location
         // On loaded, move the UI to the up-right corner
