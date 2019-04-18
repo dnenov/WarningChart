@@ -112,6 +112,7 @@
   <ItemGroup>
     <Content Include="archilizer.ico" />
     <Content Include="Archilizer_Warchart.addin" />
+    <Resource Include="Resources\warchart.png" />
     <Resource Include="PackageContents.xml" />
     <Resource Include="Resources\archilizer_warchart.png" />
   </ItemGroup>

@@ -80,7 +80,7 @@ namespace WC
             ContextualHelp ch = new ContextualHelp(ContextualHelpType.Url, @helpFile);
 
             CreatePushButton(ribbonPanel, String.Format("Warning" + Environment.NewLine + "Chart"), thisAssemblyPath, "WC.CommandWarningChart",
-                "Displays a Pie Chart representing Project Warnings.", "archilizer_warchart.png", ch);            
+                "Displays a Pie Chart representing Project Warnings.", "warchart.png", ch);            
         }
         private static void CreatePushButton(RibbonPanel ribbonPanel, string name, string path, string command, string tooltip, string icon, ContextualHelp ch)
         {
@@ -102,10 +102,9 @@ namespace WC
 
             // Make sure you have to update the plugin
             string version = a.ControlledApplication.VersionNumber;
-            if (Int32.Parse(version) < 2020)
-            {
-                AddRibbonPanel(a);
-            }
+            
+            AddRibbonPanel(a);
+            
 
             _presenter = null;  // no dialog needed yet; ThermalAsset command will bring it
             thisApp = this;  // static access to this application instance                                                    

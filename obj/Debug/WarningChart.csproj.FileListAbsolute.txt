@@ -122,3 +122,4 @@ C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\obj\D
 C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\obj\Debug\Archilizer_Warchart.dll
 C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\obj\Debug\Archilizer_Warchart.pdb
 C:\Users\didon\OneDrive\Documents\Visual Studio 2015\Projects\WarningChart\obj\Debug\WarningChart.csprojResolveAssemblyReference.cache
+C:\Users\dneno\source\repos\WarningChart\obj\Debug\WarningChart.csprojAssemblyReference.cache
