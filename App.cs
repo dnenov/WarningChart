@@ -80,7 +80,7 @@ namespace WC
             ContextualHelp ch = new ContextualHelp(ContextualHelpType.Url, @helpFile);
 
             CreatePushButton(ribbonPanel, String.Format("Warning" + Environment.NewLine + "Chart"), thisAssemblyPath, "WC.CommandWarningChart",
-                "Displays a Pie Chart representing Project Warnings.", "warchart.png", ch);            
+                String.Format("Displays a Pie Chart representing Project Warnings.{0}v1.0", Environment.NewLine), "warchart.png", ch);            
         }
         private static void CreatePushButton(RibbonPanel ribbonPanel, string name, string path, string command, string tooltip, string icon, ContextualHelp ch)
         {
