@@ -12,6 +12,7 @@ using System.Diagnostics;
 using System.Windows.Forms;
 using Autodesk.Revit.UI.Events;
 using System.Collections;
+using WC.Helpers;
 #endregion
 
 namespace WC
@@ -19,6 +20,9 @@ namespace WC
 
     class App : IExternalApplication
     {
+        private static UIControlledApplication MyApplication { get; set; }
+        private static Assembly assembly;
+
         private static object TheInternalDoingPart(UIControlledApplication CApp, string TabName, string PanelName)
         {
             IList ERPs = null;
@@ -72,18 +76,23 @@ namespace WC
             {
 
             }
+
             RibbonPanel ribbonPanel = (RibbonPanel)TheInternalDoingPart(application, tabName, panelName);
 
             // Get dll assembly path
             string thisAssemblyPath = Assembly.GetExecutingAssembly().Location;
+            assembly = Assembly.GetExecutingAssembly();
 
             ContextualHelp ch = new ContextualHelp(ContextualHelpType.Url, @helpFile);
 
             CreatePushButton(ribbonPanel, String.Format("Warning" + Environment.NewLine + "Chart"), thisAssemblyPath, "WC.CommandWarningChart",
-                String.Format("Displays a Pie Chart representing Project Warnings.{0}v1.0", Environment.NewLine), "warchart.png", ch);            
+                String.Format("Displays a Pie Chart representing Project Warnings.{0}v1.0.1", Environment.NewLine), "WC.Resources.icon_Warchart.png", ch);            
         }
+
         private static void CreatePushButton(RibbonPanel ribbonPanel, string name, string path, string command, string tooltip, string icon, ContextualHelp ch)
         {
+            BitmapIcons bitmapIcons = new BitmapIcons(assembly, icon, MyApplication);
+
             PushButtonData pbData = new PushButtonData(
                 name,
                 name,
@@ -91,20 +100,24 @@ namespace WC
                 command);
 
             PushButton pb = ribbonPanel.AddItem(pbData) as PushButton;
+
             pb.ToolTip = tooltip;
+            var largeImage = bitmapIcons.LargeBitmap();
+            var smallImage = bitmapIcons.SmallBitmap();
+            pb.LargeImage = largeImage;
+            pb.Image = smallImage;
             pb.SetContextualHelp(ch);
-            BitmapImage pb2Image = new BitmapImage(new Uri(String.Format("pack://application:,,,/Archilizer_Warchart;component/Resources/{0}", icon)));
-            pb.LargeImage = pb2Image;
         }
+
         public Result OnStartup(UIControlledApplication a)
         {
             ControlledApplication c_app = a.ControlledApplication;
+            MyApplication = a;
 
             // Make sure you have to update the plugin
             string version = a.ControlledApplication.VersionNumber;
             
-            AddRibbonPanel(a);
-            
+            AddRibbonPanel(a);            
 
             _presenter = null;  // no dialog needed yet; ThermalAsset command will bring it
             thisApp = this;  // static access to this application instance                                                    
