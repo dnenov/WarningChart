@@ -18,4 +18,8 @@
     <RuntimeRequirements OS="Win64" Platform="Revit" SeriesMin="R2021" SeriesMax="R2021" />
     <ComponentEntry AppName="Archilizer_Warchart" Version="1.0.0" ModuleName="./Content/windows/Archilizer_Warchart.addin" AppDescription="Warning Chart - creates a pie chart which dynamically updates and displays project Warnings." />
   </Components>
+  <Components Description="2022 parts">
+    <RuntimeRequirements OS="Win64" Platform="Revit" SeriesMin="R2022" SeriesMax="R2022" />
+    <ComponentEntry AppName="Archilizer_Warchart" Version="1.0.0" ModuleName="./Content/windows/Archilizer_Warchart.addin" AppDescription="Warning Chart - creates a pie chart which dynamically updates and displays project Warnings." />
+  </Components>
 </ApplicationPackage>
