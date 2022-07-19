@@ -104,7 +104,11 @@ C:\Users\dneno\source\repos\WarningChart\bin\Debug\Archilizer_Warchart.bundle\Ma
 C:\Users\dneno\source\repos\WarningChart\bin\Debug\Archilizer_Warchart.bundle\MahApps.Metro.xml
 C:\Users\dneno\source\repos\WarningChart\bin\Debug\Archilizer_Warchart.bundle\MaterialDesignThemes.Wpf.pdb
 C:\Users\dneno\source\repos\WarningChart\bin\Debug\Archilizer_Warchart.bundle\MaterialDesignThemes.Wpf.xml
+<<<<<<< Updated upstream
 C:\Users\dneno\source\repos\WarningChart\obj\Debug\WarningChart.csprojAssemblyReference.cache
+=======
+C:\Users\dneno\source\repos\WarningChart\obj\Debug\WarningChart.csproj.AssemblyReference.cache
+>>>>>>> Stashed changes
 C:\Users\dneno\source\repos\WarningChart\obj\Debug\WarningChartWPF\WarningChartCustomLegend.g.cs
 C:\Users\dneno\source\repos\WarningChart\obj\Debug\WarningChartWPF\WarningChartSettings.g.cs
 C:\Users\dneno\source\repos\WarningChart\obj\Debug\WarningChartWPF\WarningChartToolTip.g.cs
@@ -123,6 +127,7 @@ C:\Users\dneno\source\repos\WarningChart\obj\Debug\WarningChart.csproj.CoreCompi
 C:\Users\dneno\source\repos\WarningChart\obj\Debug\WarningChart.csproj.CopyComplete
 C:\Users\dneno\source\repos\WarningChart\obj\Debug\Archilizer_Warchart.dll
 C:\Users\dneno\source\repos\WarningChart\obj\Debug\Archilizer_Warchart.pdb
+<<<<<<< Updated upstream
 C:\Users\didon\source\repos\RevitTempalteAddin\WarningChart\bin\Debug\Archilizer_Warchart.bundle\Archilizer_Warchart.dll.config
 C:\Users\didon\source\repos\RevitTempalteAddin\WarningChart\bin\Debug\Archilizer_Warchart.bundle\Archilizer_Warchart.dll
 C:\Users\didon\source\repos\RevitTempalteAddin\WarningChart\bin\Debug\Archilizer_Warchart.bundle\Archilizer_Warchart.pdb
@@ -160,3 +165,5 @@ C:\Users\didon\source\repos\RevitTempalteAddin\WarningChart\obj\Debug\WarningCha
 C:\Users\didon\source\repos\RevitTempalteAddin\WarningChart\obj\Debug\Archilizer_Warchart.dll
 C:\Users\didon\source\repos\RevitTempalteAddin\WarningChart\obj\Debug\Archilizer_Warchart.pdb
 C:\Users\didon\source\repos\RevitTempalteAddin\WarningChart\obj\Debug\WarningChart.csprojAssemblyReference.cache
+=======
+>>>>>>> Stashed changes
