@@ -66,8 +66,8 @@ namespace WC
         static void AddRibbonPanel(UIControlledApplication application)
         {
             // Create a custom ribbon panel
-            String tabName = "Archilizer";
-            String panelName = "Miscellaneous";
+            var tabName = "Archilizer";
+            var panelName = "Miscellaneous";
             try
             {
                 application.CreateRibbonTab(tabName);
@@ -77,16 +77,17 @@ namespace WC
 
             }
 
-            RibbonPanel ribbonPanel = (RibbonPanel)TheInternalDoingPart(application, tabName, panelName);
+            var ribbonPanel = (RibbonPanel)TheInternalDoingPart(application, tabName, panelName);
 
             // Get dll assembly path
-            string thisAssemblyPath = Assembly.GetExecutingAssembly().Location;
+            var thisAssemblyPath = Assembly.GetExecutingAssembly().Location;
             assembly = Assembly.GetExecutingAssembly();
+            var assemblyVersion = assembly.GetName().Version;
 
-            ContextualHelp ch = new ContextualHelp(ContextualHelpType.Url, @helpFile);
+            var ch = new ContextualHelp(ContextualHelpType.Url, @helpFile);
 
             CreatePushButton(ribbonPanel, String.Format("Warning" + Environment.NewLine + "Chart"), thisAssemblyPath, "WC.CommandWarningChart",
-                String.Format("Displays a Pie Chart representing Project Warnings.{0}{0}v1.0.2", Environment.NewLine), "WC.Resources.icon_Warchart.png", ch);            
+                String.Format("Displays a Pie Chart representing Project Warnings.{0}{0}v{1}", Environment.NewLine, assemblyVersion), "WC.Resources.icon_Warchart.png", ch);            
         }
 
         private static void CreatePushButton(RibbonPanel ribbonPanel, string name, string path, string command, string tooltip, string icon, ContextualHelp ch)
@@ -175,7 +176,7 @@ namespace WC
                 }
             }
 
-            if (_document.Title != doc.Title)
+            if (_document != null && _document.Title != doc.Title)
             {
                 _document = doc;
                 _currentCount = doc.GetWarnings().Count;
@@ -243,14 +244,6 @@ namespace WC
                 }
             }
         }
-
-        //public void WakeFormUp()
-        //{
-        //    if (_presenter.form != null)
-        //    {
-        //        _presenter.form.WakeUp();
-        //    }
-        //}
     }
     /// <summary>
     /// Retrieve Revit Windows thread in order to pass it to the form as it's owner
