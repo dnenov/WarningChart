@@ -160,7 +160,7 @@ namespace WC
             // If the document is a Family Document, disable the UI
             if(doc.IsFamilyDocument)
             {
-                if(!_disabled)
+                if(!_disabled && _presenter != null)
                 {
                     _presenter.Disable();
                     _disabled = true;
