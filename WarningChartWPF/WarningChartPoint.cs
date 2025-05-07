@@ -1,6 +1,4 @@
-﻿using LiveCharts;
-using LiveCharts.Configurations;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,13 +15,13 @@ namespace WC.WarningChartWPF
             //configuring a custom type is quite simple
 
             //first we define a mapper
-            var mapper = Mappers.Pie<WarningChartPoint>()
-                .Value(x => x.Number);//use the value property in the plot
+            //var mapper = Mappers.Pie<WarningChartPoint>()
+            //    .Value(x => x.Number);//use the value property in the plot
 
-            //then we save the mapper globally, there are many ways
-            //so configure a series, for more info see:
-            //https://lvcharts.net/App/examples/v1/wpf/Types%20and%20Configuration
-            Charting.For<WarningChartPoint>(mapper);
+            ////then we save the mapper globally, there are many ways
+            ////so configure a series, for more info see:
+            ////https://lvcharts.net/App/examples/v1/wpf/Types%20and%20Configuration
+            //Charting.For<WarningChartPoint>(mapper);
         }
 
         /// <summary>

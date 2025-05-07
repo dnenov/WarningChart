@@ -238,7 +238,7 @@ namespace WC
                 }
                 catch(Exception ex)
                 {
-                    TaskDialog.Show("Error", ex.Message);
+                    Autodesk.Revit.UI.TaskDialog.Show("Error", ex.Message);
                     _presenter.Dispose();
                     _presenter = null;
                 }

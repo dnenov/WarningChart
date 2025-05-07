@@ -5,80 +5,42 @@ using System.Linq;
 using System.Windows;
 using System.Windows.Input;
 using System.Windows.Media;
-using LiveCharts;
-using LiveCharts.Helpers;
-using LiveCharts.Wpf;
-using System.Windows.Controls.Primitives;
+using LiveChartsCore;
+using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.WPF;
+using SkiaSharp;
 using System.Collections.ObjectModel;
 using System.Windows.Data;
 using System.Globalization;
 using System.Windows.Controls;
 using MaterialDesignThemes.Wpf;
 using MaterialDesignColors;
-using MahApps.Metro.Controls;
+using LiveChartsCore.SkiaSharpView.Painting;
 
 namespace WC.WarningChartWPF
 {
-    /// <summary>
-    /// Int to Color Converter
-    /// </summary>
-    public class IntToColorConverter : IValueConverter
-    {
-        private static GradientStopCollection grsc = new GradientStopCollection()
-        {
-            new GradientStop((Color)ColorConverter.ConvertFromString("#00EDF2F4"), 0), // mellow yellow
-            new GradientStop((Color)ColorConverter.ConvertFromString("#EDF2F4"), 0.1), // mellow yellow
-            new GradientStop((Color)ColorConverter.ConvertFromString("#FFCB21"), 0.5), // anti-flash white
-            new GradientStop((Color)ColorConverter.ConvertFromString("#B21A00"), 0.9), //mordant red 19
-            new GradientStop((Color)ColorConverter.ConvertFromString("#9E031E"), 1), //heidelberg red
-        };
-
-        private static Color GetColorByOffset(GradientStopCollection collection, double offset)
-        {
-            GradientStop[] stops = collection.OrderBy(x => x.Offset).ToArray();
-            if (offset <= 0) return stops[0].Color;
-            if (offset >= 1) return stops[stops.Length - 1].Color;
-            GradientStop left = stops[0], right = null;
-            foreach (GradientStop stop in stops)
-            {
-                if (stop.Offset >= offset)
-                {
-                    right = stop;
-                    break;
-                }
-                left = stop;
-            }
-            offset = Math.Round((offset - left.Offset) / (right.Offset - left.Offset), 2);
-
-            byte a = (byte)((right.Color.A - left.Color.A) * offset + left.Color.A);
-            byte r = (byte)((right.Color.R - left.Color.R) * offset + left.Color.R);
-            byte g = (byte)((right.Color.G - left.Color.G) * offset + left.Color.G);
-            byte b = (byte)((right.Color.B - left.Color.B) * offset + left.Color.B);
-
-            return Color.FromArgb(a, r, g, b);
-        }
-        public object Convert(object value, Type targetType, object parameter, CultureInfo culture)
-        {
-            int val = System.Convert.ToInt32(value);
-
-            var color = GetColorByOffset(grsc, Remap(val, 0, Properties.Settings.Default.WarningNumber, 0, 1));
-
-            return new SolidColorBrush(color);            
-        }
-        public static float Remap(float value, float from1, float to1, float from2, float to2)
-        {
-            return (value - from1) / (to1 - from1) * (to2 - from2) + from2;
-        }
-        public object ConvertBack(object value, Type targetType, object parameter, System.Globalization.CultureInfo culture)
-        {
-            throw new NotImplementedException();
-        }
-    }
     /// <summary>
     /// Interaction logic for WarningChartView.xaml
     /// </summary>
     public partial class WarningChartView : Window, INotifyPropertyChanged
     {
+        /// <summary>
+        /// Color library
+        /// </summary>
+        public static readonly SKColor[] CustomColors = new[]
+        {
+            SKColor.Parse("#FFCB21"),
+            SKColor.Parse("#8D99AE"),
+            SKColor.Parse("#EDF2F4"),
+            SKColor.Parse("#EF233C"),
+            SKColor.Parse("#9E031E"),
+            SKColor.Parse("#FFDECA"),
+            SKColor.Parse("#9891BA"),
+            SKColor.Parse("#EFE2FF"),
+            SKColor.Parse("#F93E18"),
+            SKColor.Parse("#B21A00"),
+        };
+
         private List<WarningChartModel> _warningModels;
         private List<WarningChartModel> _previousWarningModels;
         private const int pushAmount = 12;
@@ -103,17 +65,26 @@ namespace WC.WarningChartWPF
         }
         public bool? IsCheckedState { get; private set; }
                 
-        public static Func<ChartPoint, string> labelPoint = chartPoint =>
-        chartPoint.Participation > 0.05 ?
-        string.Format("{0} {1} ({2:P})", chartPoint.Y, Environment.NewLine, chartPoint.Participation)
-        : "";
+        //public static Func<ChartPoint, string> labelPoint = chartPoint =>
+        //chartPoint.Participation > 0.05 ?
+        //string.Format("{0} {1} ({2:P})", chartPoint.Y, Environment.NewLine, chartPoint.Participation)
+        //: "";
 
         // The series that will be updated (Warnings)
-        private SeriesCollection _series;
+        private ISeries[] _series;
+
+        public ISeries[] Series
+        {
+            get => _series;
+            set
+            {
+                _series = value;
+                OnPropertyChanged(nameof(Series));
+            }
+        }
+
         private Tuple<List<WarningChartModel>, List<WarningChartModel>, List<WarningChartModel>> _changes;
-
         private ObservableCollection<string> _test;
-
         public ObservableCollection<string> Test
         {
             get { return _test; }
@@ -127,40 +98,29 @@ namespace WC.WarningChartWPF
             }
         }
 
-        // The public Series to which we will bind the View 
-        public SeriesCollection Series
-        {
-            get { return _series; }
-            set
-            {
-                _series = value;
-                OnPropertyChanged("Series");
-            }
-        }
-
-
         public WarningChartView()
         {
-            MahApps.Metro.Controls.SplitButton btn = new SplitButton();
             var initial = new WarningChartModel() { Name = "Initial", Number = 1, IDs = null };
             var initialList = new List<WarningChartModel>() { initial };
-            Series = GroupsByNumberOfWarnings(initialList);
+            //Series = GroupsByNumberOfWarnings(initialList);
 
             Test = new ObservableCollection<string>(new string[] { "element1", "element2", "element3" });
 
-            InitializeMaterialDesign();
+            //InitializeMaterialDesign();
             InitializeComponent();
+
             
             // Places the UI where it needs to go
             this.Loaded += new RoutedEventHandler(MyWindow_Loaded);
-            this.MyCustomLegend.StatusUpdated += new EventHandler(MyEventHandlerFunction_StatusUpdated);
+            //this.MyCustomLegend.StatusUpdated += new EventHandler(MyEventHandlerFunction_StatusUpdated);
 
-            IsCheckedState = intToBool(Properties.Settings.Default.IsCheckedState);
+            //IsCheckedState = intToBool(Properties.Settings.Default.IsCheckedState);
 
-            UpdateInterfaceLayout();
+            //UpdateInterfaceLayout();
 
             DataContext = this;
         }
+        /***
         private void InitializeMaterialDesign()
         {
             // Create dummy objects to force the MaterialDesign assemblies to be loaded
@@ -272,25 +232,27 @@ namespace WC.WarningChartWPF
             return series;
         }
 
-        private static SeriesCollection GroupsByNumberOfWarnings(List<WarningChartModel> content)
+        private static ISeries[] GroupsByNumberOfWarnings(List<WarningChartModel> content)
         {
             var max = content.OrderByDescending(x => x.Number).First().Name;
 
-            var series = content
-                .Select(x => new PieSeries
-                {
-                    Values = new ChartValues<WarningChartPoint>
-                    {
-                        new WarningChartPoint {Number = x.Number, Title = x.Title, Name = x.Name}
-                    },
-                    LabelPoint = labelPoint,
-                    PushOut = x.Name == max ? pushAmount : 0,
-                    Tag = x.Name,
-                    Title = x.Title
-                }).AsSeriesCollection();
-
-            return series;
+            return content.Select(x => new PieSeries<WarningChartPoint>
+            {
+                Values = new[] { new WarningChartPoint { Number = x.Number, Title = x.Title, Name = x.Name } },
+                Name = x.Title,
+                //Mapping = (wp, chartPoint) =>
+                //{
+                //    chartPoint.PrimaryValue = wp.Number;
+                //    chartPoint.Label = wp.Title;
+                //},
+                Pushout = x.Name == max ? 12 : 0,
+                DataLabelsSize = 12,
+                DataLabelsPosition = LiveChartsCore.Measure.PolarLabelsPosition.ChartCenter,
+                Fill = new SolidColorPaint(new SKColor(255, 203, 33)),
+                //TooltipLabelFormatter = point => $"{point.Label}: {point.PrimaryValue}"
+            }).ToArray();
         }
+
 
         public List<WarningChartModel> warningModels
         {
@@ -436,6 +398,8 @@ namespace WC.WarningChartWPF
         }
         #endregion
 
+        ***/
+
         #region Location
         // On loaded, move the UI to the up-right corner
         // or load the previous position and size
@@ -489,5 +453,10 @@ namespace WC.WarningChartWPF
         }
         #endregion
 
+        private void Window_MouseDown(object sender, MouseButtonEventArgs e)
+        {
+
+        }
     }
+
 }

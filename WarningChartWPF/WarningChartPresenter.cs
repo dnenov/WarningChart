@@ -1,6 +1,5 @@
 ﻿using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
-using LiveCharts;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -20,7 +19,7 @@ namespace WC.WarningChartWPF
         private List<WarningChartModel> warningModels;        
         private ExternalEvent exEvent;
         private RequestHandler handler;
-        public WarningChartView form;
+        public WarChartView form;
         internal bool IsClosed;
 
         public UIApplication _Application
@@ -118,7 +117,7 @@ namespace WC.WarningChartWPF
 
         internal void Show(WindowHandle hWndRevit)
         {
-            form = new WarningChartView();
+            form = new WarChartView();
             System.Windows.Interop.WindowInteropHelper x = new System.Windows.Interop.WindowInteropHelper(form);
             x.Owner = hWndRevit.Handle;
             form.DocumentChanged = false;

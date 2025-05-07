@@ -1,0 +1,62 @@
+﻿<Window x:Class="WC.WarningChartWPF.WarChartView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:lvc="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
+        xmlns:local="clr-namespace:WC.WarningChartWPF"
+        mc:Ignorable="d"
+        Title="WarChartView" d:DesignHeight="400" d:DesignWidth="650" 
+        TextOptions.TextFormattingMode="Ideal"
+        MinWidth="450" MinHeight="300"
+        SizeToContent="WidthAndHeight"
+        WindowStartupLocation="CenterOwner"
+        WindowStyle="None"
+        AllowsTransparency="True"
+        ResizeMode="CanResizeWithGrip"
+        MouseDown="Window_MouseDown" 
+        Name="myWindow">
+    <Window.Background>
+        <SolidColorBrush Opacity="0" Color="White"/>
+    </Window.Background>
+    <Window.Resources>
+        <ResourceDictionary>
+
+            <local:IntToColorConverter x:Key="IntToColorConvertor"/>
+          
+        </ResourceDictionary>
+
+    </Window.Resources>
+    <Grid x:Name="mainGrid">
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" MinWidth="200"/>
+            <ColumnDefinition Width="Auto" />
+        </Grid.ColumnDefinitions>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <!--The Pie Chart-->
+        <lvc:PieChart Series="{Binding Series}" 
+                      Width="Auto"
+                      Height="Auto"
+                      Grid.Row="1" 
+                      x:Name="pieChart" 
+                      TextBlock.TextAlignment="Center"/>
+
+        <!--Window Control Toolbar-->
+        <DockPanel Grid.Column="1" Margin="0 0 10 0">
+            <!--Close Button-->
+            <Button Margin="2" DockPanel.Dock="Right" ToolTip="Close" Click="CloseButton_Click"
+                    Background="#03FFFFFF" Height="30" Width="30" BorderThickness="0" Content="X"/>
+            <!--Collapse Button-->
+            <ToggleButton Name="btnToggle" Margin="2" IsThreeState="True" DockPanel.Dock="Right" Click="CollapseButton_Click" IsChecked="{Binding IsCheckedState, Mode=OneWay}" ToolTip="Toggle Display" Content="R"
+                          Background="#03FFFFFF" Height="30" Width="30" BorderThickness="0" />
+            <!--Settings Button-->
+            <Button  Margin="2" Background="#03FFFFFF" Height="30" Width="30" BorderThickness="0" DockPanel.Dock="Right" ToolTip="Settings" Click="SettingsButton_Click"
+                     Content="S"/>
+            <Border></Border>
+        </DockPanel>
+
+    </Grid>
+</Window>

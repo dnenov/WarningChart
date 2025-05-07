@@ -4,7 +4,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
         xmlns:local="clr-namespace:WC.WarningChartWPF"
-        xmlns:lvc="clr-namespace:LiveCharts.Wpf;assembly=LiveCharts.Wpf"                     
+        xmlns:lvcwpf="clr-namespace:LiveChartsCore.SkiaSharpView.WPF;assembly=LiveChartsCore.SkiaSharpView.WPF"
         xmlns:Controls="http://metro.mahapps.com/winfx/xaml/controls"
         xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
         mc:Ignorable="d" 
@@ -17,8 +17,7 @@
         AllowsTransparency="True"
         ResizeMode="CanResizeWithGrip"
         MouseDown="Window_MouseDown" 
-        Name="myWindow"
-        d:DataContext="{d:DesignInstance local:WarningChartView}">
+        Name="myWindow">
     <Window.Background>
         <SolidColorBrush Opacity="0" Color="White"/>
     </Window.Background>
@@ -28,23 +27,11 @@
                 <ResourceDictionary Source="pack://application:,,,/Archilizer_Warchart;component/Resources/Theme.xaml"/>
             </ResourceDictionary.MergedDictionaries>
             
-            <local:IntToColorConverter x:Key="IntToColorConvertor"/>
-            <lvc:ColorsCollection x:Key="ColorsCollection">
-                <Color>#FFCB21</Color>
-                <Color>#8D99AE</Color>
-                <Color>#EDF2F4</Color>
-                <Color>#EF233C</Color>
-                <Color>#9E031E</Color>
-                <Color>#FFDECA</Color>
-                <Color>#9891BA</Color>
-                <Color>#EFE2FF</Color>
-                <Color>#F93E18</Color>
-                <Color>#B21A00</Color>
-            </lvc:ColorsCollection>
-            <Style TargetType="lvc:PieChart">
+            <!--<local:IntToColorConverter x:Key="IntToColorConvertor"/>-->
+            <!--<Style TargetType="lvcwpf:PieChart">
                 <Setter Property="SeriesColors" Value="{StaticResource ColorsCollection}"/>
-            </Style>
-            <Style TargetType="lvc:PieSeries">
+            </Style>-->
+            <!--<Style TargetType="lvcwpf:PieSeries">
                 <Setter Property="StrokeThickness" Value="0"></Setter>
                 <Setter Property="DataLabels" Value="True"></Setter>
                 <Setter Property="LabelPosition" Value="InsideSlice"></Setter>
@@ -53,7 +40,17 @@
                 <Setter Property="FontSize" Value="12"></Setter>
                 <Setter Property="Stroke" Value="Transparent"></Setter>
                 <Setter Property="TextBlock.TextAlignment" Value="Center"></Setter>
-            </Style>
+            </Style>-->
+            <!-- TooltipTemplate.xaml -->
+            <DataTemplate x:Key="CustomTooltipTemplate">
+                <Border Background="White" BorderBrush="Gray" BorderThickness="1" Padding="5">
+                    <StackPanel>
+                        <TextBlock Text="{Binding Series.Name}" FontWeight="Bold"/>
+                        <TextBlock Text="Value:" />
+                        <TextBlock Text="{Binding PrimaryValue}" />
+                    </StackPanel>
+                </Border>
+            </DataTemplate>
         </ResourceDictionary>      
         
     </Window.Resources>
@@ -67,36 +64,36 @@
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
         <!--The Pie Chart-->
-        <lvc:PieChart Series="{Binding Series}" Grid.Row="1" x:Name="pieChart" TextBlock.TextAlignment="Center" LegendLocation="None" DataClick="Chart_OnDataClick" Hoverable="False" Margin="10" ChartLegend="{x:Null}" AnimationsSpeed="0:0:0.1">
-            <lvc:PieChart.DataTooltip>
-                <local:WarningChartToolTip SelectionMode="OnlySender"/>
-            </lvc:PieChart.DataTooltip>
-        </lvc:PieChart>
-        <Label Grid.Row="1" x:Name="lblNoWarnings" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22" Foreground="#33303030">
+        <lvcwpf:PieChart Series="{Binding Series}" 
+                         Grid.Row="1" 
+                         x:Name="pieChart" 
+                         TextBlock.TextAlignment="Center"/>
+
+        <!--<Label Grid.Row="1" x:Name="lblNoWarnings" Visibility="Collapsed" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22" Foreground="#33303030">
             <TextBlock TextAlignment="Center">Congratulations!<LineBreak/>This document contains no Warnings.</TextBlock>
-        </Label>
+        </Label>-->
         <!--Custom Legend--> 
-        <DockPanel VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" Margin="10" Name="Legend" Background="Transparent">
+        <!--<DockPanel VerticalAlignment="Center" Grid.Column="1" Grid.Row="1" Margin="10" Name="Legend" Background="Transparent">
             <local:WarningChartCustomLegend x:Name="MyCustomLegend" LegendItemSelected="MyCustomLegend_LegendItemSelected"/>       
-        </DockPanel>
+        </DockPanel>-->
         <!--Number of Warnings Label-->
-        <DockPanel HorizontalAlignment="Right" MinWidth="50">
+        <!--<DockPanel HorizontalAlignment="Right" MinWidth="50">
             <Border Margin="5" Padding="5" BorderThickness="0" Background="{Binding Path=WarningNumber,Converter={StaticResource IntToColorConvertor}}" CornerRadius="4" DockPanel.Dock="Right" ToolTip="Total number of Warnings">
                 <TextBlock HorizontalAlignment="Right"  Text="{Binding WarningNumber}"  Foreground="#303030" FontWeight="Light"/>
             </Border>
-        </DockPanel>
+        </DockPanel>-->
         <!--Window Control Toolbar-->
-        <DockPanel Grid.Column="1" Margin="0 0 10 0">
-            <!--Close Button-->
+        <!--<DockPanel Grid.Column="1" Margin="0 0 10 0">
+            --><!--Close Button--><!--
             <Button Margin="2" DockPanel.Dock="Right" ToolTip="Close" Click="CloseButton_Click"
                     Style="{DynamicResource MetroCircleButtonStyle}" Background="#03FFFFFF" Height="30" Width="30" BorderThickness="0" Content="{materialDesign:PackIcon Kind=Close}"/>
-            <!--Collapse Button-->
+            --><!--Collapse Button--><!--
             <ToggleButton Name="btnToggle" Margin="2" IsThreeState="True" DockPanel.Dock="Right" Click="CollapseButton_Click" IsChecked="{Binding IsCheckedState}" ToolTip="Toggle Display"
                           Style="{DynamicResource MetroCircleButtonStyle}" Background="#03FFFFFF" Height="30" Width="30" BorderThickness="0" Content="{materialDesign:PackIcon Kind=RotateLeft}"/>
-            <!--Settings Button-->
+            --><!--Settings Button--><!--
             <Button  Margin="2" Style="{DynamicResource MetroCircleButtonStyle}" Background="#03FFFFFF" Height="30" Width="30" BorderThickness="0" DockPanel.Dock="Right" ToolTip="Settings" Click="SettingsButton_Click"
                      Content="{materialDesign:PackIcon Kind=Settings}"/>
             <Border></Border>
-        </DockPanel>
+        </DockPanel>-->
     </Grid>
 </Window>
