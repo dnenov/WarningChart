@@ -8,15 +8,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using Autodesk.Revit.ApplicationServices;
+using System.Runtime.Versioning;
+using System.Runtime.InteropServices;
 
 namespace WC.WarningChartWPF
 {
+    [SupportedOSPlatform("windows7.0")]
     public class WarningChartPresenter : IDisposable
     {
         private UIApplication uiapp;
         private Document doc;
         private List<FailureMessage> warnings;
-        private List<WarningChartModel> warningModels;        
+        private List<WarningChartModel> warningModels;
         private ExternalEvent exEvent;
         private RequestHandler handler;
         public WarChartView form;
@@ -30,7 +33,7 @@ namespace WC.WarningChartWPF
             }
             set
             {
-                if(uiapp != value)
+                if (uiapp != value)
                 {
                     uiapp = value;
                     _Document = uiapp.ActiveUIDocument.Document;
@@ -78,7 +81,7 @@ namespace WC.WarningChartWPF
             LoadData();
             // Update the Form
             form.DocumentChanged = true;
-            if(this.warningModels.Count == 0)
+            if (this.warningModels.Count == 0)
             {
                 form.NoWarnings();
             }
@@ -115,6 +118,7 @@ namespace WC.WarningChartWPF
             IsClosed = true;
         }
 
+        [SupportedOSPlatform("windows7.0")]
         internal void Show(WindowHandle hWndRevit)
         {
             form = new WarChartView();
@@ -129,15 +133,18 @@ namespace WC.WarningChartWPF
             {
                 form.YesWarnings();
                 form.warningModels = this.warningModels;
+                form.WarningNumber = this.warnings.Count;
             }
             form.WarningNumber = this.warnings.Count;
             form.Closed += FormClosed;
             form.SeriesSelectedEvent += SeriesSelected;
             form.Show();
         }
-        // Notify that the form is closed
+
+        // Notify that the System.Windows.Markup.XamlParseException: ''Provide value on 'System.Windows.Markup.StaticResourceHolder' threw an exception.' Line number '72' and line pform is closed
         private void FormClosed(object sender, EventArgs e)
         {
+            form.Dispose();
             this.Dispose();
         }
 
@@ -147,11 +154,11 @@ namespace WC.WarningChartWPF
             {
                 MakeRequest(RequestId.SelectWarnings, warningModels.First(x => x.Name.Equals(name)).IDs);
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-               //
+                //
             }
-        }      
+        }
         private void MakeRequest(RequestId request, List<ICollection<ElementId>> ids)
         {
             //MessageBox.Show("You are in the Control.Request event.");
@@ -184,6 +191,10 @@ namespace WC.WarningChartWPF
             form.IsEnabled = true;
             form.Visibility = System.Windows.Visibility.Visible;
         }
+
+
+        [DllImport("user32.dll")]
+        private static extern bool SetProcessDPIAware();
     }
 
     public class DelegateCommand : ICommand

@@ -1,8 +1,13 @@
 ﻿using LiveChartsCore;
+using LiveChartsCore.Drawing;
 using LiveChartsCore.Kernel;
+using LiveChartsCore.Kernel.Sketches;
 using LiveChartsCore.SkiaSharpView;
+using LiveChartsCore.SkiaSharpView.Drawing;
+using LiveChartsCore.SkiaSharpView.Painting;
 using LiveChartsCore.SkiaSharpView.SKCharts;
 using LiveChartsCore.SkiaSharpView.WPF;
+using SkiaSharp;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -83,19 +88,20 @@ namespace WC.WarningChartWPF
     /// <summary>
     /// Interaction logic for WarChartView.xaml
     /// </summary>
-    public partial class WarChartView : Window, INotifyPropertyChanged
+    [SupportedOSPlatform("windows7.0")]
+    public partial class WarChartView : Window, INotifyPropertyChanged, IDisposable
     {
-        public bool? IsCheckedState { get; private set; }
         public event Action<String> SeriesSelectedEvent;
+        public bool? IsCheckedState { get; private set; }
         public bool DocumentChanged { get; internal set; }
         public bool DocumentSwitched { get; internal set; }
 
         private List<WarningChartModel> _warningModels;
         private List<WarningChartModel> _previousWarningModels;
+        private const int pushAmount = 12;
 
         private Tuple<List<WarningChartModel>, List<WarningChartModel>, List<WarningChartModel>> _changes;
 
-        [SupportedOSPlatform("windows7.0")]
         public ObservableCollection<ISeries> Series { get; set; }
 
         private int _warningNumber;
@@ -127,10 +133,69 @@ namespace WC.WarningChartWPF
                 _warningModels = value;
                 _changes = Utils.FindChange(_previousWarningModels, _warningModels);
 
-                //LoadSeries();
+                LoadSeries();
+
+                pieChart.DataPointerDown += PieChartOnDataPointerDown;
+
+
+                // Hook up legend click handler
+                legend.LegendItemSelected += (s, seriesName) =>
+                {
+                    SeriesSelectedEvent?.Invoke(seriesName);
+
+                    // Reset pushouts
+                    foreach (var series in Series)
+                    {
+                        if (series is PieSeries<WarningChartPoint> pie)
+                            pie.Pushout = 0;
+                    }
+
+                    // Apply pushout to selected
+                    var selectedSeries = Series.FirstOrDefault(x => x.Name == seriesName) as PieSeries<WarningChartPoint>;
+                    if (selectedSeries != null)
+                    {
+                        selectedSeries.Pushout = pushAmount;
+                    }
+                };
             }
         }
 
+        private void PieChartOnDataPointerDown(IChartView chart, IEnumerable<ChartPoint> points)
+        {
+            var point = points.FirstOrDefault();
+            if (point == null) return;
+
+            if (point.Context.DataSource is WarningChartPoint data)
+            {
+                // Do something with your data
+                string name = data.Name;
+                SeriesSelectedEvent?.Invoke(name);
+            }
+
+            // Reset pushouts
+            foreach (var series in Series)
+            {
+                if (series is PieSeries<WarningChartPoint> pie)
+                    pie.Pushout = 0;
+            }
+
+            // Apply pushout to selected
+            if (point.Context.Series is PieSeries<WarningChartPoint> selectedPie)
+            {
+                selectedPie.Pushout = pushAmount;
+            }
+        }
+
+        public bool? intToBool(int i)
+        {
+            switch (i)
+            {
+                case 0: return null;
+                case 1: return true;
+                default:
+                    return false;
+            }
+        }
 
         public int boolToInt(bool? b)
         {
@@ -143,46 +208,171 @@ namespace WC.WarningChartWPF
             }
         }
 
-        [SupportedOSPlatform("windows7.0")]
+        /// <summary>
+        /// Color library
+        /// </summary>
+        public static readonly SKColor[] CustomColors = new[]
+        {
+            SKColor.Parse("#FFCB21"),
+            SKColor.Parse("#8D99AE"),
+            SKColor.Parse("#EDF2F4"),
+            SKColor.Parse("#EF233C"),
+            SKColor.Parse("#9E031E"),
+            SKColor.Parse("#FFDECA"),
+            SKColor.Parse("#9891BA"),
+            SKColor.Parse("#EFE2FF"),
+            SKColor.Parse("#F93E18"),
+            SKColor.Parse("#B21A00"),
+        };
+
         public WarChartView()
         {
+            var initial = new WarningChartModel() { Name = "Initial", Number = 1, IDs = null };
+            var initialList = new List<WarningChartModel>() { initial };
+
+            Series = GroupsByNumberOfWarnings(initialList);
+
             InitializeComponent();
 
-            Series = new ObservableCollection<ISeries>
-            {
-                new PieSeries<int> { Values = new[] { 10 }, Name = "Apples" },
-                new PieSeries<int> { Values = new[] { 20 }, Name = "Oranges" },
-                new PieSeries<int> { Values = new[] { 30 }, Name = "Bananas" }
-            };
-            //LoadSeries();
+            this.Loaded += new RoutedEventHandler(MyWindow_Loaded);
+            IsCheckedState = intToBool(Properties.Settings.Default.IsCheckedState);
+
+            UpdateInterfaceLayout();
 
             DataContext = this;
         }
 
-        [SupportedOSPlatform("windows7.0")]
-        private void LoadSeries()
+        public void LoadSeries()
         {
-            var points = new List<WarningChartPoint>
+            if (!DocumentChanged && !DocumentSwitched)
             {
-                new WarningChartPoint { Number = 5, Title = "Type A", Name = "Wall Warnings" },
-                new WarningChartPoint { Number = 3, Title = "Type B", Name = "Door Warnings" },
-                new WarningChartPoint { Number = 8, Title = "Type C", Name = "Misc Warnings" }
-            };
+                if (warningModels == null) return;
 
-            Series = new ObservableCollection<ISeries>(
-                 points.Select(point =>
-                     new PieSeries<WarningChartPoint>
-                     {
-                         Values = new[] { point },
-                         Name = point.Title,
-                         Mapping = (model, index) => new Coordinate(index, model.Number),
-                         DataLabelsPosition = LiveChartsCore.Measure.PolarLabelsPosition.Middle,
-                         DataLabelsSize = 14,
-                         DataLabelsFormatter = chartPoint =>
-                             $"{chartPoint.Context.Series.Name}: {chartPoint.Coordinate.PrimaryValue}"
-                     }
-                 )
-             );
+                // Only at the start
+                Series = GroupsByNumberOfWarnings(warningModels);
+            }
+            else if (DocumentSwitched)
+            {
+                // When a different document is active
+                DocumentSwitched = false;
+                // Reset the popouts
+                foreach (var series in Series)
+                {
+                    if (series is PieSeries<int> pie)
+                    {
+                        pie.Pushout = 0; // Reset push-out
+                    }
+                }
+                Series = GroupsByNumberOfWarnings(warningModels);
+            }
+            else if (DocumentChanged)
+            {
+                // When some of the warnings have changed
+                DocumentChanged = false;
+                // Reset the popouts
+                foreach (var series in Series)
+                {
+                    if (series is PieSeries<int> pie)
+                    {
+                        pie.Pushout = 0; // Reset push-out
+                    }
+                }
+                // Item1 - New
+                // Item2 - Deleted
+                // Item3 - Changed
+                if (_changes == null) return;
+                if (_changes.Item1.Count > 0)
+                {
+                    foreach (var item in GroupsByNumberOfWarnings(_changes.Item1))
+                    {
+                        Series.Add(item);
+                    }
+                }
+                if (_changes.Item2.Count > 0)
+                {
+                    foreach (var deleted in _changes.Item2)
+                    {
+                        var name = deleted.Name;
+                        var deletedSeries = Series.Cast<PieSeries<int>>().First(x => x.Tag?.Equals(name) == true); //use Series Tag to identify ...?
+
+                        Series.Remove(deletedSeries);
+                    }
+                }
+                if (_changes.Item3.Count > 0)
+                {
+                    foreach (var changed in _changes.Item3)
+                    {
+                        var name = changed.Name;
+                        var changedSeries = Series.Cast<PieSeries<int>>().First(x => x.Tag?.Equals(name) == true);  //use Series Tag to identify ...?
+
+                        if (changedSeries is PieSeries<int> pie)
+                        {
+                            var color = pie.Fill;
+                            // do something with color
+                            Series.Remove(changedSeries);
+                            Series.Add(ChagnedSeries(changed, color));
+                        }
+
+                    }
+                }
+            }
+
+            OnPropertyChanged("Series");
+        }
+
+        private static ObservableCollection<ISeries> GroupsByNumberOfWarnings(List<WarningChartModel> content)
+        {
+            var series = new ObservableCollection<ISeries>();
+            if (!content.Any()) return series;
+
+            var total = content.Sum(x => x.Number);
+            var max = content.OrderByDescending(x => x.Number).First().Name;
+
+            return new ObservableCollection<ISeries>(
+                content
+                .OrderByDescending(x => x.Number)
+                .Select((x, i) => new PieSeries<WarningChartPoint>
+                {
+                    Values = new[] { new WarningChartPoint { Number = x.Number, Title = x.Title, Name = x.Name } },
+                    Name = x.Name,
+                    Mapping = (model, index) => new Coordinate(index, model.Number),
+                    Pushout = x.Name == max ? pushAmount : 0,
+                    Stroke = null,
+                    DataLabelsSize = 12,
+                    DataLabelsPaint = new SolidColorPaint(SKColors.Black),
+                    DataLabelsPosition = LiveChartsCore.Measure.PolarLabelsPosition.Middle,
+                    Fill = new SolidColorPaint(CustomColors[i % CustomColors.Length]),
+                    DataLabelsFormatter = point =>
+                    {
+                        var value = point.Coordinate.PrimaryValue;
+                        var percent = value / total;
+                        return percent > 0.05
+                            ? string.Format("{0} {1} ({2:P})", value, Environment.NewLine, percent)
+                            : string.Empty;
+                    }
+                }).ToArray()
+            );
+        }
+
+        private static PieSeries<WarningChartPoint> ChagnedSeries(WarningChartModel content, IPaint<SkiaSharpDrawingContext> color)
+        {
+            return new PieSeries<WarningChartPoint>
+            {
+                Values = new[]
+                {
+                    new WarningChartPoint
+                    {
+                        Number = content.Number,
+                        Title = content.Title,
+                        Name = content.Name
+                    }
+                },
+                Mapping = (model, index) => new Coordinate(index, model.Number),
+                Pushout = pushAmount,
+                Tag = content.Name,
+                Fill = color,
+                Name = content.Title
+            };
         }
 
         // Drag window by clicking on any control
@@ -214,9 +404,9 @@ namespace WC.WarningChartWPF
             if (!NoProjectWarnings)
             {
                 NoProjectWarnings = true;
-                //pieChart.Visibility = Visibility.Collapsed;
-                //Legend.Visibility = Visibility.Collapsed;
-                //lblNoWarnings.Visibility = Visibility.Visible;
+                pieChart.Visibility = Visibility.Collapsed;
+                legend.Visibility = Visibility.Collapsed;
+                lblNoWarnings.Visibility = Visibility.Visible;
                 btnToggle.IsEnabled = false;
             }
         }
@@ -226,9 +416,9 @@ namespace WC.WarningChartWPF
             if (NoProjectWarnings)
             {
                 NoProjectWarnings = false;
-                //lblNoWarnings.Visibility = Visibility.Collapsed;
+                lblNoWarnings.Visibility = Visibility.Collapsed;
                 btnToggle.IsEnabled = true;
-                //ResumeInterfaceLayout();
+                ResumeInterfaceLayout();
             }
         }
 
@@ -254,24 +444,33 @@ namespace WC.WarningChartWPF
                 // 1: show everything
                 IsCheckedState = null;
                 pieChart.Visibility = Visibility.Visible;
-                //Legend.Visibility = Visibility.Visible;
+                legend.Visibility = Visibility.Visible;
+
+                splitterColumn.Width = new GridLength(5);
+                legendColumn.Width = GridLength.Auto;
             }
             else if (IsCheckedState == null)
             {
                 // 2: hide legend
                 IsCheckedState = false;
                 pieChart.Visibility = Visibility.Visible;
-                //Legend.Visibility = Visibility.Collapsed;
+                legend.Visibility = Visibility.Collapsed;
+
+                splitterColumn.Width = new GridLength(0);
+                legendColumn.Width = new GridLength(0);
             }
             else if (IsCheckedState == false)
             {
                 // 3: hide chart
                 IsCheckedState = true;
-                //pieChart.Visibility = Visibility.Collapsed;
-                pieChart.Visibility = Visibility.Visible;
-                //Legend.Visibility = Visibility.Collapsed;
+                pieChart.Visibility = Visibility.Collapsed;
+                legend.Visibility = Visibility.Collapsed;
+
+                splitterColumn.Width = new GridLength(0);
+                legendColumn.Width = new GridLength(0);
             }
         }
+
         private void ResumeInterfaceLayout()
         {
             // cycle through the three states
@@ -279,19 +478,28 @@ namespace WC.WarningChartWPF
             {
                 // 1: show everything
                 pieChart.Visibility = Visibility.Visible;
-                //Legend.Visibility = Visibility.Visible;
+                legend.Visibility = Visibility.Visible;
+
+                splitterColumn.Width = new GridLength(5);
+                legendColumn.Width = GridLength.Auto;
             }
             else if (IsCheckedState == null)
             {
                 // 2: hide legend
                 pieChart.Visibility = Visibility.Visible;
-                //Legend.Visibility = Visibility.Collapsed;
+                legend.Visibility = Visibility.Collapsed;
+
+                splitterColumn.Width = new GridLength(0);
+                legendColumn.Width = new GridLength(0);
             }
             else if (IsCheckedState == false)
             {
                 // 3: hide chart
                 pieChart.Visibility = Visibility.Visible;
-                //Legend.Visibility = Visibility.Collapsed;
+                legend.Visibility = Visibility.Collapsed;
+
+                splitterColumn.Width = new GridLength(0);
+                legendColumn.Width = new GridLength(0);
             }
         }
         #endregion
@@ -325,6 +533,16 @@ namespace WC.WarningChartWPF
                     this.Width = bounds.Width;
                     this.Height = bounds.Height;
                 }
+
+                // Set legend grid column width
+                if (Properties.Settings.Default.LegendWidth != 0)
+                {
+                    legendColumn.Width = new GridLength(Properties.Settings.Default.LegendWidth);
+                }
+                else
+                {
+                    legendColumn.Width = new GridLength(200);
+                }
             }
             catch
             {
@@ -335,6 +553,7 @@ namespace WC.WarningChartWPF
         private void SavePosition()
         {
             Properties.Settings.Default.WindowPosition = this.RestoreBounds;
+            Properties.Settings.Default.LegendWidth = legendColumn.Width.Value;
             Properties.Settings.Default.Save();
         }
         #endregion
@@ -346,6 +565,13 @@ namespace WC.WarningChartWPF
         protected virtual void OnPropertyChanged(string propertyName)
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
+
+        #region Dispose
+        public void Dispose()
+        {
+            pieChart.DataPointerDown -= PieChartOnDataPointerDown;
         }
         #endregion
     }

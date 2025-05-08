@@ -7,6 +7,9 @@
     <ProjectView>ProjectFiles</ProjectView>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Update="WarningChartWPF\CustomLegend.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="WarningChartWPF\WarChartView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>

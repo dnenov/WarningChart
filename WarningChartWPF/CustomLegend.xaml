@@ -1,0 +1,103 @@
+﻿<UserControl
+    x:Class="WC.WarningChartWPF.CustomLegend"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:WC.WarningChartWPF"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    MinWidth="175"
+    MaxWidth="300"
+    Padding="5"
+    d:DesignHeight="300"
+    d:DesignWidth="300"
+    Background="Transparent"
+    mc:Ignorable="d">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/Archilizer_Warchart;component/WarningChartWPF/MyResourceDictionary.xaml" />
+                <ResourceDictionary Source="pack://application:,,,/Archilizer_Warchart;component/Resources/Theme.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <local:PaintToBrushConverter x:Key="PaintToBrush" />
+            <local:SeriesToNumberConverter x:Key="SeriesToNumber" />
+            <!--  ListBoxItem style  -->
+            <Style TargetType="ListBoxItem">
+                <Setter Property="Background" Value="Transparent" />
+                <Setter Property="Padding" Value="0" />
+                <Setter Property="BorderThickness" Value="0" />
+                <Setter Property="Focusable" Value="False" />
+                <Setter Property="OverridesDefaultStyle" Value="True" />
+                <Setter Property="Template">
+                    <Setter.Value>
+                        <ControlTemplate TargetType="ListBoxItem">
+                            <ContentPresenter />
+                        </ControlTemplate>
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <Grid HorizontalAlignment="Stretch" VerticalAlignment="Stretch">
+        <ListBox
+            HorizontalAlignment="Stretch"
+            Background="Transparent"
+            BorderThickness="0"
+            ItemsSource="{Binding Series}">
+            <ListBox.Resources>
+                <Style TargetType="ScrollViewer">
+                    <Setter Property="HorizontalScrollBarVisibility" Value="Disabled" />
+                    <Setter Property="VerticalScrollBarVisibility" Value="Auto" />
+                    <Setter Property="CanContentScroll" Value="False" />
+                </Style>
+            </ListBox.Resources>
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <Button
+                        Height="30"
+                        Padding="2"
+                        HorizontalAlignment="Stretch"
+                        HorizontalContentAlignment="Stretch"
+                        VerticalContentAlignment="Center"
+                        Background="Transparent"
+                        BorderThickness="0"
+                        Click="LegendItem_Click">
+                        <Grid Margin="2">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+                            <Label
+                                Margin="0,0,8,0"
+                                HorizontalAlignment="Left"
+                                VerticalAlignment="Center"
+                                Content="{Binding ., Converter={StaticResource SeriesToNumber}}"
+                                FontSize="12"
+                                Foreground="#303030"
+                                SnapsToDevicePixels="True" />
+                            <Ellipse
+                                Grid.Column="1"
+                                Width="12"
+                                Height="12"
+                                Margin="0,0,8,0"
+                                Fill="{Binding Fill, Converter={StaticResource PaintToBrush}}" />
+                            <TextBlock
+                                Grid.Column="2"
+                                VerticalAlignment="Center"
+                                FontSize="12"
+                                Foreground="#303030"
+                                SnapsToDevicePixels="True"
+                                Text="{Binding Name}"
+                                TextTrimming="CharacterEllipsis"
+                                TextWrapping="NoWrap"
+                                UseLayoutRounding="True" />
+                        </Grid>
+                        <Button.ToolTip>
+                            <ToolTip Content="{Binding Name}" Style="{StaticResource CustomToolTipStyle}" />
+                        </Button.ToolTip>
+                    </Button>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+    </Grid>
+</UserControl>
