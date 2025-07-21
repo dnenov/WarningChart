@@ -51,8 +51,8 @@ namespace WC.WarningChartWPF
 
         private void Window_ContentRendered(object sender, EventArgs e)
         {
-            txtAnswer.SelectAll();
-            txtAnswer.Focus();
+            // Remove focus from textbox to avoid blue highlight
+            this.Focus();
         }
         // Check if the input text matches the Regex
         private void txtAnswer_PreviewTextInput(object sender, System.Windows.Input.TextCompositionEventArgs e)
@@ -112,28 +112,29 @@ namespace WC.WarningChartWPF
             }
         }
 
-        private void ColorButton_Click(object sender, RoutedEventArgs e)
+                private void ColorButton_Click(object sender, RoutedEventArgs e)
         {
             if (sender is Button button && int.TryParse(button.Tag.ToString(), out int colorIndex))
             {
                 try
                 {
-                    // Simple color picker using Windows forms
-                    var dialog = new System.Windows.Forms.ColorDialog();
+                    // Use our modern WPF color picker
                     var currentColor = (Color)ColorConverter.ConvertFromString(customColors[colorIndex]);
-                    dialog.Color = System.Drawing.Color.FromArgb(currentColor.A, currentColor.R, currentColor.G, currentColor.B);
-
-                    if (dialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    var dialog = new ColorPickerDialog(currentColor)
                     {
-                        var newColor = dialog.Color;
+                        Owner = this
+                    };
+                    
+                    if (dialog.ShowDialog() == true)
+                    {
+                        var newColor = dialog.SelectedColor;
                         string hexColor = $"#{newColor.A:X2}{newColor.R:X2}{newColor.G:X2}{newColor.B:X2}";
-
+                        
                         // Update the color in our array
                         customColors[colorIndex] = hexColor;
-
+                        
                         // Update button background
-                        var wpfColor = Color.FromArgb(newColor.A, newColor.R, newColor.G, newColor.B);
-                        button.Background = new SolidColorBrush(wpfColor);
+                        button.Background = new SolidColorBrush(newColor);
                     }
                 }
                 catch (Exception ex)
@@ -156,6 +157,21 @@ namespace WC.WarningChartWPF
             {
                 var color = (Color)ColorConverter.ConvertFromString(customColors[i]);
                 colorButtons[i].Background = new SolidColorBrush(color);
+            }
+        }
+
+        private void Border_MouseDown(object sender, System.Windows.Input.MouseButtonEventArgs e)
+        {
+            if (e.ChangedButton == System.Windows.Input.MouseButton.Left && e.ButtonState == System.Windows.Input.MouseButtonState.Pressed)
+            {
+                try
+                {
+                    this.DragMove();
+                }
+                catch (InvalidOperationException)
+                {
+                    // DragMove failed - ignore silently
+                }
             }
         }
     }
