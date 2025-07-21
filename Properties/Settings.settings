@@ -1,5 +1,6 @@
 ﻿<?xml version='1.0' encoding='utf-8'?>
-<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="WC.Properties" GeneratedClassName="Settings">
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings"
+  CurrentProfile="(Default)" GeneratedClassNamespace="WC.Properties" GeneratedClassName="Settings">
   <Profiles />
   <Settings>
     <Setting Name="WindowPosition" Type="System.Windows.Rect" Scope="User">
@@ -13,6 +14,9 @@
     </Setting>
     <Setting Name="LegendWidth" Type="System.Double" Scope="User">
       <Value Profile="(Default)">200</Value>
+    </Setting>
+    <Setting Name="CustomColorScheme" Type="System.String" Scope="User">
+      <Value Profile="(Default)">#00EDF2F4,#EDF2F4,#FFCB21,#B21A00,#9E031E</Value>
     </Setting>
   </Settings>
 </SettingsFile>

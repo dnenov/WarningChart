@@ -1,0 +1,207 @@
+<Window
+    x:Class="WC.WarningChartWPF.ColorPickerDialog"
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    Title="Choose Color"
+    Width="320"
+    Height="280"
+    AllowsTransparency="True"
+    Background="Transparent"
+    ResizeMode="NoResize"
+    WindowStartupLocation="CenterOwner"
+    WindowStyle="None">
+
+    <Border
+        Background="White"
+        BorderBrush="#E0E0E0"
+        BorderThickness="1"
+        CornerRadius="8"
+        MouseDown="Border_MouseDown">
+        <Border.Effect>
+            <DropShadowEffect
+                BlurRadius="10"
+                Opacity="0.2"
+                ShadowDepth="2"
+                Color="Black" />
+        </Border.Effect>
+
+        <Grid Margin="20">
+            <Grid.RowDefinitions>
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+
+            <!--  Title  -->
+            <TextBlock
+                Grid.Row="0"
+                Margin="0,0,0,15"
+                FontSize="16"
+                FontWeight="Medium"
+                Foreground="#333"
+                Text="Choose a color" />
+
+            <!--  Color Palette  -->
+            <UniformGrid
+                x:Name="colorGrid"
+                Grid.Row="1"
+                Columns="8"
+                Rows="4">
+                <!--  Colors will be populated in code-behind  -->
+            </UniformGrid>
+
+            <!--  Selected Color Preview  -->
+            <Grid Grid.Row="2" Margin="0,15,0,15">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto" />
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="Auto" />
+                </Grid.ColumnDefinitions>
+
+                <TextBlock
+                    Grid.Column="0"
+                    Margin="0,0,10,0"
+                    VerticalAlignment="Center"
+                    Foreground="#666"
+                    Text="Selected:" />
+
+                <Border
+                    x:Name="selectedColorPreview"
+                    Grid.Column="1"
+                    Height="30"
+                    Background="Red"
+                    BorderBrush="#CCC"
+                    BorderThickness="1"
+                    CornerRadius="4"
+                    Cursor="Hand"
+                    MouseDown="SelectedColorPreview_MouseDown" />
+
+                <TextBox
+                    x:Name="selectedColorText"
+                    Grid.Column="2"
+                    Width="80"
+                    Height="24"
+                    Margin="10,0,0,0"
+                    Padding="2"
+                    VerticalAlignment="Center"
+                    Background="White"
+                    BorderBrush="#CCC"
+                    BorderThickness="1"
+                    FontFamily="Consolas"
+                    FontSize="11"
+                    Foreground="#666"
+                    Text="#FF0000"
+                    TextChanged="SelectedColorText_TextChanged">
+                    <TextBox.Style>
+                        <Style TargetType="TextBox">
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="TextBox">
+                                        <Border
+                                            Padding="{TemplateBinding Padding}"
+                                            Background="{TemplateBinding Background}"
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                            CornerRadius="3">
+                                            <ScrollViewer x:Name="PART_ContentHost"
+                                                VerticalAlignment="Center" />
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsFocused" Value="True">
+                                                <Setter Property="BorderBrush" Value="#007ACC" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </TextBox.Style>
+                </TextBox>
+            </Grid>
+
+            <!--  Buttons  -->
+            <StackPanel
+                Grid.Row="3"
+                HorizontalAlignment="Right"
+                Orientation="Horizontal">
+                <Button
+                    x:Name="btnOk"
+                    Height="32"
+                    MinWidth="70"
+                    Margin="0,0,10,0"
+                    Background="#007ACC"
+                    BorderThickness="0"
+                    Click="BtnOk_Click"
+                    Content="OK"
+                    FontWeight="Medium"
+                    Foreground="White">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="#007ACC" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border
+                                            x:Name="BorderElement"
+                                            Padding="15,8"
+                                            Background="{TemplateBinding Background}"
+                                            CornerRadius="4">
+                                            <ContentPresenter HorizontalAlignment="Center"
+                                                VerticalAlignment="Center" />
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="BorderElement"
+                                                    Property="Background" Value="#005A9E" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                </Button>
+
+                <Button
+                    x:Name="btnCancel"
+                    Height="32"
+                    MinWidth="70"
+                    Background="#F5F5F5"
+                    BorderBrush="#CCC"
+                    BorderThickness="1"
+                    Click="BtnCancel_Click"
+                    Content="Cancel"
+                    Foreground="#333">
+                    <Button.Style>
+                        <Style TargetType="Button">
+                            <Setter Property="Background" Value="#F5F5F5" />
+                            <Setter Property="Template">
+                                <Setter.Value>
+                                    <ControlTemplate TargetType="Button">
+                                        <Border
+                                            x:Name="BorderElement"
+                                            Padding="15,8"
+                                            Background="{TemplateBinding Background}"
+                                            BorderBrush="{TemplateBinding BorderBrush}"
+                                            BorderThickness="{TemplateBinding BorderThickness}"
+                                            CornerRadius="4">
+                                            <ContentPresenter HorizontalAlignment="Center"
+                                                VerticalAlignment="Center" />
+                                        </Border>
+                                        <ControlTemplate.Triggers>
+                                            <Trigger Property="IsMouseOver" Value="True">
+                                                <Setter TargetName="BorderElement"
+                                                    Property="Background" Value="#E8E8E8" />
+                                            </Trigger>
+                                        </ControlTemplate.Triggers>
+                                    </ControlTemplate>
+                                </Setter.Value>
+                            </Setter>
+                        </Style>
+                    </Button.Style>
+                </Button>
+            </StackPanel>
+        </Grid>
+    </Border>
+</Window>
