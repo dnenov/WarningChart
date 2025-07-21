@@ -1,17 +1,17 @@
 ﻿<Window x:Class="WC.WarningChartWPF.WarningChartSettings"
-        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
-        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
-        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
-        xmlns:local="clr-namespace:WC.WarningChartWPF" 
-        mc:Ignorable="d"
-        TextElement.FontWeight="Light"
-        TextElement.FontSize="12"
-        TextOptions.TextFormattingMode="Ideal"
-        Title="Settings" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen"
-        Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
-        ContentRendered="Window_ContentRendered">
-    <Grid Margin="15 15 15 25"> 
+    xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+    xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+    xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+    xmlns:local="clr-namespace:WC.WarningChartWPF"
+    mc:Ignorable="d"
+    TextElement.FontWeight="Light"
+    TextElement.FontSize="12"
+    TextOptions.TextFormattingMode="Ideal"
+    Title="Settings" SizeToContent="WidthAndHeight" WindowStartupLocation="CenterScreen"
+    Background="{DynamicResource {x:Static SystemColors.ControlBrushKey}}"
+    ContentRendered="Window_ContentRendered">
+    <Grid Margin="15 15 15 25">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="Auto" />
             <ColumnDefinition Width="*" />
@@ -20,11 +20,40 @@
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
             <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
+
+        <!-- Warning Number Setting -->
         <Label Margin="0 5 5 10" Name="lblWarningNumber" Grid.Column="1">Maximum number of Warnings</Label>
-        <TextBox Margin="5 0 0 0"  Padding="2" Name="txtAnswer" Grid.Column="1" Grid.Row="1" MinWidth="250" PreviewTextInput="txtAnswer_PreviewTextInput">Answer</TextBox>
-        <WrapPanel Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0,25,0,0">
-            <Button IsDefault="True" Name="btnDialogOk" Click="btnDialogOk_Click" MinWidth="75" Margin="0,0,10,0">_Ok</Button>
+        <TextBox Margin="5 0 0 0" Padding="2" Name="txtAnswer" Grid.Column="1" Grid.Row="1"
+            MinWidth="250" PreviewTextInput="txtAnswer_PreviewTextInput">Answer</TextBox>
+
+        <!-- Color Scheme Section -->
+        <Separator Grid.Row="2" Grid.ColumnSpan="2" Margin="0,15,0,15" />
+        <Label Margin="0 5 5 10" Name="lblColorScheme" Grid.Row="3" Grid.ColumnSpan="2">Color Scheme
+            (Low to High Warning Count)</Label>
+
+        <StackPanel Grid.Row="4" Grid.ColumnSpan="2" Orientation="Horizontal" Margin="0,5,0,10">
+            <Button Name="colorButton1" Width="40" Height="25" Margin="5,0"
+                Click="ColorButton_Click" Tag="0" ToolTip="Lowest warning count color" />
+            <Button Name="colorButton2" Width="40" Height="25" Margin="5,0"
+                Click="ColorButton_Click" Tag="1" ToolTip="Low warning count color" />
+            <Button Name="colorButton3" Width="40" Height="25" Margin="5,0"
+                Click="ColorButton_Click" Tag="2" ToolTip="Medium warning count color" />
+            <Button Name="colorButton4" Width="40" Height="25" Margin="5,0"
+                Click="ColorButton_Click" Tag="3" ToolTip="High warning count color" />
+            <Button Name="colorButton5" Width="40" Height="25" Margin="5,0"
+                Click="ColorButton_Click" Tag="4" ToolTip="Highest warning count color" />
+            <Button Name="btnResetColors" Content="Reset to Default" Margin="15,0,0,0"
+                Click="btnResetColors_Click" ToolTip="Reset to default color scheme" />
+        </StackPanel>
+
+        <!-- Dialog Buttons -->
+        <WrapPanel Grid.Row="5" Grid.ColumnSpan="2" HorizontalAlignment="Right" Margin="0,25,0,0">
+            <Button IsDefault="True" Name="btnDialogOk" Click="btnDialogOk_Click" MinWidth="75"
+                Margin="0,0,10,0">_Ok</Button>
             <Button IsCancel="True" MinWidth="75">_Cancel</Button>
         </WrapPanel>
     </Grid>

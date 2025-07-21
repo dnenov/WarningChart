@@ -38,11 +38,11 @@ namespace WC.WarningChartWPF
     {
         private static GradientStopCollection grsc = new GradientStopCollection()
         {
-            new GradientStop((Color)ColorConverter.ConvertFromString("#00EDF2F4"), 0), // mellow yellow
-            new GradientStop((Color)ColorConverter.ConvertFromString("#EDF2F4"), 0.1), // mellow yellow
-            new GradientStop((Color)ColorConverter.ConvertFromString("#FFCB21"), 0.5), // anti-flash white
-            new GradientStop((Color)ColorConverter.ConvertFromString("#B21A00"), 0.9), //mordant red 19
-            new GradientStop((Color)ColorConverter.ConvertFromString("#9E031E"), 1), //heidelberg red
+            new GradientStop((Color)ColorConverter.ConvertFromString("#F2ECD5"), 0.3), // darker gray
+            new GradientStop((Color)ColorConverter.ConvertFromString("#EDF2F4"), 0.1), // light gray
+            new GradientStop((Color)ColorConverter.ConvertFromString("#FFCB21"), 0.5), // yellow
+            new GradientStop((Color)ColorConverter.ConvertFromString("#B21A00"), 0.9), // dark red
+            new GradientStop((Color)ColorConverter.ConvertFromString("#9E031E"), 1), // deep red
         };
 
         private static Color GetColorByOffset(GradientStopCollection collection, double offset)
@@ -227,6 +227,43 @@ namespace WC.WarningChartWPF
             SKColor.Parse("#B21A00"),
         };
 
+        /// <summary>
+        /// Gets dynamic colors based on user settings or falls back to CustomColors
+        /// </summary>
+        private static SKColor[] GetDynamicColors()
+        {
+            try
+            {
+                string customColors = Properties.Settings.Default.CustomColorScheme;
+                if (!string.IsNullOrEmpty(customColors))
+                {
+                    var colors = customColors.Split(',');
+                    if (colors.Length >= 5)
+                    {
+                        var dynamicColors = new List<SKColor>();
+
+                        // Add the 5 base colors from settings
+                        for (int i = 0; i < 5; i++)
+                        {
+                            var color = (Color)ColorConverter.ConvertFromString(colors[i].Trim());
+                            dynamicColors.Add(new SKColor(color.R, color.G, color.B, color.A));
+                        }
+
+                        // Add additional colors if needed (for more than 5 warning types)
+                        dynamicColors.AddRange(CustomColors.Skip(5));
+
+                        return dynamicColors.ToArray();
+                    }
+                }
+            }
+            catch
+            {
+                // Fall back to static colors if parsing fails
+            }
+
+            return CustomColors;
+        }
+
         public WarChartView()
         {
             var initial = new WarningChartModel() { Name = "Initial", Number = 1, IDs = null };
@@ -343,7 +380,7 @@ namespace WC.WarningChartWPF
                     DataLabelsSize = 12,
                     DataLabelsPaint = new SolidColorPaint(SKColors.Black),
                     DataLabelsPosition = LiveChartsCore.Measure.PolarLabelsPosition.Middle,
-                    Fill = new SolidColorPaint(CustomColors[i % CustomColors.Length]),
+                    Fill = new SolidColorPaint(GetDynamicColors()[i % GetDynamicColors().Length]),
                     DataLabelsFormatter = point =>
                     {
                         var value = point.Coordinate.PrimaryValue;
@@ -393,6 +430,22 @@ namespace WC.WarningChartWPF
                 var holder = WarningNumber;
                 WarningNumber = 0;
                 WarningNumber = holder;
+
+                // Refresh chart colors after settings change
+                RefreshChartColors();
+            }
+        }
+
+        /// <summary>
+        /// Refreshes the chart colors to reflect the current color scheme settings
+        /// </summary>
+        private void RefreshChartColors()
+        {
+            if (warningModels != null && warningModels.Any())
+            {
+                // Regenerate the series with new colors
+                Series = GroupsByNumberOfWarnings(warningModels);
+                OnPropertyChanged("Series");
             }
         }
 

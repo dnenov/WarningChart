@@ -8,66 +8,97 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace WC.Properties {
-    
-    
+namespace WC.Properties
+{
+
+
     [global::System.Runtime.CompilerServices.CompilerGeneratedAttribute()]
     [global::System.CodeDom.Compiler.GeneratedCodeAttribute("Microsoft.VisualStudio.Editors.SettingsDesigner.SettingsSingleFileGenerator", "17.13.0.0")]
-    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase {
-        
+    internal sealed partial class Settings : global::System.Configuration.ApplicationSettingsBase
+    {
+
         private static Settings defaultInstance = ((Settings)(global::System.Configuration.ApplicationSettingsBase.Synchronized(new Settings())));
-        
-        public static Settings Default {
-            get {
+
+        public static Settings Default
+        {
+            get
+            {
                 return defaultInstance;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("0,0,0,0")]
-        public global::System.Windows.Rect WindowPosition {
-            get {
+        public global::System.Windows.Rect WindowPosition
+        {
+            get
+            {
                 return ((global::System.Windows.Rect)(this["WindowPosition"]));
             }
-            set {
+            set
+            {
                 this["WindowPosition"] = value;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("2000")]
-        public int WarningNumber {
-            get {
+        public int WarningNumber
+        {
+            get
+            {
                 return ((int)(this["WarningNumber"]));
             }
-            set {
+            set
+            {
                 this["WarningNumber"] = value;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("1")]
-        public int IsCheckedState {
-            get {
+        public int IsCheckedState
+        {
+            get
+            {
                 return ((int)(this["IsCheckedState"]));
             }
-            set {
+            set
+            {
                 this["IsCheckedState"] = value;
             }
         }
-        
+
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
         [global::System.Configuration.DefaultSettingValueAttribute("200")]
-        public double LegendWidth {
-            get {
+        public double LegendWidth
+        {
+            get
+            {
                 return ((double)(this["LegendWidth"]));
             }
-            set {
+            set
+            {
                 this["LegendWidth"] = value;
+            }
+        }
+
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("#F2ECD5,#EDF2F4,#FFCB21,#B21A00,#9E031E")]
+        public string CustomColorScheme
+        {
+            get
+            {
+                return ((string)(this["CustomColorScheme"]));
+            }
+            set
+            {
+                this["CustomColorScheme"] = value;
             }
         }
     }
