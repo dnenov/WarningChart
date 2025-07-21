@@ -1,224 +1,227 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
-  <PropertyGroup>
-    <TargetFramework>net8.0-windows7.0</TargetFramework>
-    <OutputType>Library</OutputType>
-    <RootNamespace>WC</RootNamespace>
-    <AssemblyName>Archilizer_Warchart</AssemblyName>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <UseWindowsForms>true</UseWindowsForms>
-    <UseWPF>true</UseWPF>
-    <ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <OutputPath>bin\Debug\Archilizer_Warchart.bundle\</OutputPath>
-    <StartAction>Program</StartAction>
-    <StartProgram>$(ProgramW6432)\Autodesk\Revit 2025\Revit.exe</StartProgram>
-    <PlatformTarget>x64</PlatformTarget>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <StartAction>Program</StartAction>
-    <StartProgram>$(ProgramW6432)\Autodesk\Revit 2025\Revit.exe</StartProgram>
-  </PropertyGroup>
-  <PropertyGroup>
-    <ApplicationIcon>archilizer.ico</ApplicationIcon>
-  </PropertyGroup>
-  <PropertyGroup>
-	<NoWarn>NU1701</NoWarn>
-  </PropertyGroup>
-  <ItemGroup>
-    <Content Include="archilizer.ico" />
-    <Content Include="Archilizer_Warchart.addin" />
-    <EmbeddedResource Include="Resources\icon_Warchart.png" />
-    <Resource Include="Resources\warchart.png" />
-    <Resource Include="PackageContents.xml" />
-    <Resource Include="Resources\archilizer_warchart.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <PackageReference Include="ControlzEx" Version="7.0.0" />
-	<PackageReference Include="LiveChartsCore" Version="2.0.0-rc3.3" />
-	<PackageReference Include="LiveChartsCore.SkiaSharpView" Version="2.0.0-rc3.3" />
-	<PackageReference Include="LiveChartsCore.SkiaSharpView.WPF" Version="2.0.0-rc3.3" />
-	  
-    <PackageReference Include="MaterialDesignColors" Version="5.2.1" />
-    <PackageReference Include="MaterialDesignThemes" Version="5.2.1" />
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Badged.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\ButtonProgressAssist.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Card.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Chip.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Clock.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\ClockChoiceMadeEventArgs.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\ClockItemButton.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\ColorZone.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\ColorZoneAssist.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\ComboBoxAssist.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\ComboBoxPopup.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\BooleanToVisibilityConverter.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\BrushRoundConverter.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\BrushToRadialGradientBrushConverter.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\CalendarDateCoalesceConverter.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\CircularProgressBar\ArcEndPointConverter.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\CircularProgressBar\ArcSizeConverter.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\CircularProgressBar\LargeArcConverter.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\CircularProgressBar\LocalEx.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\CircularProgressBar\RotateTransformCentreConverter.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\CircularProgressBar\RotateTransformConverter.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\CircularProgressBar\StartPointConverter.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\ClockItemIsCheckedConverter.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\ClockLineConverter.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\DrawerOffsetConverter.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\EqualityToVisibilityConverter.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\HintProxyFabricConverter.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\ListViewItemContainerStyleConverter.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\MathConverter.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\MathMultipleConverter.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\NotConverter.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\NotZeroConverter.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\NotZeroToVisibilityConverter.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\NullableDateTimeToCurrentDateConverter.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\NullToVisibilityConverter.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\PointValueConverter.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\RangeLengthConverter.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\RangePositionConverterConverter.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\ShadowConverter.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\ShadowEdgeConverter.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\ShadowInfo.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\SizeToRectConverter.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\SnackbarMessageTypeConverter.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\TextFieldHintVisibilityConverter.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\TimeToVisibilityConverter.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\CustomPopupPlacementCallbackHelper.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\DataGridAssist.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\DateTimeEx.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\DialogClosingEventArgs.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\DialogClosingEventHandler.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\DialogHost.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\DialogHostEx.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\DialogOpenedEventArgs.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\DialogOpenedEventHandler.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\DialogSession.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\DpiHelper.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\DrawerHost.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Extensions.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Flipper.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\HintAssist.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\HintProxyFabric.ComboBox.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\HintProxyFabric.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\HintProxyFabric.PasswordBox.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\HintProxyFabric.TextBox.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Icon.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\IconType.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\IHintProxy.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\ISnackbarMessageQueue.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\ListBoxAssist.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\ListSortDirectionIndicator.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\ListViewAssist.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\MaterialDataGridComboBoxColumn.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\MaterialDataGridTextColumn.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\MaterialDateDisplay.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\MessageQueueExtension.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\obj\AppVeyor\GeneratedInternalTypeHelper.g.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\PackIcon.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\PackIconDataFactory.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\PackIconExtension.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\PackIconKind.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Palette.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\PaletteHelper.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Plane3D.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\PopupBox.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Properties\AssemblyInfo.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Properties\Resources.Designer.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Properties\Settings.Designer.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\RatingBar.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\RatingBarButton.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Ripple.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\RippleAssist.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\ScaleHost.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Screen.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\ScrollViewerAssist.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\ShadowAssist.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\SmartHint.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Snackbar.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\SnackbarMessage.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\SnackbarMessageEventArgs.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\SnackbarMessageQueue.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\SnackbarMessageQueueItem.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Spelling.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\StringExtensions.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\TextFieldAssist.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\TimePicker.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\ToggleButtonAssist.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\ToolTipAssist.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Transitions\CircleWipe.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Transitions\FadeWipe.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Transitions\IndexedItemOffsetMultiplierExtension.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Transitions\ITransitionEffect.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Transitions\ITransitionEffectSubject.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Transitions\ITransitionWipe.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Transitions\IZIndexController.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Transitions\SlideDirection.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Transitions\SlideOutWipe.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Transitions\SlideWipe.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Transitions\TransitionAssist.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Transitions\TransitionEffect.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Transitions\TransitionEffectBase.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Transitions\TransitionEffectExtension.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Transitions\TransitionEffectKind.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Transitions\TransitionEffectTypeConverter.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Transitions\Transitioner.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Transitions\TransitionerSlide.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Transitions\TransitionerSlideState.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Transitions\TransitioningContent.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Transitions\TransitioningContentBase.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\TreeHelper.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\TreeViewAssist.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Underline.cs" />
-    <Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\ValidationAssist.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <Reference Include="RevitAPI">
-      <HintPath>..\..\..\..\..\Program Files\Autodesk\Revit 2026\RevitAPI.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-    <Reference Include="RevitAPIUI">
-      <HintPath>..\..\..\..\..\Program Files\Autodesk\Revit 2026\RevitAPIUI.dll</HintPath>
-      <Private>False</Private>
-    </Reference>
-  </ItemGroup>
-  <ItemGroup>
-    <Compile Update="Properties\Settings.Designer.cs">
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-    </Compile>
-  </ItemGroup>
-  <ItemGroup>
-    <None Update="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-  </ItemGroup>
-  <PropertyGroup>
-    <PostBuildEvent>
-		copy "$(MSBuildProjectDirectory)\Archilizer_Warchart.addin" "C:\ProgramData\Autodesk\ApplicationPlugins\Archilizer_Warchart_2025.bundle\Content\windows"
-		copy "$(MSBuildProjectDirectory)\PackageContents.xml" "C:\ProgramData\Autodesk\ApplicationPlugins\Archilizer_Warchart_2025.bundle"
-		copy "$(MSBuildProjectDirectory)\bin\Debug\Archilizer_Warchart.bundle\net8.0-windows7.0\*.*" "C:\ProgramData\Autodesk\ApplicationPlugins\Archilizer_Warchart_2025.bundle\Content\windows"</PostBuildEvent>
-  </PropertyGroup>
-  <PropertyGroup>
-    <PreBuildEvent>if not exist  "C:\ProgramData\Autodesk\ApplicationPlugins\Archilizer_Warchart_2025.bundle\Content\windows" mkdir  "C:\ProgramData\Autodesk\ApplicationPlugins\Archilizer_Warchart_2025.bundle\Content\windows"</PreBuildEvent>
-  </PropertyGroup>
-  <Target Name="EnsureLiveChartsCopied" AfterTargets="Build">
+	<PropertyGroup>
+		<TargetFramework>net8.0-windows7.0</TargetFramework>
+		<OutputType>Library</OutputType>
+		<RootNamespace>WC</RootNamespace>
+		<AssemblyName>Archilizer_Warchart</AssemblyName>
+		<GenerateAssemblyInfo>true</GenerateAssemblyInfo>
+		<UseWindowsForms>true</UseWindowsForms>
+		<UseWPF>true</UseWPF>
+		<ImportWindowsDesktopTargets>true</ImportWindowsDesktopTargets>
+		<Version>0.1.4</Version>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+		<OutputPath>bin\Debug\Archilizer_Warchart.bundle\</OutputPath>
+		<StartAction>Program</StartAction>
+		<StartProgram>$(ProgramW6432)\Autodesk\Revit 2025\Revit.exe</StartProgram>
+		<PlatformTarget>x64</PlatformTarget>
+	</PropertyGroup>
+	<PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+		<StartAction>Program</StartAction>
+		<StartProgram>$(ProgramW6432)\Autodesk\Revit 2025\Revit.exe</StartProgram>
+	</PropertyGroup>
+	<PropertyGroup>
+		<ApplicationIcon>archilizer.ico</ApplicationIcon>
+	</PropertyGroup>
+	<PropertyGroup>
+		<NoWarn>NU1701</NoWarn>
+	</PropertyGroup>
 	<ItemGroup>
-		<ResolvedFileToCopy Include="$(UserProfile)\.nuget\packages\livechartscore\2.0.0-rc3.3\lib\net8.0\LiveChartsCore.dll" />
-		<ResolvedFileToCopy Include="$(UserProfile)\.nuget\packages\livechartscore.skiasharpview\2.0.0-rc3.3\lib\net8.0\LiveChartsCore.SkiaSharpView.dll" />
-		<ResolvedFileToCopy Include="$(UserProfile)\.nuget\packages\livechartscore.skiasharpview.wpf\2.0.0-rc3.3\lib\net462\LiveChartsCore.SkiaSharpView.WPF.dll" />
+		<Content Include="archilizer.ico" />
+		<Content Include="Archilizer_Warchart.addin" />
+		<EmbeddedResource Include="Resources\icon_Warchart.png" />
+		<Resource Include="Resources\warchart.png" />
+		<Resource Include="PackageContents.xml" />
+		<Resource Include="Resources\archilizer_warchart.png" />
 	</ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="ControlzEx" Version="7.0.0" />
+		<PackageReference Include="LiveChartsCore" Version="2.0.0-rc3.3" />
+		<PackageReference Include="LiveChartsCore.SkiaSharpView" Version="2.0.0-rc3.3" />
+		<PackageReference Include="LiveChartsCore.SkiaSharpView.WPF" Version="2.0.0-rc3.3" />
 
-	<Copy SourceFiles="@(ResolvedFileToCopy)" DestinationFolder="$(OutputPath)" SkipUnchangedFiles="true" />
-  </Target>
-  <Target Name="AfterClean">
-    <Delete Files="$(AppData)\Autodesk\REVIT\Addins\2017\WarningChart.addin" />
-    <Delete Files="$(AppData)\Autodesk\REVIT\Addins\2017\WarningChart.dll" />
-  </Target>
+		<PackageReference Include="MaterialDesignColors" Version="5.2.1" />
+		<PackageReference Include="MaterialDesignThemes" Version="5.2.1" />
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Badged.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\ButtonProgressAssist.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Card.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Chip.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Clock.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\ClockChoiceMadeEventArgs.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\ClockItemButton.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\ColorZone.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\ColorZoneAssist.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\ComboBoxAssist.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\ComboBoxPopup.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\BooleanToVisibilityConverter.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\BrushRoundConverter.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\BrushToRadialGradientBrushConverter.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\CalendarDateCoalesceConverter.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\CircularProgressBar\ArcEndPointConverter.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\CircularProgressBar\ArcSizeConverter.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\CircularProgressBar\LargeArcConverter.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\CircularProgressBar\LocalEx.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\CircularProgressBar\RotateTransformCentreConverter.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\CircularProgressBar\RotateTransformConverter.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\CircularProgressBar\StartPointConverter.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\ClockItemIsCheckedConverter.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\ClockLineConverter.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\DrawerOffsetConverter.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\EqualityToVisibilityConverter.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\HintProxyFabricConverter.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\ListViewItemContainerStyleConverter.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\MathConverter.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\MathMultipleConverter.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\NotConverter.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\NotZeroConverter.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\NotZeroToVisibilityConverter.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\NullableDateTimeToCurrentDateConverter.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\NullToVisibilityConverter.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\PointValueConverter.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\RangeLengthConverter.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\RangePositionConverterConverter.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\ShadowConverter.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\ShadowEdgeConverter.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\ShadowInfo.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\SizeToRectConverter.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\SnackbarMessageTypeConverter.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\TextFieldHintVisibilityConverter.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Converters\TimeToVisibilityConverter.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\CustomPopupPlacementCallbackHelper.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\DataGridAssist.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\DateTimeEx.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\DialogClosingEventArgs.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\DialogClosingEventHandler.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\DialogHost.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\DialogHostEx.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\DialogOpenedEventArgs.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\DialogOpenedEventHandler.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\DialogSession.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\DpiHelper.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\DrawerHost.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Extensions.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Flipper.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\HintAssist.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\HintProxyFabric.ComboBox.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\HintProxyFabric.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\HintProxyFabric.PasswordBox.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\HintProxyFabric.TextBox.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Icon.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\IconType.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\IHintProxy.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\ISnackbarMessageQueue.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\ListBoxAssist.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\ListSortDirectionIndicator.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\ListViewAssist.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\MaterialDataGridComboBoxColumn.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\MaterialDataGridTextColumn.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\MaterialDateDisplay.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\MessageQueueExtension.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\obj\AppVeyor\GeneratedInternalTypeHelper.g.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\PackIcon.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\PackIconDataFactory.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\PackIconExtension.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\PackIconKind.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Palette.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\PaletteHelper.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Plane3D.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\PopupBox.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Properties\AssemblyInfo.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Properties\Resources.Designer.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Properties\Settings.Designer.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\RatingBar.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\RatingBarButton.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Ripple.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\RippleAssist.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\ScaleHost.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Screen.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\ScrollViewerAssist.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\ShadowAssist.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\SmartHint.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Snackbar.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\SnackbarMessage.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\SnackbarMessageEventArgs.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\SnackbarMessageQueue.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\SnackbarMessageQueueItem.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Spelling.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\StringExtensions.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\TextFieldAssist.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\TimePicker.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\ToggleButtonAssist.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\ToolTipAssist.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Transitions\CircleWipe.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Transitions\FadeWipe.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Transitions\IndexedItemOffsetMultiplierExtension.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Transitions\ITransitionEffect.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Transitions\ITransitionEffectSubject.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Transitions\ITransitionWipe.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Transitions\IZIndexController.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Transitions\SlideDirection.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Transitions\SlideOutWipe.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Transitions\SlideWipe.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Transitions\TransitionAssist.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Transitions\TransitionEffect.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Transitions\TransitionEffectBase.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Transitions\TransitionEffectExtension.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Transitions\TransitionEffectKind.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Transitions\TransitionEffectTypeConverter.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Transitions\Transitioner.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Transitions\TransitionerSlide.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Transitions\TransitionerSlideState.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Transitions\TransitioningContent.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Transitions\TransitioningContentBase.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\TreeHelper.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\TreeViewAssist.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\Underline.cs" />
+		<Compile Remove="packages\MaterialDesignThemes.2.4.0.1044\src\net45\ValidationAssist.cs" />
+	</ItemGroup>
+	<ItemGroup>
+		<Reference Include="RevitAPI">
+			<HintPath>..\..\..\..\..\Program Files\Autodesk\Revit 2026\RevitAPI.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+		<Reference Include="RevitAPIUI">
+			<HintPath>..\..\..\..\..\Program Files\Autodesk\Revit 2026\RevitAPIUI.dll</HintPath>
+			<Private>False</Private>
+		</Reference>
+	</ItemGroup>
+	<ItemGroup>
+		<Compile Update="Properties\Settings.Designer.cs">
+			<DesignTimeSharedInput>True</DesignTimeSharedInput>
+			<AutoGen>True</AutoGen>
+			<DependentUpon>Settings.settings</DependentUpon>
+		</Compile>
+	</ItemGroup>
+	<ItemGroup>
+		<None Update="Properties\Settings.settings">
+			<Generator>SettingsSingleFileGenerator</Generator>
+			<LastGenOutput>Settings.Designer.cs</LastGenOutput>
+		</None>
+	</ItemGroup>
+	<PropertyGroup>
+		<PostBuildEvent>
+			copy "$(MSBuildProjectDirectory)\Archilizer_Warchart.addin" "$(AppData)\Autodesk\ApplicationPlugins\Archilizer_Warchart.bundle\Content\2026\windows"
+			copy "$(MSBuildProjectDirectory)\PackageContents.xml" "$(AppData)\Autodesk\ApplicationPlugins\Archilizer_Warchart.bundle"
+			copy "$(MSBuildProjectDirectory)\bin\Debug\Archilizer_Warchart.bundle\net8.0-windows7.0\*.*" "$(AppData)\Autodesk\ApplicationPlugins\Archilizer_Warchart.bundle\Content\2026\windows"
+		</PostBuildEvent>
+	</PropertyGroup>
+	<PropertyGroup>
+		<PreBuildEvent>if not exist "$(AppData)\Autodesk\ApplicationPlugins\Archilizer_Warchart.bundle\Content\2026\windows" mkdir "$(AppData)\Autodesk\ApplicationPlugins\Archilizer_Warchart.bundle\Content\2026\windows"</PreBuildEvent>
+		<RunPostBuildEvent>Always</RunPostBuildEvent>
+	</PropertyGroup>
+	<Target Name="EnsureLiveChartsCopied" AfterTargets="Build">
+		<ItemGroup>
+			<ResolvedFileToCopy Include="$(UserProfile)\.nuget\packages\livechartscore\2.0.0-rc3.3\lib\net8.0\LiveChartsCore.dll" />
+			<ResolvedFileToCopy Include="$(UserProfile)\.nuget\packages\livechartscore.skiasharpview\2.0.0-rc3.3\lib\net8.0\LiveChartsCore.SkiaSharpView.dll" />
+			<ResolvedFileToCopy Include="$(UserProfile)\.nuget\packages\livechartscore.skiasharpview.wpf\2.0.0-rc3.3\lib\net462\LiveChartsCore.SkiaSharpView.WPF.dll" />
+		</ItemGroup>
+
+		<Copy SourceFiles="@(ResolvedFileToCopy)" DestinationFolder="$(OutputPath)" SkipUnchangedFiles="true" />
+	</Target>
+	<Target Name="AfterClean">
+		<Delete Files="$(AppData)\Autodesk\REVIT\Addins\2017\WarningChart.addin" />
+		<Delete Files="$(AppData)\Autodesk\REVIT\Addins\2017\WarningChart.dll" />
+	</Target>
 </Project>

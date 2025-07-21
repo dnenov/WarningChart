@@ -13,6 +13,7 @@ using System.Windows.Forms;
 using Autodesk.Revit.UI.Events;
 using System.Collections;
 using WC.Helpers;
+using System.IO;
 #endregion
 
 namespace WC
@@ -45,7 +46,7 @@ namespace WC
             NewRevitPanel = CApp.CreateRibbonPanel(TabName, PanelName);
 
             NewOrExtgRevitPanel = NewRevitPanel;
-            FoundSoJumpPastNew:
+        FoundSoJumpPastNew:
 
             return NewOrExtgRevitPanel;
         }
@@ -60,7 +61,15 @@ namespace WC
         // Current Document
         private Document _document;
         // Hardcoded helpfile path
-        static string helpFile = "file:///C:/ProgramData/Autodesk/ApplicationPlugins/Archilizer_Warchart.bundle/Content/Help/Warchart%20_%20Revit%20_%20Autodesk%20App%20Store.html";
+        private static string helpFolderPath = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.ApplicationData),
+             "Autodesk",
+             "ApplicationPlugins",
+             "Archilizer_Warchart.bundle",
+             "Content",
+             "Help");
+        private static string helpFilePath = Path.Combine(helpFolderPath, "Warchart _ Revit _ Autodesk App Store.html");
+        private static string helpFile = new Uri(helpFilePath).AbsoluteUri;
+        //static string helpFile = "file:///C:/ProgramData/Autodesk/ApplicationPlugins/Archilizer_Warchart.bundle/Content/Help/Warchart%20_%20Revit%20_%20Autodesk%20App%20Store.html";
         private bool _disabled;
 
         static void AddRibbonPanel(UIControlledApplication application)
@@ -87,7 +96,7 @@ namespace WC
             var ch = new ContextualHelp(ContextualHelpType.Url, @helpFile);
 
             CreatePushButton(ribbonPanel, String.Format("Warning" + Environment.NewLine + "Chart"), thisAssemblyPath, "WC.CommandWarningChart",
-                String.Format("Displays a Pie Chart representing Project Warnings.{0}{0}v{1}", Environment.NewLine, assemblyVersion), "WC.Resources.icon_Warchart.png", ch);            
+                String.Format("Displays a Pie Chart representing Project Warnings.{0}{0}v{1}", Environment.NewLine, assemblyVersion), "WC.Resources.icon_Warchart.png", ch);
         }
 
         private static void CreatePushButton(RibbonPanel ribbonPanel, string name, string path, string command, string tooltip, string icon, ContextualHelp ch)
@@ -117,8 +126,8 @@ namespace WC
 
             // Make sure you have to update the plugin
             string version = a.ControlledApplication.VersionNumber;
-            
-            AddRibbonPanel(a);            
+
+            AddRibbonPanel(a);
 
             _presenter = null;  // no dialog needed yet; ThermalAsset command will bring it
             thisApp = this;  // static access to this application instance                                                    
@@ -158,9 +167,9 @@ namespace WC
             Document doc = e.CurrentActiveView.Document;
 
             // If the document is a Family Document, disable the UI
-            if(doc.IsFamilyDocument)
+            if (doc.IsFamilyDocument)
             {
-                if(!_disabled && _presenter != null)
+                if (!_disabled && _presenter != null)
                 {
                     _presenter.Disable();
                     _disabled = true;
@@ -169,7 +178,7 @@ namespace WC
             }
             else
             {
-                if(_disabled)
+                if (_disabled)
                 {
                     _presenter.Enable();
                     _disabled = false;
@@ -236,7 +245,7 @@ namespace WC
                     //pass parent (Revit) thread here
                     _presenter.Show(_hWndRevit);
                 }
-                catch(Exception ex)
+                catch (Exception ex)
                 {
                     Autodesk.Revit.UI.TaskDialog.Show("Error", ex.Message);
                     _presenter.Dispose();

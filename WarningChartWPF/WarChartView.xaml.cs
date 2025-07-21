@@ -25,6 +25,8 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.IO;
+using Microsoft.Win32;
 
 namespace WC.WarningChartWPF
 {
@@ -392,6 +394,184 @@ namespace WC.WarningChartWPF
                 WarningNumber = 0;
                 WarningNumber = holder;
             }
+        }
+
+        private void SnapshotButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                SaveSnapshot();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Failed to save snapshot: {ex.Message}", "Error", MessageBoxButton.OK, MessageBoxImage.Error);
+            }
+        }
+
+        private void SaveSnapshot()
+        {
+            // Create SaveFileDialog
+            SaveFileDialog saveDialog = new SaveFileDialog()
+            {
+                Title = "Save Chart Snapshot",
+                Filter = "PNG Image (*.png)|*.png|JPEG Image (*.jpg)|*.jpg|Bitmap Image (*.bmp)|*.bmp",
+                DefaultExt = "png",
+                FileName = $"WarningChart_Snapshot_{DateTime.Now:yyyy-MM-dd_HH-mm-ss}"
+            };
+
+            if (saveDialog.ShowDialog() == true)
+            {
+                // Create a container for just the chart content (excluding toolbar)
+                Grid contentGrid = new Grid();
+
+                // Set up the same column structure as the main grid
+                contentGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(1, GridUnitType.Star), MinWidth = 200 });
+                contentGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(5) });
+                contentGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = new GridLength(200), MinWidth = 200, MaxWidth = 300 });
+
+                // Clone the chart elements (excluding buttons)
+                var chartClone = CreateVisualClone(pieChart);
+                var legendClone = CreateVisualClone(legend);
+                var splitterClone = CreateVisualClone(mainGrid.Children.OfType<GridSplitter>().FirstOrDefault());
+                var warningLabelClone = CreateVisualClone(lblNoWarnings);
+                var warningCountClone = CreateVisualClone(mainGrid.Children.OfType<DockPanel>().FirstOrDefault(dp =>
+                    dp.HorizontalAlignment == HorizontalAlignment.Right && dp.MinWidth == 50));
+
+                // Add elements to the content grid
+                if (chartClone != null)
+                {
+                    Grid.SetColumn(chartClone, 0);
+                    contentGrid.Children.Add(chartClone);
+                }
+
+                if (warningLabelClone != null)
+                {
+                    Grid.SetColumn(warningLabelClone, 0);
+                    contentGrid.Children.Add(warningLabelClone);
+                }
+
+                if (splitterClone != null)
+                {
+                    Grid.SetColumn(splitterClone, 1);
+                    contentGrid.Children.Add(splitterClone);
+                }
+
+                if (legendClone != null)
+                {
+                    Grid.SetColumn(legendClone, 2);
+                    contentGrid.Children.Add(legendClone);
+                }
+
+                if (warningCountClone != null)
+                {
+                    Grid.SetColumn(warningCountClone, 0);
+                    contentGrid.Children.Add(warningCountClone);
+                }
+
+                // Set the size based on the current chart area
+                double chartWidth = mainGrid.ActualWidth;
+                double chartHeight = mainGrid.ActualHeight - 40; // Subtract approximate toolbar height
+
+                contentGrid.Width = chartWidth;
+                contentGrid.Height = chartHeight;
+
+                // Force layout
+                contentGrid.Measure(new Size(chartWidth, chartHeight));
+                contentGrid.Arrange(new Rect(0, 0, chartWidth, chartHeight));
+
+                // Create render bitmap at standard DPI 
+                RenderTargetBitmap renderBitmap = new RenderTargetBitmap(
+                    (int)chartWidth,
+                    (int)chartHeight,
+                    96d, // DPI X
+                    96d, // DPI Y  
+                    PixelFormats.Pbgra32); // Supports transparency
+
+                // Render directly without background for transparency
+                renderBitmap.Render(contentGrid);
+
+                // Determine the encoder based on file extension
+                BitmapEncoder encoder;
+                string extension = System.IO.Path.GetExtension(saveDialog.FileName).ToLower();
+                switch (extension)
+                {
+                    case ".jpg":
+                    case ".jpeg":
+                        // JPEG doesn't support transparency, so add white background
+                        encoder = new JpegBitmapEncoder();
+                        renderBitmap = AddWhiteBackground(renderBitmap);
+                        break;
+                    case ".bmp":
+                        encoder = new BmpBitmapEncoder();
+                        renderBitmap = AddWhiteBackground(renderBitmap);
+                        break;
+                    default:
+                        // PNG supports transparency
+                        encoder = new PngBitmapEncoder();
+                        break;
+                }
+
+                encoder.Frames.Add(BitmapFrame.Create(renderBitmap));
+
+                // Save the image
+                using (FileStream stream = new FileStream(saveDialog.FileName, FileMode.Create))
+                {
+                    encoder.Save(stream);
+                }
+
+                MessageBox.Show($"Chart snapshot saved successfully!\n\nLocation: {saveDialog.FileName}",
+                    "Snapshot Saved", MessageBoxButton.OK, MessageBoxImage.Information);
+            }
+        }
+
+        private FrameworkElement CreateVisualClone(FrameworkElement original)
+        {
+            if (original == null) return null;
+
+            // Create a visual brush of the original element
+            VisualBrush visualBrush = new VisualBrush(original);
+
+            // Create a rectangle with the visual brush
+            Rectangle rect = new Rectangle();
+            rect.Width = original.ActualWidth;
+            rect.Height = original.ActualHeight;
+            rect.Fill = visualBrush;
+            rect.HorizontalAlignment = original.HorizontalAlignment;
+            rect.VerticalAlignment = original.VerticalAlignment;
+            rect.Margin = original.Margin;
+
+            // Copy visibility
+            rect.Visibility = original.Visibility;
+
+            return rect;
+        }
+
+        private RenderTargetBitmap AddWhiteBackground(RenderTargetBitmap originalBitmap)
+        {
+            // Create a new visual with white background for formats that don't support transparency
+            Grid backgroundGrid = new Grid();
+            backgroundGrid.Background = Brushes.White;
+            backgroundGrid.Width = originalBitmap.Width;
+            backgroundGrid.Height = originalBitmap.Height;
+
+            Rectangle imageRect = new Rectangle();
+            imageRect.Width = originalBitmap.Width;
+            imageRect.Height = originalBitmap.Height;
+            imageRect.Fill = new ImageBrush(originalBitmap);
+
+            backgroundGrid.Children.Add(imageRect);
+
+            backgroundGrid.Measure(new Size(originalBitmap.Width, originalBitmap.Height));
+            backgroundGrid.Arrange(new Rect(0, 0, originalBitmap.Width, originalBitmap.Height));
+
+            RenderTargetBitmap result = new RenderTargetBitmap(
+                (int)originalBitmap.Width,
+                (int)originalBitmap.Height,
+                96d, 96d,
+                PixelFormats.Pbgra32);
+
+            result.Render(backgroundGrid);
+            return result;
         }
 
         // If there are no warnings in the current project
