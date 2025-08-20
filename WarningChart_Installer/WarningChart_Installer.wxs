@@ -6,6 +6,14 @@
         Version="2.0.0"
         UpgradeCode="07aefb8b-15af-4b0b-b0c9-f16cad02ef5e"
         Language="1033">
+
+		<!-- Properties for silent installation -->
+		<Property Id="UILevel" Value="5" />
+		<Property Id="INSTALLLEVEL" Value="1" />
+
+		<!-- Silent installation properties -->
+		<Property Id="REBOOT" Value="ReallySuppress" />
+		
         <MediaTemplate EmbedCab="yes" />
 
         <StandardDirectory Id="AppDataFolder">
