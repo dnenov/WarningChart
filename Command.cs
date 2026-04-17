@@ -24,8 +24,19 @@ namespace WC
             }
             catch (Exception ex)
             {
-                message += global_message;
-                message = ex.Message;
+                var sb = new System.Text.StringBuilder();
+                sb.AppendLine(ex.GetType().FullName + ": " + ex.Message);
+                var inner = ex.InnerException;
+                int depth = 0;
+                while (inner != null && depth < 5)
+                {
+                    sb.AppendLine("--- Inner [" + depth + "] " + inner.GetType().FullName + ": " + inner.Message);
+                    inner = inner.InnerException;
+                    depth++;
+                }
+                sb.AppendLine("--- Stack ---");
+                sb.AppendLine(ex.StackTrace);
+                message = sb.ToString();
                 return Result.Failed;
             }
         }
