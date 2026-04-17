@@ -14,6 +14,7 @@ using Autodesk.Revit.UI.Events;
 using System.Collections;
 using WC.Helpers;
 using System.IO;
+using System.Runtime.InteropServices;
 #endregion
 
 namespace WC
@@ -119,8 +120,74 @@ namespace WC
             pb.SetContextualHelp(ch);
         }
 
+        [DllImport("kernel32.dll", SetLastError = true, CharSet = CharSet.Unicode)]
+        [return: MarshalAs(UnmanagedType.Bool)]
+        private static extern bool SetDllDirectory(string lpPathName);
+
+        private static string _addinDirectory;
+
+        private static Assembly OnAssemblyResolve(object sender, ResolveEventArgs args)
+        {
+            if (_addinDirectory == null) return null;
+            var name = new AssemblyName(args.Name).Name;
+            var candidate = Path.Combine(_addinDirectory, name + ".dll");
+            if (File.Exists(candidate))
+            {
+                try { return Assembly.LoadFrom(candidate); }
+                catch { return null; }
+            }
+            return null;
+        }
+
+        private static void PreloadNativeDependencies()
+        {
+            string logPath = null;
+            var log = new System.Text.StringBuilder();
+            try
+            {
+                var dir = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+                if (string.IsNullOrEmpty(dir)) return;
+                logPath = Path.Combine(dir, "warchart_preload.log");
+                log.AppendLine($"[{DateTime.Now:O}] Preload starting in {dir}");
+
+                bool ok = SetDllDirectory(dir);
+                log.AppendLine($"SetDllDirectory => {ok}");
+
+                foreach (var name in new[] { "libSkiaSharp.dll", "libHarfBuzzSharp.dll" })
+                {
+                    var path = Path.Combine(dir, name);
+                    if (!File.Exists(path)) { log.AppendLine($"  MISSING: {name}"); continue; }
+                    try
+                    {
+                        var handle = NativeLibrary.Load(path);
+                        log.AppendLine($"  Loaded {name} -> 0x{handle.ToInt64():X}");
+                    }
+                    catch (Exception ex)
+                    {
+                        log.AppendLine($"  FAILED {name}: {ex.GetType().Name}: {ex.Message}");
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                log.AppendLine($"PreloadNativeDependencies outer exception: {ex}");
+            }
+            finally
+            {
+                if (logPath != null)
+                {
+                    try { File.AppendAllText(logPath, log.ToString()); } catch { }
+                }
+            }
+        }
+
         public Result OnStartup(UIControlledApplication a)
         {
+            _addinDirectory = Path.GetDirectoryName(Assembly.GetExecutingAssembly().Location);
+            AppDomain.CurrentDomain.AssemblyResolve += OnAssemblyResolve;
+
+            PreloadNativeDependencies();
+
             ControlledApplication c_app = a.ControlledApplication;
             MyApplication = a;
 
@@ -240,17 +307,8 @@ namespace WC
 
                 _presenter = new WarningChartPresenter(uiapp, exEvent, handler);
 
-                try
-                {
-                    //pass parent (Revit) thread here
-                    _presenter.Show(_hWndRevit);
-                }
-                catch (Exception ex)
-                {
-                    Autodesk.Revit.UI.TaskDialog.Show("Error", ex.Message);
-                    _presenter.Dispose();
-                    _presenter = null;
-                }
+                //pass parent (Revit) thread here
+                _presenter.Show(_hWndRevit);
             }
         }
     }

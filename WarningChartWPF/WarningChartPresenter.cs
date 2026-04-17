@@ -10,9 +10,16 @@ using System.Windows.Input;
 using Autodesk.Revit.ApplicationServices;
 using System.Runtime.Versioning;
 using System.Runtime.InteropServices;
+using WC.Helpers;
 
 namespace WC.WarningChartWPF
 {
+    public enum GroupingMode
+    {
+        ByType,
+        BySeverity
+    }
+
     [SupportedOSPlatform("windows7.0")]
     public class WarningChartPresenter : IDisposable
     {
@@ -56,6 +63,8 @@ namespace WC.WarningChartWPF
             }
         }
 
+        public GroupingMode CurrentGroupingMode { get; private set; } = GroupingMode.ByType;
+
         public WarningChartPresenter(UIApplication uiapp, ExternalEvent exEvent, RequestHandler handler)
         {
             this._Application = uiapp;
@@ -64,15 +73,64 @@ namespace WC.WarningChartWPF
             this.LoadData();
         }
 
+        public void SetGroupingMode(GroupingMode mode)
+        {
+            if (CurrentGroupingMode == mode) return;
+            CurrentGroupingMode = mode;
+            LoadData();
+            if (form != null)
+            {
+                form.IsSeverityGrouping = mode == GroupingMode.BySeverity;
+                form.warningModels = this.warningModels;
+                form.WarningNumber = this.warnings.Count;
+            }
+        }
+
         private void LoadData()
         {
             //Get the list of Warnings in the Project
             this.warnings = new List<FailureMessage>(doc.GetWarnings());
 
-            //WOW!! Get the list of WarningModels
-            this.warningModels = warnings.GroupBy(x => x.GetDescriptionText())
-              //.Where(g => g.Count() > 1)
-              .Select(x => new WarningChartModel { Name = x.Key, Number = x.Count(), ID = x.Key + x.Count().ToString(), IDs = x.Select(y => y.GetFailingElements()).ToList() }).ToList();
+            this.warningModels = CurrentGroupingMode == GroupingMode.BySeverity
+                ? GroupBySeverity(warnings)
+                : GroupByType(warnings);
+        }
+
+        private static List<WarningChartModel> GroupByType(List<FailureMessage> source)
+        {
+            return source.GroupBy(x => x.GetDescriptionText())
+              .Select(x => new WarningChartModel
+              {
+                  Name = x.Key,
+                  Number = x.Count(),
+                  ID = x.Key + x.Count().ToString(),
+                  IDs = x.Select(y => y.GetFailingElements()).ToList()
+              }).ToList();
+        }
+
+        private static List<WarningChartModel> GroupBySeverity(List<FailureMessage> source)
+        {
+            var classified = source
+                .Select(w => new
+                {
+                    Warning = w,
+                    Classification = WarningSeverityClassifier.Classify(w.GetDescriptionText())
+                })
+                .ToList();
+
+            return classified.GroupBy(x => x.Classification.Severity)
+              .OrderBy(g => (int)g.Key)
+              .Select(g => new WarningChartModel
+              {
+                  Name = g.Key.ToString(),
+                  Number = g.Count(),
+                  ID = "severity_" + g.Key,
+                  IDs = g.Select(y => y.Warning.GetFailingElements()).ToList(),
+                  Breakdown = g.GroupBy(x => x.Classification.CanonicalText)
+                    .Select(t => new KeyValuePair<string, int>(t.Key, t.Count()))
+                    .OrderByDescending(t => t.Value)
+                    .ToList()
+              }).ToList();
         }
 
         internal void DocumentChanged()
@@ -138,6 +196,7 @@ namespace WC.WarningChartWPF
             form.WarningNumber = this.warnings.Count;
             form.Closed += FormClosed;
             form.SeriesSelectedEvent += SeriesSelected;
+            form.GroupingModeChanged += SetGroupingMode;
             form.Show();
         }
 

@@ -55,5 +55,10 @@ namespace WC.WarningChartWPF
         /// Gets or sets the full name of the warning
         /// </summary>
         public string Name { get; set; }
+
+        /// <summary>
+        /// For severity-grouped points: ordered list of contributing warning types and their counts.
+        /// </summary>
+        public List<KeyValuePair<string, int>> Breakdown { get; set; }
     }
 }

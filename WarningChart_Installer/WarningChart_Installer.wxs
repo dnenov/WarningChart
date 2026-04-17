@@ -3,7 +3,7 @@
 
     <Package Name="Archilizer_WarningChart_Installer"
         Manufacturer="Archilizer"
-        Version="2.0.0"
+        Version="2.1.0"
         UpgradeCode="07aefb8b-15af-4b0b-b0c9-f16cad02ef5e"
         Language="1033">
 
@@ -32,9 +32,8 @@
                         <!-- Content folder -->
                         <Directory Id="ContentDir" Name="Content">
 
-                            <!-- 2024 plugin files -->
+                            <!-- 2024 plugin files (frozen prebuilt for Revit 2018-2024 / .NET Framework 4.8) -->
                             <Directory Id="Folder2024" Name="2024">
-                                <!-- 2024 windows files -->
                                 <Directory Id="Windows2024" Name="windows">
                                     <Component Id="PluginFiles2024"
                                         Guid="a9ece996-c396-473e-80e0-2f5c3b96bde5">
@@ -44,44 +43,18 @@
                                             Source="C:\Users\DeyanNenov\AppData\Roaming\Autodesk\ApplicationPlugins\Archilizer_Warchart.bundle\Content\2024\windows\Archilizer_Warchart.dll" />
                                         <File Id="Config2024"
                                             Source="C:\Users\DeyanNenov\AppData\Roaming\Autodesk\ApplicationPlugins\Archilizer_Warchart.bundle\Content\2024\windows\Archilizer_Warchart.dll.config" />
-                                        <File Id="Pdb2024"
-                                            Source="C:\Users\DeyanNenov\AppData\Roaming\Autodesk\ApplicationPlugins\Archilizer_Warchart.bundle\Content\2024\windows\Archilizer_Warchart.pdb" />
-                                    </Component>
-                                    <Component Id="Dependencies2024Part1"
-                                        Guid="b1f3e4d6-7890-1234-5678-9abcdef01234">
                                         <File Id="ControlzExDll2024"
                                             Source="C:\Users\DeyanNenov\AppData\Roaming\Autodesk\ApplicationPlugins\Archilizer_Warchart.bundle\Content\2024\windows\ControlzEx.dll" />
-                                        <File Id="ControlzExPdb2024"
-                                            Source="C:\Users\DeyanNenov\AppData\Roaming\Autodesk\ApplicationPlugins\Archilizer_Warchart.bundle\Content\2024\windows\ControlzEx.pdb" />
                                         <File Id="LiveChartsDll2024"
                                             Source="C:\Users\DeyanNenov\AppData\Roaming\Autodesk\ApplicationPlugins\Archilizer_Warchart.bundle\Content\2024\windows\LiveCharts.dll" />
-                                        <File Id="LiveChartsPdb2024"
-                                            Source="C:\Users\DeyanNenov\AppData\Roaming\Autodesk\ApplicationPlugins\Archilizer_Warchart.bundle\Content\2024\windows\LiveCharts.pdb" />
                                         <File Id="LiveChartsWpfDll2024"
                                             Source="C:\Users\DeyanNenov\AppData\Roaming\Autodesk\ApplicationPlugins\Archilizer_Warchart.bundle\Content\2024\windows\LiveCharts.Wpf.dll" />
-                                        <File Id="LiveChartsWpfPdb2024"
-                                            Source="C:\Users\DeyanNenov\AppData\Roaming\Autodesk\ApplicationPlugins\Archilizer_Warchart.bundle\Content\2024\windows\LiveCharts.Wpf.pdb" />
-                                        <File Id="LiveChartsWpfXml2024"
-                                            Source="C:\Users\DeyanNenov\AppData\Roaming\Autodesk\ApplicationPlugins\Archilizer_Warchart.bundle\Content\2024\windows\LiveCharts.Wpf.xml" />
-                                        <File Id="LiveChartsXml2024"
-                                            Source="C:\Users\DeyanNenov\AppData\Roaming\Autodesk\ApplicationPlugins\Archilizer_Warchart.bundle\Content\2024\windows\LiveCharts.xml" />
-                                    </Component>
-                                    <Component Id="Dependencies2024Part2"
-                                        Guid="c2e4f6d8-9012-3456-7890-abcdef123456">
                                         <File Id="MahAppsMetroDll2024"
                                             Source="C:\Users\DeyanNenov\AppData\Roaming\Autodesk\ApplicationPlugins\Archilizer_Warchart.bundle\Content\2024\windows\MahApps.Metro.dll" />
-                                        <File Id="MahAppsMetroPdb2024"
-                                            Source="C:\Users\DeyanNenov\AppData\Roaming\Autodesk\ApplicationPlugins\Archilizer_Warchart.bundle\Content\2024\windows\MahApps.Metro.pdb" />
-                                        <File Id="MahAppsMetroXml2024"
-                                            Source="C:\Users\DeyanNenov\AppData\Roaming\Autodesk\ApplicationPlugins\Archilizer_Warchart.bundle\Content\2024\windows\MahApps.Metro.xml" />
                                         <File Id="MaterialDesignColorsDll2024"
                                             Source="C:\Users\DeyanNenov\AppData\Roaming\Autodesk\ApplicationPlugins\Archilizer_Warchart.bundle\Content\2024\windows\MaterialDesignColors.dll" />
                                         <File Id="MaterialDesignThemesWpfDll2024"
                                             Source="C:\Users\DeyanNenov\AppData\Roaming\Autodesk\ApplicationPlugins\Archilizer_Warchart.bundle\Content\2024\windows\MaterialDesignThemes.Wpf.dll" />
-                                        <File Id="MaterialDesignThemesWpfPdb2024"
-                                            Source="C:\Users\DeyanNenov\AppData\Roaming\Autodesk\ApplicationPlugins\Archilizer_Warchart.bundle\Content\2024\windows\MaterialDesignThemes.Wpf.pdb" />
-                                        <File Id="MaterialDesignThemesWpfXml2024"
-                                            Source="C:\Users\DeyanNenov\AppData\Roaming\Autodesk\ApplicationPlugins\Archilizer_Warchart.bundle\Content\2024\windows\MaterialDesignThemes.Wpf.xml" />
                                         <File Id="SystemWindowsInteractivityDll2024"
                                             Source="C:\Users\DeyanNenov\AppData\Roaming\Autodesk\ApplicationPlugins\Archilizer_Warchart.bundle\Content\2024\windows\System.Windows.Interactivity.dll" />
                                     </Component>
@@ -110,6 +83,32 @@
                                             Source="C:\Users\DeyanNenov\AppData\Roaming\Autodesk\ApplicationPlugins\Archilizer_Warchart.bundle\Content\2026\windows\LiveChartsCore.SkiaSharpView.dll" />
                                         <File Id="LiveChartsCoreSkiaSharpViewWPFDll2026"
                                             Source="C:\Users\DeyanNenov\AppData\Roaming\Autodesk\ApplicationPlugins\Archilizer_Warchart.bundle\Content\2026\windows\LiveChartsCore.SkiaSharpView.WPF.dll" />
+                                    </Component>
+                                </Directory>
+                            </Directory>
+
+                            <!-- 2027 plugin files -->
+                            <Directory Id="Folder2027" Name="2027">
+                                <!-- 2027 windows files -->
+                                <Directory Id="Windows2027" Name="windows">
+                                    <Component Id="PluginFiles2027"
+                                        Guid="cccc6c0b-d59b-4830-9b1c-880e140a0404">
+                                        <File Id="Addin2027"
+                                            Source="C:\Users\DeyanNenov\AppData\Roaming\Autodesk\ApplicationPlugins\Archilizer_Warchart.bundle\Content\2027\windows\Archilizer_Warchart.addin" />
+                                        <File Id="DepsJson2027"
+                                            Source="C:\Users\DeyanNenov\AppData\Roaming\Autodesk\ApplicationPlugins\Archilizer_Warchart.bundle\Content\2027\windows\Archilizer_Warchart.deps.json" />
+                                        <File Id="Dll2027"
+                                            Source="C:\Users\DeyanNenov\AppData\Roaming\Autodesk\ApplicationPlugins\Archilizer_Warchart.bundle\Content\2027\windows\Archilizer_Warchart.dll" />
+                                        <File Id="Config2027"
+                                            Source="C:\Users\DeyanNenov\AppData\Roaming\Autodesk\ApplicationPlugins\Archilizer_Warchart.bundle\Content\2027\windows\Archilizer_Warchart.dll.config" />
+                                        <File Id="Pdb2027"
+                                            Source="C:\Users\DeyanNenov\AppData\Roaming\Autodesk\ApplicationPlugins\Archilizer_Warchart.bundle\Content\2027\windows\Archilizer_Warchart.pdb" />
+                                        <File Id="LiveChartsCoreDll2027"
+                                            Source="C:\Users\DeyanNenov\AppData\Roaming\Autodesk\ApplicationPlugins\Archilizer_Warchart.bundle\Content\2027\windows\LiveChartsCore.dll" />
+                                        <File Id="LiveChartsCoreSkiaSharpViewDll2027"
+                                            Source="C:\Users\DeyanNenov\AppData\Roaming\Autodesk\ApplicationPlugins\Archilizer_Warchart.bundle\Content\2027\windows\LiveChartsCore.SkiaSharpView.dll" />
+                                        <File Id="LiveChartsCoreSkiaSharpViewWPFDll2027"
+                                            Source="C:\Users\DeyanNenov\AppData\Roaming\Autodesk\ApplicationPlugins\Archilizer_Warchart.bundle\Content\2027\windows\LiveChartsCore.SkiaSharpView.WPF.dll" />
                                     </Component>
                                 </Directory>
                             </Directory>
@@ -155,9 +154,8 @@
         <Feature Id="MainFeature" Title="Archilizer WarningChart Plugin" Level="1">
             <ComponentRef Id="PackageManifest" />
             <ComponentRef Id="PluginFiles2024" />
-            <ComponentRef Id="Dependencies2024Part1" />
-            <ComponentRef Id="Dependencies2024Part2" />
             <ComponentRef Id="PluginFiles2026" />
+            <ComponentRef Id="PluginFiles2027" />
             <ComponentRef Id="HelpHtmlGeneral" />
             <ComponentRef Id="HelpResourcesGeneral" />
         </Feature>

@@ -27,6 +27,7 @@ using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
 using System.IO;
 using Microsoft.Win32;
+using System.Windows.Threading;
 
 namespace WC.WarningChartWPF
 {
@@ -94,6 +95,7 @@ namespace WC.WarningChartWPF
     public partial class WarChartView : Window, INotifyPropertyChanged, IDisposable
     {
         public event Action<String> SeriesSelectedEvent;
+        public event Action<GroupingMode> GroupingModeChanged;
         public bool? IsCheckedState { get; private set; }
         public bool DocumentChanged { get; internal set; }
         public bool DocumentSwitched { get; internal set; }
@@ -227,6 +229,19 @@ namespace WC.WarningChartWPF
             SKColor.Parse("#B21A00"),
         };
 
+        // Fixed palette for severity grouping mode. Order matches WarningSeverity enum.
+        private static readonly Dictionary<string, SKColor> SeverityColors = new Dictionary<string, SKColor>
+        {
+            { "Critical", SKColor.Parse("#9E031E") },
+            { "High",     SKColor.Parse("#EF233C") },
+            { "Medium",   SKColor.Parse("#FFCB21") },
+            { "Low",      SKColor.Parse("#8DC97F") },
+            { "Unknown",  SKColor.Parse("#BDBDBD") },
+        };
+
+        /// <summary>True when the most recent series build was for severity grouping.</summary>
+        public bool IsSeverityGrouping { get; set; }
+
         /// <summary>
         /// Gets dynamic colors based on user settings or falls back to CustomColors
         /// </summary>
@@ -359,7 +374,7 @@ namespace WC.WarningChartWPF
             OnPropertyChanged("Series");
         }
 
-        private static ObservableCollection<ISeries> GroupsByNumberOfWarnings(List<WarningChartModel> content)
+        private ObservableCollection<ISeries> GroupsByNumberOfWarnings(List<WarningChartModel> content)
         {
             var series = new ObservableCollection<ISeries>();
             if (!content.Any()) return series;
@@ -367,12 +382,14 @@ namespace WC.WarningChartWPF
             var total = content.Sum(x => x.Number);
             var max = content.OrderByDescending(x => x.Number).First().Name;
 
+            var palette = IsSeverityGrouping ? null : GetDynamicColors();
+
             return new ObservableCollection<ISeries>(
                 content
                 .OrderByDescending(x => x.Number)
                 .Select((x, i) => new PieSeries<WarningChartPoint>
                 {
-                    Values = new[] { new WarningChartPoint { Number = x.Number, Title = x.Title, Name = x.Name } },
+                    Values = new[] { new WarningChartPoint { Number = x.Number, Title = x.Title, Name = x.Name, Breakdown = x.Breakdown } },
                     Name = x.Name,
                     Mapping = (model, index) => new Coordinate(index, model.Number),
                     Pushout = x.Name == max ? pushAmount : 0,
@@ -380,7 +397,9 @@ namespace WC.WarningChartWPF
                     DataLabelsSize = 12,
                     DataLabelsPaint = new SolidColorPaint(SKColors.Black),
                     DataLabelsPosition = LiveChartsCore.Measure.PolarLabelsPosition.Middle,
-                    Fill = new SolidColorPaint(GetDynamicColors()[i % GetDynamicColors().Length]),
+                    Fill = new SolidColorPaint(IsSeverityGrouping
+                        ? (SeverityColors.TryGetValue(x.Name, out var c) ? c : SeverityColors["Unknown"])
+                        : palette[i % palette.Length]),
                     DataLabelsFormatter = point =>
                     {
                         var value = point.Coordinate.PrimaryValue;
@@ -419,6 +438,42 @@ namespace WC.WarningChartWPF
         {
             if (e.ChangedButton == MouseButton.Left)
                 this.DragMove();
+        }
+
+        private DispatcherTimer _toolbarCollapseTimer;
+
+        private void EnsureToolbarTimer()
+        {
+            if (_toolbarCollapseTimer != null) return;
+            _toolbarCollapseTimer = new DispatcherTimer { Interval = TimeSpan.FromMilliseconds(300) };
+            _toolbarCollapseTimer.Tick += (s, e) =>
+            {
+                _toolbarCollapseTimer.Stop();
+                if (toolbarHost != null && toolbarHost.IsMouseOver) return;
+                actionGroup.Visibility = Visibility.Collapsed;
+                dotsPlaceholder.Visibility = Visibility.Visible;
+            };
+        }
+
+        private void ToolbarHost_MouseEnter(object sender, MouseEventArgs e)
+        {
+            EnsureToolbarTimer();
+            _toolbarCollapseTimer.Stop();
+            actionGroup.Visibility = Visibility.Visible;
+            dotsPlaceholder.Visibility = Visibility.Collapsed;
+        }
+
+        private void ToolbarHost_MouseLeave(object sender, MouseEventArgs e)
+        {
+            EnsureToolbarTimer();
+            _toolbarCollapseTimer.Stop();
+            _toolbarCollapseTimer.Start();
+        }
+
+        private void SeverityToggle_Click(object sender, RoutedEventArgs e)
+        {
+            var mode = btnSeverity.IsChecked == true ? GroupingMode.BySeverity : GroupingMode.ByType;
+            GroupingModeChanged?.Invoke(mode);
         }
 
         private void SettingsButton_Click(object sender, RoutedEventArgs e)
