@@ -152,6 +152,10 @@ namespace WC.WarningChartWPF
             }
         }
 
+        // For severity-grouped models: top contributing warning types and their counts.
+        // Null/empty in type-grouped mode.
+        public List<KeyValuePair<string, int>> Breakdown { get; set; }
+
         public event PropertyChangedEventHandler PropertyChanged;
 
         private void RaisePropertyChanged(string property)

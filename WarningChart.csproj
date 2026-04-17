@@ -31,6 +31,7 @@
 		<Content Include="archilizer.ico" />
 		<Content Include="Archilizer_Warchart.addin" />
 		<EmbeddedResource Include="Resources\icon_Warchart.png" />
+		<EmbeddedResource Include="Resources\RevitWarningsClassified.json" />
 		<Resource Include="Resources\warchart.png" />
 		<Resource Include="PackageContents.xml" />
 		<Resource Include="Resources\archilizer_warchart.png" />

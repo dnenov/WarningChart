@@ -88,7 +88,7 @@ namespace WC.WarningChartWPF
                     Paint = _fontPaint,
                     TextSize = 13,
                     Padding = new Padding(8, 10, 20, 0),
-                    ClippingMode = ClipMode.None, // required on tooltips 
+                    ClippingMode = ClipMode.None, // required on tooltips
                     VerticalAlignment = Align.Start,
                     HorizontalAlignment = Align.Start,
                     MaxWidth = 240,
@@ -96,6 +96,57 @@ namespace WC.WarningChartWPF
 
                 _stackPanel?.Children.Add(sp);
                 _stackPanel?.Children.Add(tb);
+
+                // For severity-grouped points: append a "Top types" breakdown,
+                // one label per line so each respects the tooltip's natural width.
+                var breakdown = (point.Context.DataSource as WarningChartPoint)?.Breakdown;
+                if (breakdown != null && breakdown.Count > 0)
+                {
+                    const int TopN = 4;
+                    const int MaxChars = 42;
+
+                    _stackPanel?.Children.Add(new LabelVisual
+                    {
+                        Text = "Top warning types:",
+                        Paint = _fontPaint,
+                        TextSize = 11,
+                        Padding = new Padding(8, 8, 20, 2),
+                        ClippingMode = ClipMode.None,
+                        VerticalAlignment = Align.Start,
+                        HorizontalAlignment = Align.Start,
+                    });
+
+                    foreach (var kv in breakdown.Take(TopN))
+                    {
+                        var typeText = kv.Key ?? "(unnamed)";
+                        if (typeText.Length > MaxChars) typeText = typeText.Substring(0, MaxChars - 3) + "...";
+                        _stackPanel?.Children.Add(new LabelVisual
+                        {
+                            Text = $"  {kv.Value} \u00d7 {typeText}",
+                            Paint = _fontPaint,
+                            TextSize = 11,
+                            Padding = new Padding(8, 0, 20, 0),
+                            ClippingMode = ClipMode.None,
+                            VerticalAlignment = Align.Start,
+                            HorizontalAlignment = Align.Start,
+                        });
+                    }
+
+                    var remainder = breakdown.Skip(TopN).Sum(kv => kv.Value);
+                    if (remainder > 0)
+                    {
+                        _stackPanel?.Children.Add(new LabelVisual
+                        {
+                            Text = $"  + {remainder} more across {breakdown.Count - TopN} type(s)",
+                            Paint = _fontPaint,
+                            TextSize = 11,
+                            Padding = new Padding(8, 0, 20, 0),
+                            ClippingMode = ClipMode.None,
+                            VerticalAlignment = Align.Start,
+                            HorizontalAlignment = Align.Start,
+                        });
+                    }
+                }
             }
 
             var size = _stackPanel.Measure(chart);
